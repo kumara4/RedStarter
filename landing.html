@@ -5,26 +5,67 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <link rel ="stylesheet" type ="text/css" href="Styles.css">
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <h1 class="bigtitle">RedStarter</h1> <!should be on every page>
-        <hr>
-        <form>
-            <p>  
-                <label class = "form email"><input type ="email" placeholder="Enter Facebook email"></label>
-                <button class="button1">Connect with Facebook</button>
-            </p>
-        </form>
-        <p></p>
-        <a href="https://www.reddit.com/top/"> <!--insert link to Trending page here-->
-            <div id="trend">Trending</div></a>
-        <a href="https://www.reddit.com/top/"><div id="new">New</div></a>
-        <a href="https://www.reddit.com/top/"><div id="subreddit"> Subreddit of the Month</div></a>
-        <a href="https://www.reddit.com/top/"><div id="fav"> Favorites</div></a>
-    </body>
+	<head>
+		<link rel ="stylesheet" type ="text/css" href="css/normalize.css">
+		<link rel ="stylesheet" type ="text/css" href="css/styles.css">
+		<title>RedStarter</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="alien_img">
+			<img src="img/alien.png">
+		</div>
+		
+		
+		<section class="button_search center"> 
+		
+		<div class="connecttofacebook">
+			<button class="facebookbutton">
+				Connect with Facebook
+			</button>
+		</div>
+		<br>
+		<br>
+		<h3> Or enter a list of your interests to get recommended subreddits!</h3>
+		<br>
+		<br>
+		
+		<div class="interest_list">
+			<label>I like</label>
+			<input  type="text" placeholder="Dogs, Netflix, Memes">
+		</div>
+		
+		
+		
+		</section>
+		<section class="visualizations">
+			
+			
+			<div id="topSR">
+				<a href="https://www.reddit.com/top/">Top Subreddits</a>
+			</div> 
+
+			
+			<div id="risingSR">
+				<a href="https://www.reddit.com/rising/">Rising Subreddits</a>
+			</div> 
+
+			
+			<div id="newSR">
+				<a href="https://www.reddit.com/new/">New Subreddits</a>
+			</div>
+
+			
+			<div id="controversialSR">
+				<a href="https://www.reddit.com/controversial/">Controversial Subreddits</a>
+			</div>
+
+			
+			<div id="promotedSR">
+				<a href="https://www.reddit.com/promoted/">Promoted Subreddits</a>
+			</div>
+			
+		</section>
+	</body>
 </html>

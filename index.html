@@ -5,27 +5,38 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <link rel ="stylesheet" type ="text/css" href="Styles.css">
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div id="indextitle">
-            <h1>RedStarter <!should be on every page> </h1>
-        </div>
-            <hr>
-        <div  class = "desc" ><blockquote><strong>Connect to personalized sub-reddits 
-                    that meet your interests and likes!</strong></blockquote>
-        </div>
-            <a href="http://localhost:8383/RedStarter/login.html"><button class="button1"> Log In</button></a>
-            <a href="http://localhost:8383/RedStarter/signup.html"><button class="button1"> Sign Up</button></a>
-        <div>
-             <img src="https://www.facebook.com/images/fb_icon_325x325.png" class="imagefb" />
-             <img src="http://emcrit.org/wp-content/uploads/2016/04/Reddit_Logo_Wide.jpg" class="imagered" />
+	<head>
+		<link rel ="stylesheet" type ="text/css" href="css/normalize.css">
+		<link rel ="stylesheet" type ="text/css" href="css/styles.css">
+		<title>RedStarter</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="alien_img">
+			<img src="img/alien.png">
+		</div>
+		<hr>
 
-        </div>
-        
-    </body>
+		<section class="login_signup">
+			<div  class="desc">
+				<strong>Connect to personalized sub-reddits
+				that meet your interests and likes!</strong>
+			</div>
+			<div  class="login">
+				<a href="login.html">
+				<button class="button1">
+					Log In
+				</button></a>
+			</div>
+			<div  class="signup">
+				<a href="signup.html">
+				<button class="button1">
+					Sign Up
+				</button></a>
+			</div>
+		</section>
+		
+
+	</body>
 </html>
