@@ -1,0 +1,189 @@
+/*
+ To change this license header, choose License Headers in Project Properties.
+ To change this template file, choose Tools | Templates
+ and open the template in the editor.
+ */
+/*
+ Created on : Sep 11, 2016, 10:03:07 PM
+ Author     : ashmita kumar, henry lopez
+ */
+
+/* LANDING PAGE */
+
+.center {
+	text-align: center;
+}
+
+.alien_img img {
+	display: inline-block;
+	width: 15%;
+	margin: 10px;
+}
+.alien_img img:hover {
+	transform: rotate(10deg);
+}
+.button_search {
+	text-align: center;
+}
+
+.connecttofacebook {
+	display: inline-block;
+	width: 50%;
+}
+
+.facebookbutton {
+	display: inline-block;
+	width: 100%;
+	color: #fff;
+	background-color: #0275d8;
+	border-color: #0275d8;
+	font-weight: 400;
+	font-size: 14px;
+	font-family: sans-serif, Times;
+	line-height: 1.25;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	letter-spacing: 2px;
+	user-select: none;
+	border: 1px solid transparent;
+	padding: 1rem;
+	font-size: 1rem;
+	border-radius: .25rem;
+}
+
+.facebookbutton:hover {
+	color: #fff;
+	background-color: #025aa5;
+	border-color: #01549b;
+}
+.redimg{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    width: 100%;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.visualizations div:nth-child(odd) {
+	color: white;
+	background-color: #0275d8;
+}
+
+.visualizations div:nth-child(even) {
+	color: white;
+	background-color: #00A462;
+}
+
+.visualizations div:first-child {
+	margin-top: 50px;
+}
+
+.visualizations {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	color: white;
+}
+.visualizations div {
+	padding: 5%;
+}
+.visualizations div:hover {
+	opacity: 0.80;
+}
+
+.visualizations a {
+	color: white;
+	text-decoration: none;
+}
+
+.button1 {
+	color: white;
+	background-color: mediumaquamarine;
+	border-radius: 10px;
+	padding: 10px;
+	font-size: 14px;
+	font-family: Arial, Times;
+	letter-spacing: 2px;
+	-webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+	transition: width 2s;
+}
+
+.button1:hover {
+	width: 300px;
+}
+.form {
+	font-family: Arial, Times;
+	color: #8A2E62;
+}
+.login {
+	font-family: Arial, Times;
+	padding: 15px;
+}
+.login:focus {
+	background: wheat;
+}
+.desc {
+	font-family: Arial, Times;
+	color: #8A2E62;
+	font-size: 20px;
+}
+.bigtitle {
+	font-family: Arial, Times;
+	color: mediumaquamarine;
+}
+.email:invalid {
+
+	border: red;
+}
+input:invalid {
+	border: 2px solid red;
+}
+.imagefb {
+	width: 100px;
+	height: 100px;
+}
+.imagered {
+	width: 300px;
+	height: 100px;
+}
+#indextitle {
+	font-family: Arial, Times;
+	color: white;
+	height: 100px;
+	width: 200px;
+	background-color: mediumaquamarine;
+	-webkit-transition: width 2s;
+	border-radius: 10px;
+	transition: width 2s, height 2s;
+	transition-property: all;
+}
+
+.login_signup, .login, .signup {
+	text-align: center;
+}
+
+/*RESPONSIVE DESIGN */
+@media only screen and (max-width: 700px) {
+	.alien_img img {
+		display: block;
+		margin: auto;
+		width: 35%;
+		text-align: center;
+	}
+}
