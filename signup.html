@@ -8,9 +8,12 @@ Users enter their data into the forms.
 	<head>
 		<link rel ="stylesheet" type ="text/css" href="css/normalize.css">
 		<link rel ="stylesheet" type ="text/css" href="css/styles.css">
-		<title>TODO supply a title</title>
+		<title>Sign Up</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">   
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
 	</head>
 	<body>
 		<div class="alien_img">
@@ -25,42 +28,36 @@ Users enter their data into the forms.
 					that meet your interests and likes!</strong>
 				</blockquote>
 			</div>
-			<div>
-				<form>
-					<p>
-						<label class = "form" >First Name:
-							<input class = "s-input" type ="text" placeholder="First Name">
-						</label>
-						<label class = "form">Last Name:
-							<input type ="text" placeholder="Last Name">
-						</label>
-					</p>
-					<p>
-						<label class = "form email" >Email:
-							<input type ="email"  placeholder="Email">
-						</label>
-						<label class = "form email"  >Confirm Email:
-							<input type ="email"  placeholder="Re-enter Email">
-						</label>
-					</p>
-					<p>
-						<label class = "form password"> New Password:
-							<input
-							type="text"
-							name="username"
-							placeholder="New Password"
-							pattern="[a-z]{1,15}"
-							title="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9.">
-						</label>
-					</p>
-					<p>
-						<a href="landing.html">
-						<button class="button1">
-							Sign Up
-						</button></a>
-					</p>
-
-				</form>
+			<div class = "form container">
+                            <div class = "firstname">
+                                <label>First Name: </label><input type ="text" placeholder="First Name">
+                            </div>
+                            <div class ="lastname">
+                                <label>Last Name: </label><input type ="text" placeholder="Last Name">
+                            </div>
+                            <div class = "username">
+                                <label>Username: </label><input type = "text" placeholder ="Username">
+                                <div class = "suggestun">
+                                    
+                                </div>
+                            </div>
+                            <div class ="email">
+                                <label>Email: </label><input type ="email"  placeholder="Email">
+                            </div>
+                            
+                            <div class = "cemail">
+                                <label>Re-enter Email: </label><input type ="email"  placeholder="Confirm Email">
+                            </div>
+                            <div class = "newpw">
+                                <label>New Password: </label><input type ="text" placeholder="New Password">
+                            </div>
+                            <div class = "signupbutton">
+                                <a href="landing.html">
+                                    <button class="button1">Sign Up</button></a>
+                            </div>
+						
+					
+				
 			</div>
 		</section>
 
