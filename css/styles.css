@@ -150,7 +150,6 @@ tr:nth-child(even) {
 	color: mediumaquamarine;
 }
 .email:invalid {
-
 	border: red;
 }
 input:invalid {
@@ -179,7 +178,6 @@ input:invalid {
 .login_signup, .login, .signup {
 	text-align: center;
 }
-
 /*RESPONSIVE DESIGN */
 @media only screen and (max-width: 700px) {
 	.alien_img img {
