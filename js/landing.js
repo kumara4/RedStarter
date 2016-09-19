@@ -21,6 +21,8 @@ $(document).ready(function() {
 
 	/*Traverse the canned data and grab the subreddits that are associated with eah post in the data. 
 	 * Add this to the table on each section on the page*/
+	
+	/*REQUIREMENT: Manipulate the DOM and add html elements dynamically */
 	$.each(sections, function(i, section) {
 		var url = "https://www.reddit.com/" + section + "/.json?jsonp=?";
 		score.push(0);
@@ -63,7 +65,8 @@ $(document).ready(function() {
 
 	/*Allow for multiple views, TOPSCORE view will display info about the top subreddit and information about the section.
 	 * Stats will contain graphs related to posts that are the most popular in this section*/
-	 
+	
+	 /*REQUIREMENT: Create multiple views*/
 	function show(id) {
 		$('.tab')//Select all elements with tab class
 		.removeClass('selected')//From that set, remove the class "selected" from all
