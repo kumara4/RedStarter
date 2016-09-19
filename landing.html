@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Authors: Ashmita Kumar and Henry Lopez
-Landing: Page that user sees after user logs in or signed up. 
+Landing: Page that user sees after user logs in or signed up.
 User can begin getting subreddit recommendations, by connecting to Facebook or searching.
 
 -->
@@ -9,6 +9,8 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
 	<head>
 		<link rel ="stylesheet" type ="text/css" href="css/normalize.css">
 		<link rel ="stylesheet" type ="text/css" href="css/styles.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="js/landing.js"></script>
 		<title>RedStarter</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,77 +19,172 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
 		<div class="alien_img">
 			<img src="img/alien.png">
 		</div>
-		
-		
-		<section class="button_search center"> 
-		
-		<div class="connecttofacebook">
-			<button class="facebookbutton">
-				Connect with Facebook
-			</button>
-		</div>
-		<br>
-		<br>
-		<h3> Or enter a list of your interests to get recommended subreddits!</h3>
-		<br>
-		<br>
-		
-		<div class="interest_list">
-			<label>I like</label>
-			<input  type="text" placeholder="Dogs, Netflix, Memes">
-		</div>
-		
-		<img class="redimg" src= "img/red.jpg">
+
+		<section class="button_search center">
+
+			<div class="connecttofacebook">
+				<button class="facebookbutton">
+					Connect with Facebook
+				</button>
+			</div>
+			<br>
+			<br>
+			<h3> Or enter a list of your interests to get recommended subreddits!</h3>
+			<br>
+			<br>
+
+			<div class="interest_list">
+				<label>I like</label>
+				<input  type="text" placeholder="Dogs, Netflix, Memes">
+			</div>
+
+			<img class="redimg" src= "img/red.jpg">
 		</section>
+		
+		<!-- Visualization section currently has canned data of posts info in the respective subreddit. 
+			Each section will contain data about the current most active subreddits in that category such as the most popular
+			and which ones have the most traffic 
+			
+			TOPSCORE: Canned data, this will later have a description of the top subreddits and graphs-->
+			
 		<section class="visualizations">
-			
-			
-			<div id="topSR">
-				<a href="https://www.reddit.com/top/">Top Subreddits</a>
-				<table >
-				  <tr>
-					<th>Title</th>
-					<th>Views</th>
-					<th>Followers</th>
-				  </tr>
-				  <tr>
-					<td>Hillary gets Pneumonia</td>
-					<td>193</td>
-					<td>301</td>
-				  </tr>
-				  <tr>
-					<td>Woman Ends Marriage over Dog</td>
-					<td>3232</td>
-					<td>506</td>
-				  </tr>
-				  <tr>
-					<td>Florida Man Found Eating McDonald's on Highway</td>
-					<td>503</td>
-					<td>965</td>
-				  </tr>
-				</table>
-			</div> 
 
-			
-			<div id="risingSR">
-				<a href="https://www.reddit.com/rising/">Rising Subreddits</a>
-			</div> 
+			<div id="topSR" class="datasection">
+				<a class="showdata" href="#">Top Subreddits</a>
+				<div class="content">
+					<ul class="tabs">
+						<li>
+							<a class="tab" href="#topscore">TOP SCORE</a>
+						</li>
+						<li>
+							<a class="tab" href="#topstats">STATS</a>
+						</li>
+					</ul>
+					<div id="topscore" class="panel">
 
-			
-			<div id="newSR">
-				<a href="https://www.reddit.com/new/">New Subreddits</a>
+					</div>
+					<div id="topstats" class="panel">
+						<table id="toptable" class="table">
+							<tr>
+								<th>Subreddit</th>
+								<th>Views</th>
+								<th>Followers</th>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 
-			
-			<div id="controversialSR">
-				<a href="https://www.reddit.com/controversial/">Controversial Subreddits</a>
+			<div id="risingSR" class="datasection">
+				<a class="showdata" href="#">Rising Subreddits</a>
+				<div class="content">
+					<ul class="tabs">
+						<li>
+							<a class="tab" href="#risingscore">TOP SCORE</a>
+						</li>
+						<li>
+							<a class="tab" href="#risingstats">STATS</a>
+						</li>
+					</ul>
+					<div id="risingscore" class="panel">
+
+					</div>
+					<div id="risingstats" class="panel">
+
+						<table id="risingtable" class="table">
+							<tr >
+								<th>Subreddit</th>
+								<th>Views</th>
+								<th>Followers</th>
+							</tr>
+
+						</table>
+					</div>
+				</div>
 			</div>
 
-			
-			<div id="promotedSR">
-				<a href="https://www.reddit.com/promoted/">Promoted Subreddits</a>
+			<div id="newSR" class="datasection">
+				<a class="showdata"  href="#">New Subreddits</a>
+				<div class="content">
+					<ul class="tabs">
+						<li>
+							<a class="tab" href="#newscore">TOP SCORE</a>
+						</li>
+						<li>
+							<a class="tab" href="#newstats">STATS</a>
+						</li>
+					</ul>
+					<div id="newscore" class="panel">
+
+					</div>
+					<div id="newstats" class="panel">
+
+						<table id="newtable" class="table">
+							<tr >
+								<th>Subreddit</th>
+								<th>Views</th>
+								<th>Followers</th>
+							</tr>
+
+						</table>
+					</div>
+				</div>
 			</div>
-			
+			<div id="controversialSR" class="datasection">
+				<a class="showdata"  href="#">Controversial Subreddits</a>
+				<div class="content">
+					
+					<ul class="tabs">
+						<li>
+							<a class="tab" href="#controversialscore">TOP SCORE</a>
+						</li>
+						<li>
+							<a class="tab" href="#controversialstats">STATS</a>
+						</li>
+					</ul>
+					<div id="controversialscore" class="panel">
+
+					</div>
+					<div id="controversialstats" class="panel">
+
+						<table id="controversialtable" class="table">
+							<tr >
+								<th>Subreddit</th>
+								<th>Views</th>
+								<th>Followers</th>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div id="hotSR" class="datasection">
+				<a class="showdata"  href="#">Hot Subreddits</a>
+				<div class="content">
+					<ul class="tabs">
+						<li>
+							<a class="tab" href="#hotscore">TOP SCORE</a>
+						</li>
+						<li>
+							<a class="tab" href="#hotstats">STATS</a>
+						</li>
+					</ul>
+					<div id="hotscore" class="panel">
+
+					</div>
+					<div id="hotstats" class="panel">
+						<table id="hottable" class="table">
+							<tr >
+								<th>Subreddit</th>
+								<th>Views</th>
+								<th>Followers</th>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+			</div>
+
 		</section>
 	</body>
 </html>
