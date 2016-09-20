@@ -33,13 +33,17 @@ Users enter their data into the forms.
                             <label>First Name: <input id="fn" type ="text" placeholder="First Name"></label><br>
                             <label>Last Name: <input id="ln" type ="text" placeholder="Last Name"></label><br>                     
                             <label>Username: <input type = "text" placeholder ="Username"></label>
-                            <div id = "suggestun"></div>
+                            <div id = "suggestun"></div> <!-- Elements are dynamically created after user inputs into label. -->
                             <label>Email: <input type ="email"  placeholder="Email"></label><br>
                             <label>Re-enter Email: <input type ="email"  placeholder="Confirm Email"></label><br>
                             <label>New Password: <input type ="password" placeholder="New Password"
                                 pattern="[a-z]{1,15}"
-                                title="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9."></label><br>
-                            <a href="landing.html">
+                                title="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9."></label>
+                                <button type = "button" class = "btn btn-default btn-sm" id = "help" 
+                                    data-help="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9.">
+                                    <span class = "glyphicon glyphicon-info-sign"></span>
+                                </button><br>
+                                <a href="landing.html">
                                 <button class="button1">Sign Up</button></a>
 			</div>
 		</section>

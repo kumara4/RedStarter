@@ -13,7 +13,6 @@
 .center {
 	text-align: center;
 }
-
 .alien_img img {
 	display: inline-block;
 	width: 15%;
@@ -124,9 +123,8 @@ tr:nth-child(even) {
         height: 50px;
         width: 160px;
 }
-
 .button1:hover {
-	width: 300px;  
+	width: 200px;  
         height: 50px;
 }
 .form {
@@ -155,6 +153,10 @@ tr:nth-child(even) {
 input:invalid {
 	border: 2px solid red;
 }
+#hinttext{
+    font-family: Arial, Times;
+    color: blue;
+}
 .imagefb {
 	width: 100px;
 	height: 100px;
@@ -174,7 +176,6 @@ input:invalid {
 	transition: width 2s, height 2s;
 	transition-property: all;
 }
-
 .login_signup, .login, .signup {
 	text-align: center;
 }
