@@ -11,10 +11,10 @@ $(document).ready(function () {
      * and displays them. 
      */
     $("#ln").change(function () {
-        $("#suggestun").append("<ol> " + $first.val() + $last.val().substring(0, 1) + randomNum() + "</ol>");
-        $("#suggestun").append("<ol> " + $first.val().substring(0, 1) + $last.val() + randomNum() + "</ol>");
-        $("#suggestun").append("<ol> " + $last.val() + $first.val().substring(0, 1) + randomNum() + "</ol>");
-        $("#suggestun").append("<ol> " + $last.val().substring(0, 1) + $first.val() + randomNum() + "</ol>");
+        $("#suggestun").append("<label id = \"selectid\" ><input type = \"radio\" > " + $first.val() + $last.val().substring(0, 1) + randomNum() + "</label><br>");
+        $("#suggestun").append("<label id = \"selectid\"><input type = \"radio\" > " + $first.val().substring(0, 1) + $last.val() + randomNum() + "</label><br>");
+        $("#suggestun").append("<label id = \"selectid\"><input type = \"radio\" > " + $last.val() + $first.val().substring(0, 1) + randomNum() + "</label><br>");
+        $("#suggestun").append("<label id = \"selectid\"><input type = \"radio\" > " + $last.val().substring(0, 1) + $first.val() + randomNum() + "</label><br>");
     });
     /*
      * Uses data attribute to display pop-up message about form.
