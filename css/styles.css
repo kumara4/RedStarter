@@ -207,7 +207,6 @@ ul li a {
     font-family: Arial, Times;
     color: #8A2E62;
 }
-
 .desc {
     font-family: Arial, Times;
     color: #8A2E62;
@@ -227,10 +226,9 @@ input:invalid {
     font-family: Arial, Times;
     color: blue;
 }
-.suggestun{
-    font-family: Arial, Times;
-    color: #8A2E62;
-    font-size: 15px;
+#suggestun{
+    
+    color: teal;
 }
 .imagefb {
     width: 100px;
