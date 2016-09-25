@@ -30,19 +30,23 @@ $(document).ready(function () {
     });
     $("#un").change(function () {
         $('input[type=radio]').prop('checked', false);
-    })
+    });
     /*
-     * Uses data attribute to display pop-up message about password requiments.
+     * Uses data attribute to display alert about password requiments.
      */
     $("#help").click(function () {
         var $output = $("#help").data("help");
         alert($output);
     });
     /*
-     * Pop up alert, if emails entered do not match
+     * Pop up alerts:
+     *  if emails entered do not match
+     *  username field is left empty
+     *  password field is left empty
+     * If all fields are filled, then "sign up" **to implement** and close modal
      */
     $("#signup").click(function (evt) {
-        if ($('#email1').val() != $('#email2').val()) {
+        if ($('#email1').val() !== $('#email2').val()) {
             alert('Emails mismatch');
             evt.preventDefault();
         }
@@ -51,6 +55,9 @@ $(document).ready(function () {
         }
         if (!$('#newpw').val()) {
             alert('Please enter a valid password');
+        }
+        else{
+            $('#myModal').modal('hide');
         }
     });
 });
