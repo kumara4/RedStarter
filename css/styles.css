@@ -187,6 +187,15 @@ ul li a {
 
 
 /* SIGN UP*/
+.model-body{
+    text-align: left;
+}
+.modal-header{
+    text-align: center;
+}
+.top-buffer {
+    margin-top:10px; 
+}
 .button1 {
     color: white;
     background-color: mediumaquamarine;
@@ -205,12 +214,12 @@ ul li a {
 }
 .form {
     font-family: Arial, Times;
-    color: #8A2E62;
+    text-align: left;
 }
 .desc {
     font-family: Arial, Times;
-    color: #8A2E62;
     font-size: 20px;
+    text-align: left;
 }
 .bigtitle {
     font-family: Arial, Times;
@@ -222,12 +231,13 @@ ul li a {
 input:invalid {
     border: 2px solid red;
 }
+
 #hinttext{
     font-family: Arial, Times;
     color: blue;
 }
 #suggestun{
-    
+
     color: teal;
 }
 .imagefb {
@@ -248,9 +258,6 @@ input:invalid {
     border-radius: 10px;
     transition: width 2s, height 2s;
     transition-property: all;
-}
-.login_signup, .login, .signup {
-    text-align: center;
 }
 .login {
     font-family: Arial, Times;

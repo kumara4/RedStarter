@@ -49,5 +49,8 @@ $(document).ready(function () {
         if (!$('#un').val()) {
             alert('Please enter a username');
         }
+        if (!$('#newpw').val()) {
+            alert('Please enter a valid password');
+        }
     });
 });

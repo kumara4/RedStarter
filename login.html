@@ -15,28 +15,140 @@ Login: Page that user sees when they need to Log in to use the website.
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>      
         <script type="text/javascript"></script>
         <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript" src="js/signup.js"></script>
     </head>
     <body>
         <div class="alien_img">
             <img src="img/alien.png">
         </div>
         <hr>
-        <section class = "signup">
-            <div  class = "desc" >
-                <blockquote>
-                    <strong>Connect to personalized sub-reddits
-                        that meet your interests and likes!</strong>
-                </blockquote>
+        <!-- Container class for whole page-->
+        <div class = "container form">
+            <!-- Rows of input fields to: Log in (email, password)-->
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label>Email: <input type ="email"  placeholder="Email"></label>
+                </div>
+                <div class="col-md-4"></div>
             </div>
-            <div class = "form container">
-                <label><input type ="email"  placeholder="Email"></label><br>
-                <label><input type = "password" placeholder="Enter Password"></label><br>                            
-                <a href="landing.html"><button class="button1">Login via Reddit</button></a>
-                <button class = "button1" id = "forgotpw" >Forgot Password</button>
-                <button type = "button" class = "btn btn-default btn-sm" id = "help" 
-                        data-help="Click Forgot Password if you forgot your password.">
-                    <span class = "glyphicon glyphicon-info-sign"></span></button><br>
-                <section class = "container" id = "resetpw"></section>
-        </section>
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label>Password: <input type = "password" placeholder="Enter Password"></label>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" id = "login">Login via Reddit</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <!-- Button if user forgets password. Reset password modal.-->
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" id = "forgotpw" >Forgot Password</button>                    
+                </div>
+                <div class="col-md-4"></div>
+            </div>                               
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <section class = "container form" id = "resetpw"></section>                   
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <!-- Button to show Sign Up modal. -->
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" id="signup-l">Sign Up</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <!--Sign Up Modal-->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!--Content to Sign Up-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding:35px 50px;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h2>Sign Up</h2>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <!-- Rows of input fields (first&last name, username, email and password). -->
+                            <div class ="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <label>First Name: <input id="name1" type ="text" placeholder="First Name"></label> 
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class ="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <label>Last Name: <input id="name2" type ="text" placeholder="Last Name"></label>                  
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class ="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <label>Username: <input id = "un" type = "text" placeholder ="Username"></label>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <!-- Username suggestion elements are dynamically created after user inputs into label. -->
+                            <div class = "row " >
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4" id = "suggestun"></div>
+                                <div class="col-md-4"></div>
+                            </div> 
+                            <div class ="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <label>Email: <input id="email1" type ="email"  placeholder="Email"></label>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class ="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <label>Re-enter Email: <input id="email2" type ="email"  placeholder="Confirm Email"></label>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class ="row">   
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <label>New Password: <input id = "newpw" type ="password" placeholder="New Password"
+                                                                pattern="[a-z]{1,15}"
+                                                                title="Password should only contain 6-10 characters; 
+                                                                may contain upper and lower case and digits 0-9."></label> 
+                                    <button type = "button" class = "btn btn-default btn-sm " id = "help" 
+                                            data-help="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9.">
+                                        <span class = "glyphicon glyphicon-info-sign"></span>
+                                    </button>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <!--<a href="landing.html"> </a>-->
+                            <div class ="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary " id="signup">Sign Up</button>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </body>
 </html>

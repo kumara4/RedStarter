@@ -1,21 +1,36 @@
 $(document).ready(function () {
-    var $emailinput = $("<input type = \"email\" placeholder = \"Enter email here\" ><br>");
+    
+    var $emailinput = $("<input id=\"email1\" type = \"email\" placeholder = \"Enter email here\" ><br>");
     var $cancelb = $("<button id = \"cb\">Cancel</button>");
     var $submit = $("<button id = \"sb\">Submit</button>");
+    var $forgotpwmessage = $("<label class = \"hinttext\" >Enter email address so we can send you a password reset link.</label><br>");
     /*
      *  Dynamically creates label and input field to enter email for "forgot password"
      *  Also removes fields if user clicks the Cancel button. 
      */
-    $("#forgotpw").one('click', function () {
-        $("#resetpw").append("<label class = \"hinttext\" >Enter email address so we can send you a password reset link.</label><br>");
+//    $("#forgotpw").one('click', function () {
+    $("#signup-l").click(function () {
+        $("#myModal").modal();
+    });
+    $("#forgotpw").click(function () {
+        $("#forgotpw").prop("disabled", true);
+        
+        $("#resetpw").append($forgotpwmessage);
         $("#resetpw").append($emailinput);
         $("#resetpw").append($submit);
         $("#resetpw").append($cancelb);
+        $("#sb").prop("disabled", false);
         $("#sb").click(function () {
-            $("#resetpw").append("<br>Please check your email for a password reset link.");
+            if (!$('#email1').val()) {
+                alert("Please enter a valid email.");
+            } else {
+                $("#sb").prop("disabled", true);
+                $("#resetpw").append("<br>Please check your email for a password reset link.");
+            }
         });
         $("#cb").click(function () {
-            $("#resetpw").remove();
+            $("#resetpw").empty();
+            $("#forgotpw").prop("disabled", false);
         });
     });
     /*
@@ -25,6 +40,10 @@ $(document).ready(function () {
         var $output = $("#help").data("help");
         alert($output);
     });
+    $("#login").click(function () {
+        alert("loggin in");
+    })
+
 });
 
     

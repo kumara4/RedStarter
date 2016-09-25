@@ -22,42 +22,70 @@ Users enter their data into the forms.
             <img src="img/alien.png">
         </div>
         <hr>
-        <section class="signup">
-            <div  class = "desc" >
-                <blockquote>
-                    <strong>Connect to personalized sub-reddits
-                        that meet your interests and likes!</strong>
-                </blockquote>
+        <div class = "container form">
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label>First Name: <input id="name1" type ="text" placeholder="First Name"></label> 
+                </div>
+                <div class="col-md-4"></div>
             </div>
-            <div class = "container form">
-                <div class ="row">
-                    <label>First Name: <input id="name1" type ="text" placeholder="First Name"></label>
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label>Last Name: <input id="name2" type ="text" placeholder="Last Name"></label>                  
                 </div>
-                <div class ="row">
-                    <label>Last Name: <input id="name2" type ="text" placeholder="Last Name"></label>                        
-                </div>
-                <div class ="row">
+                <div class="col-md-4"></div>
+            </div>
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
                     <label>Username: <input id = "un" type = "text" placeholder ="Username"></label>
                 </div>
-                <div class = "row" id = "suggestun"></div> <!-- Elements are dynamically created after user inputs into label. -->
-                <div class ="row">
+                <div class="col-md-4"></div>
+            </div>
+            <!-- Elements are dynamically created after user inputs into label. -->
+            <div class = "row " >
+                <div class="col-md-4"></div>
+                <div class="col-md-4" id = "suggestun"></div>
+                <div class="col-md-4"></div>
+            </div> 
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
                     <label>Email: <input id="email1" type ="email"  placeholder="Email"></label>
                 </div>
-                <div class ="row">
-                    <label>Re-enter Email: <input id="email2" type ="email"  placeholder="Confirm Email"></label><br>
+                <div class="col-md-4"></div>
+            </div>
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label>Re-enter Email: <input id="email2" type ="email"  placeholder="Confirm Email"></label>
                 </div>
-                <div class ="row">
-                    <label>New Password: <input type ="password" placeholder="New Password"
+                <div class="col-md-4"></div>
+            </div>
+            <div class ="row">   
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label>New Password: <input id = "newpw" type ="password" placeholder="New Password"
                                                 pattern="[a-z]{1,15}"
-                                                title="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9."></label>
-                    <button type = "button" class = "btn btn-default btn-sm" id = "help" 
+                                                title="Password should only contain 6-10 characters; 
+                                                may contain upper and lower case and digits 0-9."></label> 
+                    <button type = "button" class = "btn btn-default btn-sm " id = "help" 
                             data-help="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9.">
                         <span class = "glyphicon glyphicon-info-sign"></span>
                     </button>
                 </div>
-                <!--<a href="landing.html"> -->
-                <button class="button1" id="signup">Sign Up</button></a>
+                <div class="col-md-4"></div>
             </div>
-        </section>
+            <!--<a href="landing.html"> </a>-->
+            <div class ="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary " id="signup">Sign Up</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
     </body>
 </html>
