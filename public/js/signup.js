@@ -1,6 +1,11 @@
 $(document).ready(function () {
+    var usersRef = firebase.database().ref('users');
     var $first = $("#name1");
     var $last = $("#name2");
+    var $unentered = $("#un");
+    var $email1 = $("#email1");
+    var $email2 = $("#email2");
+    var $pwentered = $("#newpw");
     var low = 1;
     var high = 100;
     function randomNum() {
@@ -46,6 +51,8 @@ $(document).ready(function () {
      * If all fields are filled, then "sign up" **to implement** and close modal
      */
     $("#signup").click(function (evt) {
+        $("#signUpModal").modal("show");
+
         if ($('#email1').val() !== $('#email2').val()) {
             alert('Emails mismatch');
             evt.preventDefault();
@@ -56,8 +63,24 @@ $(document).ready(function () {
         if (!$('#newpw').val()) {
             alert('Please enter a valid password');
         }
-        else{
-            $('#myModal').modal('hide');
-        }
+        usersRef.push(
+                {'firstname': $first.val(),
+                    'lastname': $last.val(),
+                    'email': $email1.val(),
+                    'username': $unentered.val(),
+                    'password': $pwentered.val(),
+                });
+        $("#name1").val("");
+        $("#name2").val("");
+        $("#un").val("");
+        $("#email1").val("");
+        $("#email2").val("");
+        $("#newpw").val("");
+        $('input[type=radio]').prop('checked', false);
+        $("#signUpModal").modal("hide");
+        $("#suggestun").empty();
+        
+
+
     });
 });

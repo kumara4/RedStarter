@@ -14,8 +14,15 @@ Login: Page that user sees when they need to Log in to use the website.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>      
         <script type="text/javascript"></script>
+<<<<<<< HEAD:public/login.html
         <script type="text/javascript" src="../js/login.js"></script>
         <script type="text/javascript" src="../js/signup.js"></script>
+=======
+        <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript" src="js/signup.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+
+>>>>>>> 5d2b0ea5ec7ef94f00cc20daf5e9c690cc1c642d:public/login.html
     </head>
     <body>
         <div class="alien_img">
@@ -28,21 +35,21 @@ Login: Page that user sees when they need to Log in to use the website.
             <div class ="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <label>Email: <input type ="email"  placeholder="Email"></label>
+                    <label>Username: <input id="loginUN" type ="text"  placeholder="Username"></label>
                 </div>
                 <div class="col-md-4"></div>
             </div>
             <div class ="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <label>Password: <input type = "password" placeholder="Enter Password"></label>
+                    <label>Password: <input id="loginPW" type = "password" placeholder="Enter Password"></label>
                 </div>
                 <div class="col-md-4"></div>
             </div>
             <div class ="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id = "login">Login via Reddit</button>
+                    <button type="button" class="btn btn-primary" id = "login">Login</button>
                 </div>
                 <div class="col-md-4"></div>
             </div>
@@ -67,7 +74,6 @@ Login: Page that user sees when they need to Log in to use the website.
                     <div class="modal-content">
                         <div class="modal-header" style="padding:35px 50px;">
                             <section class = "container form" id = "resetpw"></section>                   
- 
                         </div>
                     </div>
                 </div>
@@ -159,7 +165,19 @@ Login: Page that user sees when they need to Log in to use the website.
                 </div>
             </div>
         </div>
-
-
+        <!-- script for FireBase-->
+        <script>
+            "use strict";
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
+                authDomain: "redstarter-b0908.firebaseapp.com",
+                databaseURL: "https://redstarter-b0908.firebaseio.com",
+                storageBucket: "redstarter-b0908.appspot.com",
+                messagingSenderId: "122153615057"
+            };
+            firebase.initializeApp(config);
+            var usersRef = firebase.database().ref('users');
+        </script>
     </body>
 </html>

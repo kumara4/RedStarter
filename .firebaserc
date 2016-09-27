@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 {}
+=======
+{
+  "projects": {
+    "default": "redstarter-b0908"
+  }
+}
+>>>>>>> 5d2b0ea5ec7ef94f00cc20daf5e9c690cc1c642d
