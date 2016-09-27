@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
+		authDomain: "redstarter-b0908.firebaseapp.com",
+		databaseURL: "https://redstarter-b0908.firebaseio.com",
+		storageBucket: "redstarter-b0908.appspot.com",
+		messagingSenderId: "122153615057"
+	};
+	firebase.initializeApp(config);
+
 	var sections = ['top', 'rising', 'new', 'controversial', 'hot'];
 	var tablename;
 	var newrow;
@@ -7,7 +17,27 @@ $(document).ready(function() {
 	var commentcount;
 	var ups;
 	var score = [];
+	var defaulturl;
+	var lastID;
+	var count = 5;
+	var nexturl;
 	var scoretag;
+	var section;
+	var total=0;
+
+
+	var firebaseRef = firebase.database().ref("subreddits");
+
+	function saveData(tempurl){
+		nexturl = tempurl;
+		count--;
+		if(count != 0){
+			generateContent(nexturl, section);
+		}
+
+	}
+
+
 	$('.showdata').click(function($e) {
 		$e.preventDefault();
 		var panelcontent = $(this).parent().children('.content');
@@ -16,18 +46,37 @@ $(document).ready(function() {
 		} else {
 			panelcontent.css('display', 'inline');
 		}
+		//grab the section name from the xxxxxstats div
+
+		section =  $(this).parent().attr('id').replace('SR','');
+		defaulturl = "https://www.reddit.com/" + section + "/.json?&limit=100";
+
+		generateContent(defaulturl, section);
+
 
 	});
 
+<<<<<<< HEAD
+
+	function generateContent(url, section) {
+		var thesection = section;
+		/*Traverse the data and grab the subreddits that are associated with eah post in the data.
+		 * Add this to the table on each section on the page*/
+
+=======
 	/*Traverse the canned data and grab the subreddits that are associated with eah post in the data. 
 	 * Add this to the table on each section on the page*/
 	$.each(sections, function(i, section) {
 		var url = "https://www.reddit.com/" + section + "/.json?jsonp=?";
+>>>>>>> 91965e7539306ea547d6dd5d2abd3e97657d3a88
 		score.push(0);
-		$.getJSON(url, function(output) {
+		$.getJSON(url, function (output) {
+
+			saveData("https://www.reddit.com/" + thesection + "/.json?&limit=100&after=" + output.data.after);
 
 			//Display the subreddits of the rising posts
-			$.each(output.data.children, function(ii, item) {
+			$.each(output.data.children, function (ii, item) {
+				total = total+1;
 				//track the subreddit with the largest score in this section
 				if (score[score.length - 1] < item.data.score) {
 					score[score.length - 1] = item.data.score;
@@ -54,12 +103,16 @@ $(document).ready(function() {
 				$(tablename).after(newrow);
 
 			});
+
 			scoretag = document.createElement("p");
 			scoretag.appendChild(document.createTextNode(score[score.length - 1]));
 			var scorelocation = "#" + section + "score";
 			$(scorelocation).append(scoretag);
+
 		});
-	});
+	}
+
+
 
 	/*Allow for multiple views, TOPSCORE view will display info about the top subreddit and information about the section.
 	 * Stats will contain graphs related to posts that are the most popular in this section*/
