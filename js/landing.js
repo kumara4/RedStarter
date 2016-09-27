@@ -56,12 +56,19 @@ $(document).ready(function() {
 
 	});
 
+<<<<<<< HEAD
 
 	function generateContent(url, section) {
 		var thesection = section;
 		/*Traverse the data and grab the subreddits that are associated with eah post in the data.
 		 * Add this to the table on each section on the page*/
 
+=======
+	/*Traverse the canned data and grab the subreddits that are associated with eah post in the data. 
+	 * Add this to the table on each section on the page*/
+	$.each(sections, function(i, section) {
+		var url = "https://www.reddit.com/" + section + "/.json?jsonp=?";
+>>>>>>> 91965e7539306ea547d6dd5d2abd3e97657d3a88
 		score.push(0);
 		$.getJSON(url, function (output) {
 
@@ -109,7 +116,7 @@ $(document).ready(function() {
 
 	/*Allow for multiple views, TOPSCORE view will display info about the top subreddit and information about the section.
 	 * Stats will contain graphs related to posts that are the most popular in this section*/
-
+	 
 	function show(id) {
 		$('.tab')//Select all elements with tab class
 		.removeClass('selected')//From that set, remove the class "selected" from all
@@ -128,12 +135,12 @@ $(document).ready(function() {
 
 	//Set a listener so that when we change the #... part of it, we call the function above
 	$(window).on('hashchange', function($e) {
-		$e.preventDefault();
+		 $e.preventDefault();
 		show(location.hash);
 	});
-
+	
 	// initialise by showing the first panel
-	show('#topscore');
+		show('#topscore');
 
 });
 
