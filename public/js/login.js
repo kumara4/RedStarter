@@ -1,5 +1,7 @@
 $(document).ready(function () {
-
+    var loginRef = firebase.database().ref('logins');
+    var $loginun = $("#loginUN");
+    var $loginpw = $("#loginPW");
     var $emailinput = $("<input id=\"email1\" type = \"email\" placeholder = \"Enter email here\" ><br>");
     var $cancelb = $("<button id = \"cb\" >Cancel</button>");
     var $submit = $("<button id = \"sb\">Submit</button>");
@@ -8,6 +10,7 @@ $(document).ready(function () {
      * Show Sign Up Modal (when Sign Up button on Log In is clicked).
      */
     $("#signup-l").click(function () {
+
         $("#signUpModal").modal();
     });
     /*
@@ -29,14 +32,13 @@ $(document).ready(function () {
                 $("#sb").prop("disabled", true);
                 $("#resetpw").append("<br>Please check your email for a password reset link.");
             }
-            $("#cb").html('Done');  //  once email is submitted, "Cancel" button changes to "Done" 
+            $("#cb").html('Done'); //  once email is submitted, "Cancel" button changes to "Done" 
             //  Same functionality: close modal.
         });
         $("#cb").click(function () {    //  Candel button: Clear password reset info. Close Modal
             $("#resetpw").empty();
             $("#forgotpw").prop("disabled", false);
             $('#pwModal').modal('hide');
-
         });
     });
     /*
@@ -47,9 +49,12 @@ $(document).ready(function () {
         alert($output);
     });
     $("#login").click(function () { //  take user to landing page
-        alert("loggin in");
-    })
-
+//        alert("loggin in");
+        loginRef.push({
+            'username': $loginun.val(),
+            'password': $loginpw.val(),
+        });
+    });
 });
 
     
