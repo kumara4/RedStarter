@@ -54,7 +54,8 @@ $(document).ready(function() {
 
 	});
 
-	function recordScore(score, section) {
+	function recordScore(scoree, section) {
+
 		var scorelocation = "#" + section + "score";
 
 		scoretag = document.createElement("p");
@@ -72,33 +73,34 @@ $(document).ready(function() {
 		/*Traverse the data and grab the subreddits that are associated with eah post in the data.
 		 * Add this to the table on each section on the page*/
 		var sub = {};
-
+		score = 0;
 		$.getJSON(url, function(output) {
 
 			saveData("https://www.reddit.com/" + thesection + "/.json?&limit=100&after=" + output.data.after);
-			var sub = {},
-				key;
+			var sub = {}
+
 			$.each(output.data.children, function(ii, item) {
 				total = total + 1;
 				//track the subreddit with the largest score in this section
 				if (score < item.data.score) {
 					score = item.data.score;
+
 				}
 
 				//store data in database, tracking each subreddit's total viewers, total followers and each post
 
-				var fredNameRef = new Firebase('https://redstarter-b0908.firebaseio.com/subreddits');
+				var fredNameRef = firebase.database().ref("subreddits");
 				fredNameRef.child(thesection).set({});
 				sub[item.data.subreddit] = {};
 
-				var existsRef = new Firebase('https://redstarter-b0908.firebaseio.com/subreddits/'+thesection);
-				fredNameRef.once("value", function(snapshot) {
-					var a = snapshot.child(item.data.subreddit).exists();
-					if(a ==true){
-						alert(a);
-					}
-
-				});
+				// var existsRef = firebase.database().ref("subreddits/" + thesection);
+				// fredNameRef.once("value", function(snapshot) {
+				// 	var a = snapshot.child(item.data.subreddit).exists();
+				// 	if(a ==true){
+				// 		alert(a);
+				// 	}
+                //
+				// });
 
 				sub[item.data.subreddit] = {
 					"subreddit": item.data.subreddit,
@@ -112,12 +114,14 @@ $(document).ready(function() {
 					}
 				};
 				fredNameRef.child(thesection).set(sub);
-			});
 
+			});
+			recordScore(score, section);
 		addRow();
 
 			});
-			recordScore(score, thesection);
+
+
 
 
 		}
@@ -134,13 +138,13 @@ $(document).ready(function() {
 		tablename = "#" + section + "table" + " tr:last";
 
 
-		var ref = new Firebase('https://redstarter-b0908.firebaseio.com/subreddits/'+section);
+		var ref = firebase.database().ref("subreddits/"+ section);
 		ref.once("value", function(snapshot) {
 			// The callback function will get called twice, once for "fred" and once for "barney"
 			snapshot.forEach(function(childSnapshot) {
 				newrow = document.createElement("tr");
 				// key will be "fred" the first time and "barney" the second time
-				var key = childSnapshot.key();
+				var key = childSnapshot.key;
 				// childData will be the actual contents of the child
 				var childData = childSnapshot.val();
 
