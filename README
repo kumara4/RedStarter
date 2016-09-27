@@ -1,0 +1,21 @@
+Henry Lopez
+	landing.html: landing page that will allow the user to search or connect to facebook so that he can get subreddit suggestions. Also, users are able to view summaries of popular subreddit sections. 	
+
+Ashmita Kumar
+	login.html: users can log in and sign up on the same page. Clicking on the Sign Up button opens a modal where users enter their information and then can sign in immediately. Clicking the Forgot Password button opens modal for users to enter their email address and click submit. 
+	
+
+RedStarter - HW3 
+Four Scenarios: 
+1.	On the login page (which is now our home page), user can sign up and their data is saved on Firebase. User can also log in on the same page and be taken to the landing page. 
+2.	The user will be able to search subreddits by entering key terms into the search box
+3.	The user will be able to connect their account to Facebook to get suggestions based on their Facebook likes
+4.	The user will be able to search specific Reddit categories (top, trending, hot, new etc.) and be presented with data on specific subreddits that are trending within that category (D3 Visualization)
+5.	The user will be able to click on any subreddit and follow them
+6.	The user will be able to see information about a subreddit by clicking on it, such as number of followers
+7.	The user will be able to navigate to a subreddit on a new tab by clicking on a button next to the title.
+8.	User is able to view summaries of popular subreddit sections.
+
+Two scenarios we implemented:
+1.	When user signs up for a new account their log in info (name, email, username and passwords) are stored in the Firebase database. 
+2.	User is able to view summaries of popular subreddit sections.
