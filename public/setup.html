@@ -19,21 +19,55 @@ Setup: Page that user sees after they sign up, to personalize their likes.
         <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
     </head>
     <body>
-        <hr>
+
         <div class="alien_img">
-            <img src="img/alien.png">
+            <img src="img/rs.jpg">
         </div>
+        <hr>
         <!--content class for Set Up page -->
         <div id="content">
             <!--Set Up page header -->
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4 well well-lg" style="background-color: darksalmon">
+                <div class="col-md-1"></div>
+
+                <div class="col-md-10 well well-lg" id="setuphead" >
                     <label>Let's finish setting you up! Click on the sections below to view SubRedits 
                         and tell us which are your favorites:</label>
                 </div>
-                <div class="col-md-4"></div>
+
+                <div class="col-md-1"></div>
             </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4 well well-lg" id = "setupcategory" >
+                    <a class = "showcategory" href="#">DIY Crafts</a>                    
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4 well well-lg" id = "setupcategory">
+                    <div>
+                        <label>thing two</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+
+
+
+            </div>
+
         </div>
+
+        <script>
+            "use strict";
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
+                authDomain: "redstarter-b0908.firebaseapp.com",
+                databaseURL: "https://redstarter-b0908.firebaseio.com",
+                storageBucket: "redstarter-b0908.appspot.com",
+                messagingSenderId: "122153615057"
+            };
+            firebase.initializeApp(config);
+        </script>
     </body>
 </html>

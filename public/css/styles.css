@@ -15,11 +15,16 @@
 }
 .alien_img img {
     display: inline-block;
-    width: 15%;
     margin: 10px;
+    height: auto; 
+    width: auto; 
+    max-width: 80px; 
+    max-height: 80px;
 }
 .alien_img img:hover {
     transform: rotate(10deg);
+    opacity: 0.75;
+
 }
 .button_search {
     text-align: center;
@@ -266,9 +271,20 @@ input:invalid {
 .login:focus {
     background: wheat;
 }
-
 /*SET UP PAGE*/
+#setuphead{
+    background-color: cornflowerblue;
+    font-size: 20px;
+    color: white;
 
+}
+#setupcategory{
+    background-color: #990000;
+    color: white;
+    font-family: Arial, Times;
+
+
+}
 /*RESPONSIVE DESIGN */
 @media only screen and (max-width: 700px) {
     .alien_img img {
