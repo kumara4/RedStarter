@@ -16,6 +16,7 @@ Setup: Page that user sees after they sign up, to personalize their likes.
         <script type="text/javascript"></script>
         <script type="text/javascript" src="js/login.js"></script>
         <script type="text/javascript" src="js/signup.js"></script>
+        <script type="text/javascript" src="js/setup.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
     </head>
     <body>
@@ -27,7 +28,7 @@ Setup: Page that user sees after they sign up, to personalize their likes.
         <!--content class for Set Up page -->
         <div id="content">
             <!--Set Up page header -->
-            <div class="row">
+            <div class="row" >
                 <div class="col-md-1"></div>
                 <div class="col-md-10 well well-lg" id="setuphead" >
                     <label>Let's finish setting you up! Click on the sections below to view SubRedits 
@@ -36,35 +37,49 @@ Setup: Page that user sees after they sign up, to personalize their likes.
                 <div class="col-md-1"></div>
             </div>
             <!--Four wells of categories for user to click and favorite-->
-            <div class="row">
+            <div class="row" id="setuprow">
                 <div class="col-md-1"></div>
-                <div class="col-md-4 well well-lg" id = "setupcategory" >
-                    <a class = "showcategory" href="#">DIY Crafts</a>                    
-                </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4 well well-lg" id = "setupcategory">
-                    <div>
-                        <label>thing two</label>
+                <a class = "showcategory" href="#">
+                    <div class="col-md-5 well well-lg" id = "setupcategory" >
+                        DIY Crafts
                     </div>
-                </div>
+                </a>
+                <a class = "showcategory" href="#">
+                    <div class="col-md-5 well well-lg" id = "setupcategory">
+                        Grey's Anatomy
+                    </div>
+                </a>
                 <div class="col-md-1"></div>
             </div>
-            <div class="row">
+            <div class="row" id="setuprow">
                 <div class="col-md-1"></div>
-                <div class="col-md-4 well well-lg" id = "setupcategory" >
-                    <a class = "showcategory" href="#">DIY Crafts</a>                    
-                </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4 well well-lg" id = "setupcategory">
-                    <div>
-                        <label>thing two</label>
+                <a class = "showcategory" href="#">
+                    <div class="col-md-5 well well-lg" id = "setupcategory" >
+                        Jokes
                     </div>
-                </div>
+                </a>                    
+                <a class = "showcategory" href="#">
+                    <div class="col-md-5 well well-lg" id = "setupcategory" >
+                        Football
+                    </div>
+                </a>
                 <div class="col-md-1"></div>
             </div>
-
+            <div class="row" id="setuprow">
+                <div class="col-md-1"></div>
+                <a class = "showcategory" href="#">
+                    <div class="col-md-5 well well-lg" id = "setupcategory" >
+                        Greek Mythology
+                    </div>
+                </a>                    
+                <a class = "showcategory" href="#">
+                    <div class="col-md-5 well well-lg" id = "setupcategory" >
+                        Makeup
+                    </div>
+                </a>
+                <div class="col-md-1"></div>
+            </div>
         </div>
-
         <script>
             "use strict";
             // Initialize Firebase
