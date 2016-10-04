@@ -50,10 +50,7 @@ $(document).ready(function () {
     });
     $("#login").click(function () { //  take user to landing page
 //        alert("loggin in");
-        loginRef.push({
-            'username': $loginun.val(),
-            'password': $loginpw.val(),
-        });
+        loginRef
     });
 });
 
