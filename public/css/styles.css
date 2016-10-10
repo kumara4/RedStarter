@@ -278,14 +278,16 @@ input:invalid {
     color: white;
 
 }
-#setupcategory{
+#diy, #greys,
+#jokes, #football,
+#greekmyth, #sports{
     background-color: #990000;
     color: white;
     font-family: Arial, Times;
-
-
+    text-align: center;
+    font-size: 20px;
 }
-#setuprow{
+#category_row, #id1{
     line-height: 150px;
 }
 /*RESPONSIVE DESIGN */

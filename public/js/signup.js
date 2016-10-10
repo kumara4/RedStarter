@@ -80,6 +80,7 @@ $(document).ready(function () {
         $("#signUpModal").modal("hide");
         $("#suggestun").empty();
         
+        
 
 
     });

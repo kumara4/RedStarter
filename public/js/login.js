@@ -19,7 +19,6 @@ $(document).ready(function () {
      */
     $("#forgotpw").click(function () {
         $("#pwModal").modal();
-//        $("#forgotpw").prop("disabled", true);
         $("#resetpw").append($forgotpwmessage);
         $("#resetpw").append($emailinput);
         $("#resetpw").append($submit);
@@ -49,7 +48,6 @@ $(document).ready(function () {
         alert($output);
     });
     $("#login").click(function () { //  take user to landing page
-//        alert("loggin in");
         loginRef.push({
             'username': $loginun.val(),
             'password': $loginpw.val(),
