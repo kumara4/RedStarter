@@ -19,3 +19,23 @@ Four Scenarios:
 Two scenarios we implemented:
 1.	When user signs up for a new account their log in info (name, email, username and passwords) are stored in the Firebase database. 
 2.	User is able to view summaries of popular subreddit sections.
+
+
+
+
+
+
+HW4:
+
+Features
+
+1.	When user signs up for a new account their log in info (name, email, username and passwords) are stored in the Firebase database.
+2.	User is able to view summaries of popular subreddit sections.
+NEW FEATURE: Feature #4 	The user will be able to search specific Reddit categories (top, trending, hot, new etc.) and be presented with data on specific subreddits that are trending within that category (D3 Visualization)
+
+
+
+React code on:
+Login/signup and Landing view sections
+1.	When user signs up for a new account their log in info (name, email, username and passwords) are stored in the Firebase database.
+2.	User is able to view summaries of popular subreddit sections.
