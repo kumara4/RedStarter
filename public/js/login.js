@@ -48,10 +48,15 @@ $(document).ready(function () {
         alert($output);
     });
     $("#login").click(function () { //  take user to landing page
+<<<<<<< HEAD
         loginRef.push({
             'username': $loginun.val(),
             'password': $loginpw.val(),
         });
+=======
+//        alert("loggin in");
+        loginRef
+>>>>>>> gh-pages
     });
 });
 
