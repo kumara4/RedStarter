@@ -1,4 +1,5 @@
 var count = 1;
+        "use strict";
 // Initialize Firebase
         var config = {
         apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
@@ -8,6 +9,7 @@ var count = 1;
                 messagingSenderId: "122153615057"
         };
         firebase.initializeApp(config);
+        
         var usersRef = firebase.database().ref('logins');
         var renderLanding = false;
         var MyModal = React.createClass({
@@ -55,10 +57,10 @@ var count = 1;
                                 < div className = "row" >
                                 < div > New Password:
                                 < input id = "newpw" type = "password" placeholder = "New Password"
-                                pattern = "[a-z]{1,15}"
-                                title = "Password must have at least 6 characters; may contain upper and lower case and digits 0-9." / >
+                                pattern = "[a-z]{4,}"
+                                title = "Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9." / >
                                 < button type = "button" className = "btn btn-default btn-sm " id = "help"
-                                data = "Password must have at least 6 characters; may contain upper and lower case and digits 0-9." >
+                                data = "Password must; may contain upper and lower case and digits 0-9." >
                                 < span className = "glyphicon glyphicon-info-sign" > < /span>
                                 < /button>
                                 < /div>
@@ -75,19 +77,20 @@ var count = 1;
                                 );
                 }
         });
+
         var LoginBox = React.createClass({
 
         mixins: [ReactFireMixin],
                 getInitialState: function () {
-                return {user: "", pass: ""};
+                return {user: "", pass: "", valid: "false"};
                 },
                 accessFirebase: function (user, pass) {
 
-                var ref = firebase.database().ref("users");
+                var ref = firebase.database().ref("newUsers");
                         //Verify user already exists
 
                         ref.push({
-                        'username': user,
+                                'username': user,
                                 'password': pass,
                         });
                 },
@@ -102,12 +105,18 @@ var count = 1;
                 $(".usersignup").css("display", "inline");
                 },
                 handleAdd: function (e) {
-                e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
-                        this.setState({user: this.state.user, pass: this.state.pass});
+//                e.preventDefault();
+                // This is, by default, submit button by form. Make sure it isn't submitted.
+                    
+                this.setState({user: this.state.user, pass: this.state.pass});
                         this.accessFirebase(this.state.user, this.state.pass);
+          
+
+
+
                 },
                 componentWillMount: function () {
-                var ref = firebase.database().ref("users");
+                var ref = firebase.database().ref("newUsers");
                 },
                 render: function () {
                 ++count;
@@ -123,11 +132,8 @@ var count = 1;
                                 < /div>
 
                                 < div className = "col-lg-12" >
-                                < a href = "landing.html" > < button type = "button" className = "btn btn-primary" onClick = {this.handleAdd} id = "login" > Login < /button></a >
-                                < /div>
-                                < div className = "col-lg-12" >
-                                < button type = "button" className = "btn btn-primary" id = "forgotpw" > Forgot Password < /button>
-                                < /div>
+                                < button type = "button" className = "btn btn-primary" onClick = {this.handleAdd} id = "login" > Login < /button>
+                                < /div>                                                            
                                 < div className = "col-lg-12" >
                                 < button type = "button" className = "btn btn-primary" onClick = {this.signUp} id = "signup-l" > Sign Up
                                 < /button>
