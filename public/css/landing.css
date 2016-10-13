@@ -3,8 +3,12 @@
     margin-bottom: 0px;
 }
 
-.alien_img{
+.alien_img, .TopicBox, .container{
     background-color: #FF8F86;
+}
+
+.TopicBox li {
+    background-color: inherit;
 }
 .subredditTitle{
 
@@ -115,6 +119,7 @@ Facebook Button and Search section
     margin-bottom: 30px;
     background-color: #3D9CA5;
     padding: 30px 15px;
+    margin-top: 30px;
 }
 #searchresults a{
     display: inline-block;
@@ -152,4 +157,6 @@ Facebook Button and Search section
 }
 
 
-
+text {
+    font: 10px sans-serif;
+}
