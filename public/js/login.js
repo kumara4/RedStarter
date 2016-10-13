@@ -6,12 +6,22 @@ $(document).ready(function () {
     var $cancelb = $("<button id = \"cb\" >Cancel</button>");
     var $submit = $("<button id = \"sb\">Submit</button>");
     var $forgotpwmessage = $("<label class = \"hinttext\" >Enter email address so we can send you a password reset link.</label><br>");
+    function authenticate(un, pw) {
+        var valid = true;
+        var len = usersRef.length;
+        console.log("authenticate: \n");
+        while (len) {
+            len--;
+            valid = (un.val() === unentered && pw.val() === pwentered);
+            console.log(valid);
+            return valid;
+        }
+    }
     /*
      * Show Sign Up Modal (when Sign Up button on Log In is clicked).
      */
     $("#signup-l").click(function () {
-
-        $("#signUpModal").modal();
+//        $("#signUpModal").modal();
     });
     /*
      *  Dynamically creates label and input field to enter email for "forgot password"
@@ -47,17 +57,10 @@ $(document).ready(function () {
         var $output = $("#help").data("help");
         alert($output);
     });
-    $("#login").click(function () { //  take user to landing page
-<<<<<<< HEAD
-        loginRef.push({
-            'username': $loginun.val(),
-            'password': $loginpw.val(),
-        });
-=======
-//        alert("loggin in");
-        loginRef
->>>>>>> gh-pages
-    });
+//    $("#login").click(function () { //  take user to landing page
+//        authenticate($loginun.val(), $loginpw.val());
+//
+//    });
 });
 
     

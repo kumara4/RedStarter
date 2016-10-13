@@ -3,13 +3,51 @@
 [debug] CLI Version:  3.0.7
 [debug] Platform:     darwin
 [debug] Node Version: v4.5.0
+<<<<<<< HEAD
 [debug] Time:         Wed Oct 12 2016 22:45:05 GMT-0400 (EDT)
+=======
+[debug] Time:         Wed Oct 12 2016 22:13:19 GMT-0400 (EDT)
+>>>>>>> gh-pages
 [debug] ----------------------------------------------------------------------
 [debug] 
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: /Users/ashmita/Desktop/swe432/RedStarter
+<<<<<<< HEAD
 [warn] ⚠  Port 5000 is not available. Trying another port...
 [info] Public Directory: public
 [info] 
 [info] Server listening at: http://localhost:5001
+=======
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000
+>>>>>>> gh-pages
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.0.7
+[debug] Platform:     darwin
+[debug] Node Version: v4.5.0
+[debug] Time:         Wed Oct 12 2016 23:17:17 GMT-0400 (EDT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/ashmita/Desktop/swe432/RedStarter
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.0.7
+[debug] Platform:     darwin
+[debug] Node Version: v4.5.0
+[debug] Time:         Thu Oct 13 2016 09:11:34 GMT-0400 (EDT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/ashmita/Desktop/swe432/RedStarter
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000

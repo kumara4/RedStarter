@@ -10,7 +10,7 @@ Login: Page that user sees when they need to Log in to use the website.
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
         <link rel ="stylesheet" type ="text/css" href="css/normalize.css">
         <link rel ="stylesheet" type ="text/css" href="css/styles.css">
         <title>Log In</title>
@@ -28,170 +28,26 @@ Login: Page that user sees when they need to Log in to use the website.
         <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
         <!-- ReactFire -->
         <script src="https://cdn.firebase.com/libs/reactfire/0.6.0/reactfire.min.js"></script>
-        <script type="text/babel" src="js/login2.js"></script>
+        <script src=“https://cdnjs.com/libraries/babel-core/5.8.34"></script>
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" rel="stylesheet" media="screen">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+
 
     </head>
     <body>
 
         <div class="alien_img">
-            <img src="img/rs.jpg">
+            <img src="img/alien.png">
         </div>
-        <hr>
-        <!-- Container class for whole page-->
-        <div class = "container form">
-            <!-- Rows of input fields to: Log in (email, password)-->
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <label>Username: <input id="loginUN" type ="text"  placeholder="Username"></label>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <label>Password: <input id="loginPW" type = "password" placeholder="Enter Password"></label>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id = "login">Login</button>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <!-- Button if user forgets password. Reset password modal.-->
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id = "forgotpw" >Forgot Password</button>                    
-                </div>
-                <div class="col-md-4"></div>
-            </div>                               
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <!-- Forgot Password Modal -->
-            <div class="modal fade" id="pwModal" role="dialog">
-                <div class="modal-dialog">
-                    <!--Content for Password Reset-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="padding:35px 50px;">
-                            <section class = "container form" id = "resetpw"></section>                   
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Button to show Sign Up modal. -->
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id="signup-l">Sign Up</button>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <!--Sign Up Modal-->
-            <div class="modal fade" id="signUpModal" role="dialog">
-                <div class="modal-dialog">
-                    <!--Content for Sign Up-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="padding:35px 50px;">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h2>Sign Up</h2>
-                        </div>
-                        <div class="modal-body" style="padding:40px 50px;">
-                            <!-- Rows of input fields (first&last name, username, email and password). -->
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>First Name: <input id="name1" type ="text" placeholder="First Name"></label> 
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Last Name: <input id="name2" type ="text" placeholder="Last Name"></label>                  
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Username: <input id = "un" type = "text" placeholder ="Username"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <!-- Username suggestion elements are dynamically created after user inputs into label. -->
-                            <div class = "row " >
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4" id = "suggestun"></div>
-                                <div class="col-md-4"></div>
-                            </div> 
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Email: <input id="email1" type ="email"  placeholder="Email"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Re-enter Email: <input id="email2" type ="email"  placeholder="Confirm Email"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">   
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>New Password: <input id = "newpw" type ="password" placeholder="New Password"
-                                                                pattern="[a-z]{1,15}"
-                                                                title="Password should only contain 6-10 characters; 
-                                                                may contain upper and lower case and digits 0-9."></label> 
-                                    <button type = "button" class = "btn btn-default btn-sm " id = "help" 
-                                            data-help="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9.">
-                                        <span class = "glyphicon glyphicon-info-sign"></span>
-                                    </button>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <!--<a href="landing.html"> </a>-->
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary " id="signup" >Sign Up</button>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- script for FireBase-->
-        <script>
-            "use strict";
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
-                authDomain: "redstarter-b0908.firebaseapp.com",
-                databaseURL: "https://redstarter-b0908.firebaseio.com",
-                storageBucket: "redstarter-b0908.appspot.com",
-                messagingSenderId: "122153615057"
-            };
-            firebase.initializeApp(config);
-            var usersRef = firebase.database().ref('users');
+        <div id="signupbox" class="container text-cetner"></div>
+        <script type="text/babel" src="js/login2.js"></script>
+
+        <script type="text/babel">
         </script>
-
-
-    
-
-
 
     </body>
 </html>
