@@ -5,188 +5,70 @@ Landing: Page that user sees after user logs in or signed up.
 User can begin getting subreddit recommendations, by connecting to Facebook or searching.
 
 -->
-<html>
+<html xmlns:xlink="http://www.w3.org/1999/xlink">
 <head>
-	<link rel ="stylesheet" type ="text/css" href="css/normalize.css">
-	<link rel ="stylesheet" type ="text/css" href="css/styles.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="js/landing.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
-	<title>RedStarter</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/landing.css">
+    <script src="https://use.fontawesome.com/1fb77ba1d7.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+
+    <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <script type="text/babel" src="js/landing2.js"></script>
+    <script type="text" src="js/landing.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <title>RedStarter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="alien_img">
-	<img src="img/alien.png">
+<div id="mainpage">
+
 </div>
 
-<section class="button_search center">
 
-	<div class="connecttofacebook">
-		<button class="facebookbutton">
-			Connect with Facebook
-		</button>
-	</div>
-	<br>
-	<br>
-	<h3> Or enter a list of your interests to get recommended subreddits!</h3>
-	<br>
-	<br>
+<script>
+    function deleteItem(divElem) {
+        divElem.parentElement.removeChild(divElem);
+    }
+    if($("#searchresults").children.length <=2){
 
-	<div class="interest_list">
-		<label>I like</label>
-		<input  type="text" placeholder="Dogs, Netflix, Memes">
-	</div>
+    }
+</script>
 
-	<img class="redimg" src= "img/red.jpg">
-</section>
 
-<!-- Visualization section currently has canned data of posts info in the respective subreddit.
-        Each section will contain data about the current most active subreddits in that category such as the most popular
-        and which ones have the most traffic
+<style>
+    form {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
 
-        TOPSCORE: Canned data, this will later have a description of the top subreddits and graphs-->
+    .node {
+        border: solid 1px white;
+        font: 10px sans-serif;
+        line-height: 12px;
+        overflow: hidden;
+        position: absolute;
+        text-indent: 2px;
+    }
 
-<section class="visualizations">
+</style>
 
-	<div id="topSR" class="datasection">
-		<a class="showdata" href="#">Top Subreddits</a>
-		<div class="content">
-			<ul class="tabs">
-				<li>
-					<a class="tab" href="#topscore">TOP SCORE</a>
-				</li>
-				<li>
-					<a class="tab" href="#topstats">STATS</a>
-				</li>
-			</ul>
-			<div id="topscore" class="panel">
 
-			</div>
-			<div id="topstats" class="panel">
-				<table id="toptable" class="table">
-					<tr>
-						<th>Subreddit</th>
-						<th>Views</th>
-						<th>Followers</th>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
 
-	<div id="risingSR" class="datasection">
-		<a class="showdata" href="#">Rising Subreddits</a>
-		<div class="content">
-			<ul class="tabs">
-				<li>
-					<a class="tab" href="#risingscore">TOP SCORE</a>
-				</li>
-				<li>
-					<a class="tab" href="#risingstats">STATS</a>
-				</li>
-			</ul>
-			<div id="risingscore" class="panel">
 
-			</div>
-			<div id="risingstats" class="panel">
 
-				<table id="risingtable" class="table">
-					<tr >
-						<th>Subreddit</th>
-						<th>Views</th>
-						<th>Followers</th>
-					</tr>
-
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<div id="newSR" class="datasection">
-		<a class="showdata"  href="#">New Subreddits</a>
-		<div class="content">
-			<ul class="tabs">
-				<li>
-					<a class="tab" href="#newscore">TOP SCORE</a>
-				</li>
-				<li>
-					<a class="tab" href="#newstats">STATS</a>
-				</li>
-			</ul>
-			<div id="newscore" class="panel">
-
-			</div>
-			<div id="newstats" class="panel">
-
-				<table id="newtable" class="table">
-					<tr >
-						<th>Subreddit</th>
-						<th>Views</th>
-						<th>Followers</th>
-					</tr>
-
-				</table>
-			</div>
-		</div>
-	</div>
-	<div id="controversialSR" class="datasection">
-		<a class="showdata"  href="#">Controversial Subreddits</a>
-		<div class="content">
-
-			<ul class="tabs">
-				<li>
-					<a class="tab" href="#controversialscore">TOP SCORE</a>
-				</li>
-				<li>
-					<a class="tab" href="#controversialstats">STATS</a>
-				</li>
-			</ul>
-			<div id="controversialscore" class="panel">
-
-			</div>
-			<div id="controversialstats" class="panel">
-
-				<table id="controversialtable" class="table">
-					<tr >
-						<th>Subreddit</th>
-						<th>Views</th>
-						<th>Followers</th>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<div id="hotSR" class="datasection">
-		<a class="showdata"  href="#">Hot Subreddits</a>
-		<div class="content">
-			<ul class="tabs">
-				<li>
-					<a class="tab" href="#hotscore">TOP SCORE</a>
-				</li>
-				<li>
-					<a class="tab" href="#hotstats">STATS</a>
-				</li>
-			</ul>
-			<div id="hotscore" class="panel">
-
-			</div>
-			<div id="hotstats" class="panel">
-				<table id="hottable" class="table">
-					<tr >
-						<th>Subreddit</th>
-						<th>Views</th>
-						<th>Followers</th>
-					</tr>
-
-				</table>
-			</div>
-		</div>
-	</div>
-
-</section>
 </body>
 </html>
