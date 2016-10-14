@@ -1,6 +1,6 @@
 var count = 1;
 "use strict";
-
+// Initialize Firebase
 var config = {
     apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
     authDomain: "redstarter-b0908.firebaseapp.com",
@@ -19,8 +19,8 @@ var LoginBox = React.createClass({
     },
 
     componentWillMount: function () {
-        var ref = firebase.database().ref("newUsers");
-        this.bindAsArray(ref, "newUsers");
+        var ref = firebase.database().ref("users");
+        this.bindAsArray(ref, "users");
     },
 
     onChangeUser: function (e) {
