@@ -5,7 +5,12 @@ Landing: Page that user sees after user logs in or signed up.
 User can begin getting subreddit recommendations, by connecting to Facebook or searching.
 
 -->
+<<<<<<< HEAD
 <html>
+=======
+<html xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+>>>>>>> gh-pages
 
 <head>
 	<!-- Jasmine:-->
@@ -25,71 +30,55 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <script src="js/landing.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 
     <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
     <script type="text/babel" src="js/landing2.js"></script>
+    <script type="text" src="js/landing.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
     <title>RedStarter</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="alien_img">
-    <img src="img/alien.png">
+<div id="mainpage">
+
 </div>
-
-<section class="jumbotron text-center button_search center ">
-    <div class="row">
-        <div class="connecttofacebook">
-            <button class="facebookbutton">
-                Connect with Facebook
-            </button>
-        </div>
-        <br>
-        <br>
-        <h3> Or enter a list of your interests to get recommended subreddits!</h3>
-        <br>
-        <br>
-
-        <div class="interest_list">
-            <label>I like</label>
-            <input type="text" autofocus="autofocus" id="searchterms" placeholder=" dogs"><p>Press enter to add term</p>
-
-            <div id="terms">My list of terms:</div>
-            <button id="searchnow">Search for Subreddits</button>
-
-        </div>
-
-
-    </div>
-</section>
-<section id="searchresults" class="row text-center">
-
-</section>
-<!-- Visualization section currently has canned data of posts info in the respective subreddit.
-        Each section will contain data about the current most active subreddits in that category such as the most popular
-        and which ones have the most traffic
-
-        TOPSCORE: Canned data, this will later have a description of the top subreddits and graphs-->
-
-
-
-
-</section>
-
-<section class="visualizations2" id="visualizations2">
-</section>
-
 
 
 <script>
     function deleteItem(divElem) {
         divElem.parentElement.removeChild(divElem);
     }
+    if($("#searchresults").children.length <=2){
+
+    }
 </script>
+
+
+<style>
+    form {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    .node {
+        border: solid 1px white;
+        font: 10px sans-serif;
+        line-height: 12px;
+        overflow: hidden;
+        position: absolute;
+        text-indent: 2px;
+    }
+
+</style>
+
+
+
 
 
 </body>
