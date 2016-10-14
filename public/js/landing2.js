@@ -255,10 +255,6 @@ var SearchListItem = React.createClass({
 
 var TopicBox = React.createClass({
     getInitialState: function () {
-<<<<<<< HEAD
-        return {section: "top", id: count++, thedata: [{additional: [], ups: 0, permalink: "0", subreddit: "0", title: "0", id: 1}]};
-    },
-=======
         return {
             section: "top",
             id: count++,
@@ -266,7 +262,6 @@ var TopicBox = React.createClass({
         };
     },
 
->>>>>>> gh-pages
     refreshLoadedData: function (section) {
 
         $.ajax({
@@ -306,6 +301,7 @@ var TopicBox = React.createClass({
     componentDidMount: function () {
         this.refreshLoadedData(this.state.section);
     },
+
     handleAdd: function (e) {
         e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
         this.refreshLoadedData(e.target.value);
@@ -332,36 +328,6 @@ var TopicBox = React.createClass({
     render: function () {
         ++count;
         return (
-<<<<<<< HEAD
-                < div key = {this.props.id} className = "TopicBox " >
-                < ul className = "tabs text-center" >
-                < li >
-                < button onClick = {this.handleAdd} value = "top" className = "tab" > Top < /button>
-                < /li>
-                < li >
-                < button onClick = {this.handleAdd} value = "rising" className = "tab" > Rising < /button>
-                < /li>
-                < li >
-                < button onClick = {this.handleAdd} value = "new" className = "tab" > New < /button>
-                < /li>
-                < li >
-                < button onClick = {this.handleAdd} value = "controversial" className = "tab" > Controversial < /button>
-                < /li>
-                < li >
-                < button onClick = {this.handleAdd} value = "hot" className = "tab" > Hot < /button>
-                < /li>
-                < /ul>
-                < div className = "container" >
-                < div className = "row" >
-                < div className = "col-sm-12 col-lg-offset-1 col-lg-10" >
-                < h1 className = "text-center" > Subreddits with popular posts < /h1>
-                < TopicList id = {count} data = {this.state.thedata} / >
-                < /div>
-                < /div>
-                < /div>
-                < /div>
-                );
-=======
 
             <section className="visualizations2" id="visualizations2">
                 <div key={this.props.id} className="TopicBox ">
@@ -401,7 +367,6 @@ var TopicBox = React.createClass({
             </section>
 
         );
->>>>>>> gh-pages
     }
 });
 
@@ -414,39 +379,16 @@ var TopicList = React.createClass({
             var commmentNodes = this.props.data.map(function (comment) {
                 if (comment.additional.length > 0) {
                     var morecommmentNodes = comment.additional.map(function (mcomment) {
-<<<<<<< HEAD
-                        return(
-                                < Comment key = {mcomment.id} comments = {mcomment.comments} url = {mcomment.url}
-                        moresubs = {mcomment.additional} permalink = {mcomment.permalink} ups = {mcomment.ups} >
-                        {mcomment.title}
-                        < /Comment>
-                                );
-=======
                         return (
                             <Comment key={mcomment.id} comments={mcomment.comments} url={mcomment.url}
                                      moresubs={mcomment.additional} permalink={mcomment.permalink} ups={mcomment.ups}>
                                 {mcomment.title}
                             </Comment>
                         );
->>>>>>> gh-pages
                     });
                 }
 
                 return (
-<<<<<<< HEAD
-                        < div key = {count++} className = "cList" >
-                        < div className = "col-sm-12 subredditTitle" >
-                        < a href = {'https://www.reddit.com/r/' + comment.subreddit + "/"} > < div className = "cSubName" > {comment.subreddit}
-                < /div></a >
-                        < /div>
-                        < Comment key = {comment.id} comments = {comment.comments} url = {comment.url}
-                moresubs = {comment.additional} permalink = {comment.permalink} ups = {comment.ups} >
-                {comment.title}
-                < /Comment>
-                {
-                    morecommmentNodes
-                }
-=======
                     <div key={count++} className="cList">
                         <div className="col-sm-12 subredditTitle">
                             <a href={'https://www.reddit.com/r/' + comment.subreddit + "/"}>
@@ -463,23 +405,18 @@ var TopicList = React.createClass({
 
                     </div>
                 );
->>>>>>> gh-pages
 
-
-                < /div>
-                        );
             });
 
 
         }
         return (
-                < div key = {this.props.id} className = "commentSubreddit " >
-        {
-            commmentNodes
-        }
 
-        < /div>
-                );
+            <div key={this.props.id} className="commentSubreddit ">
+                {commmentNodes}
+
+            </div>
+        );
     }
 });
 
@@ -488,27 +425,6 @@ var TopicList = React.createClass({
 var Comment = React.createClass({
     render: function () {
         return (
-<<<<<<< HEAD
-                < div key = {this.props.id} className = " col-lg-12 col-sm-12 cSubreddit" >
-                < div className = "col-sm-2 col-lg-1 row-no-padding" >
-                < div className = "ups" > < i className = "fa fa-thumbs-up" aria - hidden = "true" > < /i> {" " + this.props.ups}</div >
-                < /div>
-                < div className = "col-sm-8 col-lg-10 " >
-                < div className = "cTitle" > < a href = {this.props.url} >
-        {this.props.children}
-        < /a>
-                < /div>
-                < /div>
-                < div className = "col-sm-2 col-lg-1 row-no-padding" >
-                < div className = "cComNum" > < a
-                href = {'https://www.reddit.com' + this.props.permalink} > < i className = "fa fa-comment-o" aria - hidden = "true" > < /i> {" " + this.props.comments}</a > < /div>
-                < /div>
-
-
-
-
-                < /div>
-=======
             <div key={this.props.id} className=" col-lg-12 col-sm-12 cSubreddit">
                 <div className="col-sm-2 col-lg-1 row-no-padding">
 
@@ -530,19 +446,13 @@ var Comment = React.createClass({
 
 
             </div>
->>>>>>> gh-pages
 
-                );
+        );
     }
 });
 
 
 ReactDOM.render(
-<<<<<<< HEAD
-        < TopicBox / > ,
-        document.getElementById('visualizations2')
-);
-=======
     <LandingPage />
 
     ,
@@ -711,4 +621,3 @@ function createCirclemap() {
 
     d3.select(self.frameElement).style("height", diameter + "px");
 }
->>>>>>> gh-pages
