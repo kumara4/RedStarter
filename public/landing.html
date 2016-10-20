@@ -720,7 +720,7 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
         var TestUtils = React.addons.TestUtils;
         var TopicBoxComponent, element, renderedDOM;
         beforeEach(function (done){
-           element = React.createElement(TopicBox);
+            element = React.createElement(TopicBox);
             TopicBoxComponent = TestUtils.renderIntoDocument(element);
             TopicBoxComponent.setState({section: "top",  thedata: [{additional: [], ups: 0, permalink: "0", subreddit: "0", title: "0", id: 1}]}, done);
         });
@@ -740,14 +740,13 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
         });
 
     });
-    describe('SearchBox', function () {
+    describe("SearchBox", function () {
         var TestUtils = React.addons.TestUtils;
         var SearchBoxComponent, element, renderedDOM;
         beforeEach(function (done) {
             element = React.createElement(SearchBox);
             SearchBoxComponent = TestUtils.renderIntoDocument(element);
             SearchBoxComponent.setState({results: [], text: "", id: ++count, terms: []}, done);
-
         });
         it("Has 2 buttons: Connect with Facebook, Search for Subreddits", function () {
             let buttons = TestUtils.scryRenderedDOMComponentsWithTag(SearchBoxComponent, "button");
@@ -756,8 +755,6 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
             expect(buttons[0].innerHTML).toBe("Connect with Facebook");
             expect(buttons[1]).not.toBeUndefined();
             expect(buttons[1].innerHTML).toBe("Search for Subreddits");
-
-
         });
         it("Has a Search List component", function () {
             expect(function () {
@@ -769,37 +766,51 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
                 TestUtils.findRenderedComponentWithType(SearchBoxComponent, ResultList);
             }).not.toThrow();
         });
-        it("Calls searchTerms", function(){
-            var setSpy;
-            setSpy = jasmine.createSpy("set");
-            spyOn(SearchBoxComponent.searchTerms(), 'st');
-            expect(SearchBoxComponent.searchTerms).toHaveBeenCalled();
+
+        describe('TopicBox', function(){
+            var TestUtils = React.addons.TestUtils;
+            var TopicBoxComponent, element, renderedDOM;
+            beforeEach(function (done){
+                element = React.createElement(TopicBox);
+                TopicBoxComponent = TestUtils.renderIntoDocument(element);
+                TopicBoxComponent.setState({section: "top",  thedata: [{additional: [], ups: 0, permalink: "0", subreddit: "0", title: "0", id: 1}]}, done);
+            });
+            it("Has a TopicList component", function(){
+                expect(function () {
+                    TestUtils.findRenderedComponentWithType(TopicBoxComponent, TopicList);
+                }).not.toThrow();
+
+            });
+
         });
-        /*
-         describe("A spy", function() {
-         var foo, bar = null;
-
-         beforeEach(function() {
-         foo = {
-         setBar: function(value) {
-         bar = value;
-         }
-         };
-
-         spyOn(foo, 'setBar');
-
-         foo.setBar(123);
-         foo.setBar(456, 'another param');
-         });
-
-         it("tracks that the spy was called", function() {
-         expect(foo.setBar).toHaveBeenCalled();
-         });
-        */
 
 
     });
 
+
+
+
+    /*
+     describe("A spy", function() {
+     var foo, bar = null;
+
+     beforeEach(function() {
+     foo = {
+     setBar: function(value) {
+     bar = value;
+     }
+     };
+
+     spyOn(foo, 'setBar');
+
+     foo.setBar(123);
+     foo.setBar(456, 'another param');
+     });
+
+     it("tracks that the spy was called", function() {
+     expect(foo.setBar).toHaveBeenCalled();
+     });
+     */
 
 </script>
 <style>
