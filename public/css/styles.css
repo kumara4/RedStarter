@@ -20,11 +20,16 @@ body{
 }
 .alien_img img {
     display: inline-block;
-    width: 15%;
     margin: 10px;
+    height: auto; 
+    width: auto; 
+    max-width: 80px; 
+    max-height: 80px;
 }
 .alien_img img:hover {
     transform: rotate(10deg);
+    opacity: 0.75;
+
 }
 .button_search {
     text-align: center;
@@ -160,14 +165,14 @@ ul {
     padding-bottom: 25px;
 }
 
-ul li {
-    display: inline;
-    padding: 10px;
-    background-color: white;
-    margin: 10px;
-    text-align: center;
-    list-style: none;
-}
+/*ul li {*/
+    /*display: inline;*/
+    /*padding: 10px;*/
+    /*background-color: white;*/
+    /*margin: 10px;*/
+    /*text-align: center;*/
+    /*list-style: none;*/
+/*}*/
 ul li a {
     text-decoration: none;
 }
@@ -270,6 +275,25 @@ input:invalid {
 }
 .login:focus {
     background: wheat;
+}
+/*SET UP PAGE*/
+#setuphead{
+    background-color: cornflowerblue;
+    font-size: 20px;
+    color: white;
+
+}
+#diy, #greys,
+#jokes, #football,
+#greekmyth, #sports{
+    background-color: #990000;
+    color: white;
+    font-family: Arial, Times;
+    text-align: center;
+    font-size: 20px;
+}
+#category_row, #id1{
+    line-height: 150px;
 }
 /*RESPONSIVE DESIGN */
 @media only screen and (max-width: 700px) {

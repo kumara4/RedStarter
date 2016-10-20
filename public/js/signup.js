@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var usersRef = firebase.database().ref('users');
+    var usersRef = firebase.database().ref('newUsers');
     var $first = $("#name1");
     var $last = $("#name2");
     var $unentered = $("#un");
@@ -11,6 +11,28 @@ $(document).ready(function () {
     function randomNum() {
         return Math.floor(Math.random() * high) + low;  //  generate random number to insert into username suggestion
     }
+    function newUser(input) {
+        usersRef.child(input).set(
+                {'firstname': $first.val(),
+                    'lastname': $last.val(),
+                    'email': $email1.val(),
+                    'username': $unentered.val(),
+                    'password': $pwentered.val(),
+                });
+    }
+
+//    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+//        // Handle Errors here.
+//        var errorCode = error.code;
+//        var errorMessage = error.message;
+//        // ...
+//    });
+//    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+//        // Handle Errors here.
+//        var errorCode = error.code;
+//        var errorMessage = error.message;
+//        // ...
+//    });
     /*
      * Dynamically creates ordered list objects based on user's input of first name and last name
      * and displays them. 
@@ -51,8 +73,7 @@ $(document).ready(function () {
      * If all fields are filled, then "sign up" **to implement** and close modal
      */
     $("#signup").click(function (evt) {
-        $("#signUpModal").modal("show");
-
+//        $("#signUpModal").modal("show");
         if ($('#email1').val() !== $('#email2').val()) {
             alert('Emails mismatch');
             evt.preventDefault();
@@ -63,13 +84,7 @@ $(document).ready(function () {
         if (!$('#newpw').val()) {
             alert('Please enter a valid password');
         }
-        usersRef.push(
-                {'firstname': $first.val(),
-                    'lastname': $last.val(),
-                    'email': $email1.val(),
-                    'username': $unentered.val(),
-                    'password': $pwentered.val(),
-                });
+        newUser($unentered.val()); //call new User to populate firebase
         $("#name1").val("");
         $("#name2").val("");
         $("#un").val("");
@@ -77,9 +92,10 @@ $(document).ready(function () {
         $("#email2").val("");
         $("#newpw").val("");
         $('input[type=radio]').prop('checked', false);
-        $("#signUpModal").modal("hide");
+//        $("#signUpModal").modal("hide");
         $("#suggestun").empty();
-        
+
+
 
 
     });

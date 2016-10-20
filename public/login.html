@@ -1,197 +1,537 @@
 <!DOCTYPE html>
 <!--
 Authors: Ashmita Kumar and Henry Lopez
-Login: Page that user sees when they need to Log in to use the website. 
+Login: Page that user sees when they need to Log in to use the website.
 -->
 <html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
-        <link rel ="stylesheet" type ="text/css" href="css/normalize.css">
-        <link rel ="stylesheet" type ="text/css" href="css/styles.css">
-        <title>Log In</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<head>
 
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript"></script>
-        <script type="text/javascript" src="js/login.js"></script>
-        <script type="text/javascript" src="js/signup.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
-        <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
-        <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
-        <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
-        <!-- ReactFire -->
-        <script src="https://cdn.firebase.com/libs/reactfire/0.6.0/reactfire.min.js"></script>
-        <script type="text/babel" src="js/login2.js"></script>
 
-    </head>
-    <body>
+    <title>Log In</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
 
-        <div class="alien_img">
-            <img src="img/rs.jpg">
-        </div>
-        <hr>
-        <!-- Container class for whole page-->
-        <div class = "container form">
-            <!-- Rows of input fields to: Log in (email, password)-->
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <label>Username: <input id="loginUN" type ="text"  placeholder="Username"></label>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <label>Password: <input id="loginPW" type = "password" placeholder="Enter Password"></label>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id = "login">Login</button>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <!-- Button if user forgets password. Reset password modal.-->
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id = "forgotpw" >Forgot Password</button>                    
-                </div>
-                <div class="col-md-4"></div>
-            </div>                               
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <!-- Forgot Password Modal -->
-            <div class="modal fade" id="pwModal" role="dialog">
-                <div class="modal-dialog">
-                    <!--Content for Password Reset-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="padding:35px 50px;">
-                            <section class = "container form" id = "resetpw"></section>                   
+    <!-- React -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-with-addons.js"></script>
+    <script src="https://fb.me/react-dom-15.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <!-- ReactFire -->
+    <script src="https://cdn.firebase.com/libs/reactfire/1.0.0/reactfire.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" rel="stylesheet"
+          media="screen">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <script type="text/javascript"></script>
+    <!--<script type="text/babel" src="js/login2.js"></script>-->
+
+    <!--JASMINE-->
+
+
+    <script type="text/javascript" src="jasmine/lib/jasmine-2.5.2/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine-2.5.2/jasmine-html.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine-2.5.2/boot.js"></script>
+    <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.5.2/jasmine.css">
+
+
+    <!--<script src="spec/LoginSpec.js"></script>-->
+
+
+</head>
+<body>
+
+<div class="alien_img">
+    <img src="img/alien.png"/>
+</div>
+<div id="signupbox"></div>
+
+<script type="text/babel">
+    "use strict";
+    var count = 1;
+
+
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
+        authDomain: "redstarter-b0908.firebaseapp.com",
+        databaseURL: "https://redstarter-b0908.firebaseio.com",
+        storageBucket: "redstarter-b0908.appspot.com",
+        messagingSenderId: "122153615057"
+    };
+    firebase.initializeApp(config);
+
+
+    var LoginBox = React.createClass({
+        mixins: [ReactFireMixin],
+
+        getInitialState: function () {
+            return {user: "", pass: "", newUsers: [], uerror: ["", "", ""], display: "none"};
+        },
+
+        componentWillMount: function () {
+            this.usersRef = firebase.database().ref("newUsers");
+            //this.bindAsArray(this.userRef, "newUsers");
+        },
+        onChangePass: function (e) {
+
+            e.preventDefault();
+            this.setState({pass: e.target.value});
+        },
+        onChangeUser: function (e) {
+            e.preventDefault();
+            this.setState({user: e.target.value});
+        },
+
+        validateLogin: function (e) {
+            var user = this.state.user;
+            var pass = this.state.pass;
+            var correct = false;
+            // this.usersRef = firebase.database().ref("newUsers");
+            this.usersRef.child(user).once('value', function (snapshot) {
+                console.log("");
+                correct = (snapshot.val() !== null && snapshot.val().password == pass && user == snapshot.val().username);
+                if (correct) {
+                    document.location.href = "landing.html";
+
+                } else {
+                    correct = false;
+                }
+            });
+            if (!correct) {
+                this.setState({display: "inline", uerror: ["has-error", "inputError1", "Username/Password Incorrect"]})
+            }
+
+
+        },
+        handleAdd: function (e) {
+            e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
+            this.setState({user: this.state.user, pass: this.state.pass});
+            this.accessFirebase(this.state.user, this.state.pass);
+
+
+        },
+
+        render: function () {
+            ++count;
+            var style = {display: this.props.display};
+            return (
+
+                    <div key={this.props.id} className="row text-center LoginBox">
+                        <div className={"col-lg-12 " + this.state.uerror[0]}>
+                            <label className={this.state.uerror[1]}>Username: </label>
+                            <input id="loginUN" className={this.state.uerror[1]} onChange={this.onChangeUser}
+                                   value={this.state.user}
+                                   type="text" placeholder="Username"/>
+                            <p className="warning" style={style}>{this.state.uerror[2]}</p>
                         </div>
+                        <div className={"col-lg-12 " + this.state.uerror[0]}>
+                            <label className={this.state.uerror[1]}>Password</label>
+                            <input id="loginPW" className={this.state.uerror[1]} type="password"
+                                   onChange={this.onChangePass}
+                                   value={this.state.pass} placeholder="Enter Password"/>
+                            <p className="warning" style={style}>{this.state.uerror[2]}</p>
+                        </div>
+
+                        <div className="col-lg-12">
+                            <button className="btn btn-primary" onClick={this.validateLogin} id="login">Login</button>
+                        </div>
+
+                        <SignupBox ref="SignupBox"/>
+
+                    </div >
+            );
+        }
+    });
+
+
+
+
+    var LoginForgot = React.createClass({
+
+        render: function () {
+            return (
+                    <div className="col-lg-12">
+                        <button type="button" className="btn btn-primary" id="forgotpw">Forgot Password</button>
                     </div>
-                </div>
-            </div>
-            <!-- Button to show Sign Up modal. -->
-            <div class ="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary" id="signup-l">Sign Up</button>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <!--Sign Up Modal-->
-            <div class="modal fade" id="signUpModal" role="dialog">
-                <div class="modal-dialog">
-                    <!--Content for Sign Up-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="padding:35px 50px;">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h2>Sign Up</h2>
-                        </div>
-                        <div class="modal-body" style="padding:40px 50px;">
-                            <!-- Rows of input fields (first&last name, username, email and password). -->
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>First Name: <input id="name1" type ="text" placeholder="First Name"></label> 
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Last Name: <input id="name2" type ="text" placeholder="Last Name"></label>                  
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Username: <input id = "un" type = "text" placeholder ="Username"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <!-- Username suggestion elements are dynamically created after user inputs into label. -->
-                            <div class = "row " >
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4" id = "suggestun"></div>
-                                <div class="col-md-4"></div>
-                            </div> 
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Email: <input id="email1" type ="email"  placeholder="Email"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>Re-enter Email: <input id="email2" type ="email"  placeholder="Confirm Email"></label>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class ="row">   
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <label>New Password: <input id = "newpw" type ="password" placeholder="New Password"
-                                                                pattern="[a-z]{1,15}"
-                                                                title="Password should only contain 6-10 characters; 
-                                                                may contain upper and lower case and digits 0-9."></label> 
-                                    <button type = "button" class = "btn btn-default btn-sm " id = "help" 
-                                            data-help="Password should only contain 6-10 characters; may contain upper and lower case and digits 0-9.">
-                                        <span class = "glyphicon glyphicon-info-sign"></span>
-                                    </button>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <!--<a href="landing.html"> </a>-->
-                            <div class ="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary " id="signup" >Sign Up</button>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- script for FireBase-->
-        <script>
-            "use strict";
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
-                authDomain: "redstarter-b0908.firebaseapp.com",
-                databaseURL: "https://redstarter-b0908.firebaseio.com",
-                storageBucket: "redstarter-b0908.appspot.com",
-                messagingSenderId: "122153615057"
+            )
+        }
+    });
+
+
+    var SignupBox = React.createClass({
+        mixins: [ReactFireMixin],
+
+        getInitialState: function () {
+            return {
+                user: "", pass: "", newUsers: [], existserror: ["", "", ""],
+                confirmpasserror: ["", "", ""],
+                confirmemailerror: ["", "", ""],
+                display: "none"
             };
-            firebase.initializeApp(config);
-            var usersRef = firebase.database().ref('users');
-        </script>
+        },
+
+        componentWillMount: function () {
+            this.usersRef = firebase.database().ref("newUsers");
+            //this.bindAsArray(this.usersRef, "newUsers");
+        },
 
 
-    
+        validateSignup: function (e) {
+            var user = this.refs.SignupCredentials.state.user;
+            var pass = this.refs.SignupCredentials.state.pass;
+            var cpass = this.refs.SignupCredentials.state.passconfirm;
+            var email = this.refs.SignupCredentials.state.email;
+            var cemail = this.refs.SignupCredentials.state.confirmemail;
+            var firstname = this.refs.SignupName.state.firstname;
+            var lastname = this.refs.SignupName.state.lastname;
+
+
+            var userexists = false;
+            this.usersRef = firebase.database().ref("newUsers");
+
+            if (user == "" || pass == "" || cpass == "" || email == "" || cemail == "" || firstname == "" || lastname == "") {
+                this.setState({
+                    display: "inline",
+                    existserror: ["has-error", "inputError1", "Username already exists"]
+                })
+
+            }
+            if (user != "") {
+                this.usersRef.child(user).once('value', function (snapshot) {
+                    var exists = (snapshot.val() !== null);
+                    if (exists) {
+                        userexists = true;
+                    }
+                    if (userexists) {
+                        console.log("user exists");
+                        this.setState({
+                            display: "inline",
+                            existserror: ["has-error", "inputError1", "Username already exists"]
+                        })
+                    }
+                    else if (email != cemail) {
+                        console.log("email not same");
+                        this.setState({
+                            display: "inline",
+                            confirmemailserror: ["has-error", "inputError1", "Emails do not match"]
+                        })
+                    }
+                    else if (pass != cpass) {
+                        console.log("pass not same");
+                        this.setState({
+                            display: "inline",
+                            confirmpasserror: ["has-error", "inputError1", "Passwords do not match"]
+                        })
+                    } else if (user == "" || pass == "" || cpass == "" || email == "" || cemail == "" || firstname == "" || lastname == "") {
+                        alert("You must fill in all fields");
+
+                    } else {
+
+                        this.usersRef.child(user.toString()).set(
+                                {
+                                    'firstname': firstname,
+                                    'lastname': lastname,
+                                    'email': email,
+                                    'username': user,
+                                    'password': pass,
+                                });
+                        document.location.href = "landing.html";
+                    }
+
+
+                }, this);
+            }
+
+
+        },
+        render: function () {
+            ++count;
+
+            return (
+                    <div className="signup-section">
+                        <SignupName ref="SignupName"/>
+
+                        <SignupCredentials ref="SignupCredentials" display={this.state.display}
+                                           existserror={this.state.existserror}
+                                           confirmpasserror={this.state.confirmpasserror}
+                                           confirmemailerror={this.state.confirmemailerror}/>
+
+                        <div className="col-lg-12">
+
+                            <button type="button" className="btn btn-primary" onClick={this.validateSignup}
+                                    id="signupsubmit">Signup
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+            );
+
+        }
+
+
+    });
+
+
+    var SignupName = React.createClass({
+        getInitialState: function () {
+            return {lastname: "", firstname: ""};
+        },
+        onChangefirst: function (e) {
+            e.preventDefault();
+            this.setState({firstname: e.target.value});
+        },
+        onChangelast: function (e) {
+            e.preventDefault();
+            this.setState({lastname: e.target.value});
+        },
+        render: function () {
+            return (
+                    <div className="fullname-fields">
+                        <div className="firstname">
+                            <label>First Name:</label>
+                            <input id="name1" type="text" onChange={this.onChangefirst} value={this.state.value}
+                                   placeholder="First Name"/>
+                        </div>
+                        <div className="lastname">
+                            <label>Last Name:</label>
+                            <input id="name2" type="text" onChange={this.onChangelast} value={this.state.value}
+                                   placeholder="Last Name"/>
+                        </div>
+                    </div>
+            )
+        }
+    });
+
+
+    var SignupCredentials = React.createClass({
+        getInitialState: function () {
+            return {email: "", confirmemail: "", user: "", pass: "", passconfirm: ""};
+        },
+        onChangeUser: function (e) {
+            e.preventDefault();
+            this.setState({user: e.target.value});
+        },
+        onChangePass: function (e) {
+            e.preventDefault();
+            this.setState({pass: e.target.value});
+        },
+        onChangePassCon: function (e) {
+            e.preventDefault();
+            this.setState({passconfirm: e.target.value});
+        },
+        onChangeEmail: function (e) {
+            e.preventDefault();
+            this.setState({email: e.target.value});
+        },
+        onChangeConEmail: function (e) {
+            e.preventDefault();
+            this.setState({confirmemail: e.target.value});
+        },
+        render: function () {
+            var style = {display: this.props.display};
+            return (
+                    <div className="username-pass-fields">
+                        <div className={"row " + this.props.existserror[0]}>
+                            <label className={this.props.existserror[1]}>Username</label>
+                            <input id="username" className={this.props.existserror[1]} onChange={this.onChangeUser}
+                                   value={this.state.value} placeholder="Username"/>
+                            <p className="warning" style={style}>{this.props.existserror[2]}</p>
+                        </div>
+                        <div className="password-fields">
+                            <div className={"row " + this.props.confirmpasserror[0]}>
+                                <label className={this.props.confirmpasserror[1]}>Password</label>
+                                <input id="password" className={this.props.confirmpasserror[1]}
+                                       onChange={this.onChangePass} value={this.state.value} placeholder="Password"/>
+                                <p className="warning" style={style}>{this.props.confirmpasserror[2]}</p>
+                            </div>
+                            <div className={"row " + this.props.confirmpasserror[0]}>
+                                <label className={this.props.confirmpasserror[1]}>Confirm Password</label>
+                                <input id="cpassword" className={this.props.confirmpasserror[1]}
+                                       onChange={this.onChangePassCon} value={this.state.value}
+                                       placeholder="Confirm Password"/>
+
+
+                            </div>
+                            <div className={"row " + this.props.confirmemailerror[0]}>
+                                <label className={this.props.confirmemailerror[1]}>Email:</label>
+                                <input id="email" type="email" className={this.props.confirmemailerror[1]}
+                                       onChange={this.onChangeEmail} value={this.state.value} placeholder="Email"/>
+                                <p className="warning" style={style}>{this.props.confirmemailerror[2]}</p>
+                            </div>
+                            <div className="row">
+                                <label className={this.props.confirmemailerror[1]}>Confirm Email:</label>
+                                <input id="cemail" type="email" className={this.props.confirmemailerror[1]}
+                                       onChange={this.onChangeConEmail} value={this.state.value}
+                                       placeholder="Confirm Email"/>
+
+                            </div>
+                        </div>
+                    </div>
+
+            )
+        }
+    });
 
 
 
-    </body>
+
+
+    // tutorial4.js
+
+    ReactDOM.render(
+            < LoginBox />, document.getElementById('signupbox')
+    );
+
+
+
+
+
+    describe('LoginBox', function () {
+        var TestUtils = React.addons.TestUtils;
+        var loginBoxComponent, element, renderedDOM;
+        beforeEach(function (done) {
+            element = React.createElement(LoginBox);
+            loginBoxComponent = TestUtils.renderIntoDocument(element);
+            loginBoxComponent.setState({user: "", pass: "", newUsers: [], uerror: ["", "", ""], display: "none"}, done);
+        });
+
+
+        it("Has a SignupBox component", function () {
+            expect(function () {
+                TestUtils.findRenderedComponentWithType(loginBoxComponent, SignupBox);
+            }).not.toThrow();
+        });
+
+        it("Has a login and signup button", function () {
+            let buttons = TestUtils.scryRenderedDOMComponentsWithTag(loginBoxComponent, "button");
+            /*
+             Warning: Anti-pattern: should *not* have this hard-coded index into the button array
+             Better: Add an ID to that button, and then find it
+             Same applies everywhere else below that we use the same anti-pattern
+             */
+            expect(buttons.length).toEqual(2);
+            expect(buttons[0]).not.toBeUndefined();
+            expect(buttons[0].innerHTML).toBe("Login");
+            expect(buttons[1]).not.toBeUndefined();
+            expect(buttons[1].innerHTML).toBe("Signup");
+        });
+
+        it("Calls firebase database to check if user login credientials exist", function () {
+            let loginbutton = TestUtils.scryRenderedDOMComponentsWithTag(loginBoxComponent, "button")[0];
+            var onceSpy;
+            onceSpy = jasmine.createSpy("once");
+            spyOn(loginBoxComponent.usersRef, "child").and.returnValue({once: onceSpy});
+            var inputs = TestUtils.scryRenderedDOMComponentsWithTag(loginBoxComponent, "input");
+            inputs[0].value = "wrongusername";
+            inputs[1].value = "wrongpassword";
+            TestUtils.Simulate.change(inputs[0]);
+            TestUtils.Simulate.change(inputs[1]);
+            TestUtils.Simulate.click(loginbutton);
+            expect(loginBoxComponent.usersRef.child).toHaveBeenCalled();
+            expect(onceSpy).toHaveBeenCalled();
+            expect(loginBoxComponent.state.display).toBe("none");
+
+        });
+
+
+        describe("SignupBox", function () {
+            var SignupBoxComponent;
+            var SignupCredentialsComponent;
+            var SignupNameComponent;
+            beforeEach(function () {
+                SignupBoxComponent = TestUtils.findRenderedComponentWithType(loginBoxComponent, SignupBox);
+                SignupCredentialsComponent = TestUtils.findRenderedComponentWithType(SignupBoxComponent, SignupCredentials);
+                SignupNameComponent = TestUtils.findRenderedComponentWithType(SignupBoxComponent, SignupName);
+                SignupBoxComponent.setState({
+                    user: "", pass: "", newUsers: [], existserror: ["", "", ""],
+                    confirmpasserror: ["", "", ""],
+                    confirmemailerror: ["", "", ""],
+                    display: "none"
+                });
+            });
+            it("Has a SignupCredentials component", function () {
+                expect(function () {
+                    TestUtils.findRenderedComponentWithType(SignupBoxComponent, SignupCredentials);
+                }).not.toThrow();
+            });
+            it("Has a SignupName component", function () {
+                expect(function () {
+                    TestUtils.findRenderedComponentWithType(SignupBoxComponent, SignupName);
+                }).not.toThrow();
+            });
+            it("Do not call Firebase if called when user attempts to sign up with no credentials", function () {
+                var onceSpy;
+                var signupbutton = TestUtils.scryRenderedDOMComponentsWithTag(SignupBoxComponent, "button");
+                onceSpy = jasmine.createSpy("once");
+                spyOn(SignupBoxComponent.usersRef, "child").and.returnValue({once: onceSpy});
+                TestUtils.Simulate.click(signupbutton[0]);
+
+                expect(signupbutton[0].innerHTML).toBe("Signup");
+                // expect(signupbutton[0].innerHTML).toBe("Signup");
+                //expect(SignupBoxComponent.usersRef.child).not.toHaveBeenCalled();
+                // expect(onceSpy).not.toHaveBeenCalled();
+            });
+            it("Create a new user if the user signs up.", function () {
+                var onceSpy;
+                var signupbutton = TestUtils.scryRenderedDOMComponentsWithTag(SignupBoxComponent, "button");
+                onceSpy = jasmine.createSpy("once");
+                spyOn(SignupBoxComponent.usersRef, "child").and.returnValue({once: onceSpy});
+
+                var inputs = TestUtils.scryRenderedDOMComponentsWithTag(SignupCredentialsComponent, "input");
+                var nameinputs = TestUtils.scryRenderedDOMComponentsWithTag(SignupNameComponent, "input");
+                inputs[0].value = "user";
+                inputs[1].value = "pass";
+                inputs[2].value = "conpass";
+                inputs[3].value = "email";
+                inputs[4].value = "conemail";
+                nameinputs[0].value = "firstname";
+                nameinputs[1].value = "lastname";
+                TestUtils.Simulate.change(inputs[0]);
+                TestUtils.Simulate.change(inputs[1]);
+                TestUtils.Simulate.change(inputs[2]);
+                TestUtils.Simulate.change(inputs[3]);
+                TestUtils.Simulate.change(inputs[4]);
+                TestUtils.Simulate.change(nameinputs[0]);
+                TestUtils.Simulate.change(nameinputs[1]);
+                TestUtils.Simulate.click(signupbutton[0]);
+                expect(signupbutton[0].innerHTML).toBe("Signup");
+                expect(inputs[0].value).toBe("user");
+                // expect(SignupBoxComponent.usersRef.child).toHaveBeenCalled();
+//            expect(onceSpy).toHaveBeenCalledWith({'firstname': nameinputs[0].value,
+//               'lastname':  nameinputs[1].value,
+//                'email': inputs[3].value,
+//                'username': inputs[0].value,
+//                'password': inputs[1].value,
+//            });
+
+
+            });
+
+        });
+    });
+
+
+</script>
+
+</body>
 </html>
