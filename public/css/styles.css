@@ -165,14 +165,14 @@ ul {
     padding-bottom: 25px;
 }
 
-ul li {
-    display: inline;
-    padding: 10px;
-    background-color: white;
-    margin: 10px;
-    text-align: center;
-    list-style: none;
-}
+/*ul li {*/
+    /*display: inline;*/
+    /*padding: 10px;*/
+    /*background-color: white;*/
+    /*margin: 10px;*/
+    /*text-align: center;*/
+    /*list-style: none;*/
+/*}*/
 ul li a {
     text-decoration: none;
 }
