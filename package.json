@@ -1,0 +1,22 @@
+{
+  "name": "redstarter",
+  "version": "1.0.0",
+  "description": "Henry Lopez \tlanding.html: landing page that will allow the user to search or connect to facebook so that he can get subreddit suggestions. Also, users are able to view summaries of popular subreddit sections.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumara4/RedStarter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kumara4/RedStarter/issues"
+  },
+  "homepage": "https://github.com/kumara4/RedStarter#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
