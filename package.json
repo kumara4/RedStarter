@@ -4,8 +4,13 @@
   "description": "Henry Lopez\r \tlanding.html: landing page that will allow the user to search or connect to facebook so that he can get subreddit suggestions. Also, users are able to view summaries of popular subreddit sections.",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "jasmine": "^2.5.2"
+    "firebase": "^3.5.1",
+    "google-cloud": "^0.43.0",
+    "jasmine": "^2.5.2",
+    "multer": "^1.2.0"
   },
   "devDependencies": {},
   "scripts": {
