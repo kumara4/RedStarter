@@ -307,6 +307,29 @@ var SignupCredentials = React.createClass({
         e.preventDefault();
         this.setState({confirmemail: e.target.value});
     },
+    onSubmit: function (e) {
+        var fireRef = firebase.database().ref('newUsers');
+        fireRef.on("child_added",function(v){
+            displayPic(v.val().img);
+        });
+        function displayPic(img)
+        {
+                $('#photo').append(
+                    '<div class="newPhoto"><img src="'+img+'" /><br/>'+text+'</div>'
+                );
+        }
+        e.preventDefault();
+        var formData = new FormData($("#newItemForm")[0]);
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            url: "/todo",
+            data: formData,processData: false,
+            contentType: false
+
+        });
+
+    },
     render: function () {
         var style = {display: this.props.display};
         return (
@@ -345,12 +368,11 @@ var SignupCredentials = React.createClass({
                                placeholder="Confirm Email"/>
 
                     </div>
+                    <div id="photo"></div>
+
+                    <form id="newItemForm" action="/todo" method="post" enctype="multipart/form-data"><input type="text" id="newTodo" name="todoText" /><input type="file" id="newFile" name="img" /><input onClick={this.onSubmit} type="submit" value="Upload Picture" /></form>
+
                 </div>
-                <form className="row" id="newUser" method="post" enctype="multipart/form-data">
-                    <input type="text" id="newPic" name="newUserPic"/>
-                    <input type="file" id="newFile" name="img"/>
-                    <input type="submit" value="Upload Photo"/>
-                </form>
             </div>
 
         )

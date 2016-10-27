@@ -1,7 +1,11 @@
-var firebase = require("firebase");
 var express = require('express');
-var cookieParser = require('cookie-parser');
+var gcloud = require('google-cloud');
+var firebase = require('firebase');
+var multer = require("multer");
+var uploader = multer({ storage: multer.memoryStorage({}) });
 var app = express();
+var port = process.env.PORT || 3000;
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 app.use(cookieParser());
 app.use(bodyParser.json());       // to support JSON-encoded bodies
@@ -9,15 +13,78 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
-
-
 firebase.initializeApp({
     serviceAccount: "RedStarter-329502b8049c.json",
     databaseURL: "https://redstarter-b0908.firebaseio.com/"
 });
 var fireRef = firebase.database().ref('newUsers');
 
-var port = process.env.PORT || 3000;
+/**
+ * Google cloud storage part
+ */
+var CLOUD_BUCKET="redstarter-b0908.appspot.com"; //From storage console, list of buckets
+var gcs = gcloud.storage({
+    projectId: 'redstarter-b0908', //from storage console, then click settings, then "x-goog-project-id"
+    keyFilename: 'RedStarter-329502b8049c.json' //the key we already set up
+});
+// From blob store example
+function getPublicUrl (filename) {
+    return 'https://storage.googleapis.com/' + CLOUD_BUCKET + '/' + filename;
+}
+
+var bucket = gcs.bucket(CLOUD_BUCKET);
+
+//From https://cloud.google.com/nodejs/getting-started/using-cloud-storage
+function sendUploadToGCS (req, res, next) {
+    if (!req.file) {
+        return next();
+    }
+    // console.log("send upload to GCS");
+
+    var gcsname = Date.now() + req.file.originalname;
+    var file = bucket.file(gcsname);
+
+
+    var stream = file.createWriteStream({
+        metadata: {
+            contentType: req.file.mimetype
+        }
+    });
+
+    stream.on('error', function (err) {
+        req.file.cloudStorageError = err;
+        next(err);
+    });
+
+    stream.on('finish', function () {
+        req.file.cloudStorageObject = gcsname;
+        req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+        var options = {
+            entity: 'allUsers',
+            role: gcs.acl.READER_ROLE
+        };
+        file.acl.add(options, function(a,e){next();});//Make file world-readable; this is async so need to wait to return OK until its done
+    });
+
+    stream.end(req.file.buffer);
+}
+
+//upload image
+app.post('/todo', uploader.single("img"), sendUploadToGCS, function (req, res, next) {
+    // console.log("upload image1");
+    var data = {"text" : req.body.todoText};
+    if(req.file)
+        data.img = getPublicUrl(req.file.cloudStorageObject);
+    fireRef.push(data, function () {
+        // console.log("upload image");
+        res.send("OK!");
+    }).catch(function(){
+        console.log("upload image - catch");
+        res.status(403);
+        res.send();
+    });
+});
+
 
 var currentuser = "";
 var correct = false;
@@ -61,7 +128,6 @@ app.get('/login', function (req, res) {
     });
 });
 
-
 //Make a new one
 app.post('/signup', function (req, res) {
     console.log("New req");
@@ -74,29 +140,10 @@ app.post('/signup', function (req, res) {
         res.status(403);
         res.send();
     });
+
+
 });
 
-// app.get('/login', function (req, res) {
-//     // fireRef.child("d").once('value', function (snapshot) {
-//     //     console.log("DONE");
-//     //     res.send("Hello");
-//
-//         // var correct = (snapshot.val() !== null && snapshot.val().info.password == req.body.thepass.toString() && req.body.thuser.toString() == snapshot.val().info.username);
-//         // if (correct) {
-//         //     currentuser = snapshot.val().info.username;
-//         //     res.send({redirectUrl: "/landing.html"});
-//         //
-//         // } else {
-//         //     correct = false;
-//         // }
-//         // if (!correct) {
-//         //     res.send({redirectUrl: "" ,display: "inline", uerror: ["has-error", "inputError1", "Username/Password Incorrect"]});
-//         // }
-//     });
-//
-//
-//
-// });
 
 app.get('/user', function (req, res) {
     console.log("Getting current user in the backend");
