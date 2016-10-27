@@ -63,4 +63,33 @@ Henry - Get login and signup to check that existing users cant sign up again and
         - Test Login and signup with jasmine
 
         Jasmine tests are located in login.html and landing.html
+	
+	
+	
+	
+	
+	
+HW7
+
+Step 1: Setup Heroku Hosting
+https://boiling-harbor-24320.herokuapp.com/
+ 
+Step 2: Node.JS Backend
+Henry - Created backend for landing.html and login.html, 
+Backend does all interactions with firebase which are 
+	1) Checking if user trying to login exists
+	2) loginning in a user when he correctly enters credentials
+	3) Allowing user to signup
+	4) Loggining in a user who signs up
+	5) Allowing user to select subreddits that they search to follow and remove (plus and remove icons next to searched results)
+	
+ 
+In order to protect the security of your web app’s data, you will rearchitect your web app so that (1) all write interactions with Firebase from require authentication (using a special service key, as described in the ImmutableTodo example - https://github.com/gmu-swe432/lecture14demos/tree/master/immutabletodoserver ), (2) only the backend is authenticated to write to Firebase. In order to persist data to Firebase, you should pass data first to your Node.JS backend. Your Node.JS backend should support a RESTful interface for your web apps data, describing at least 3 resources using unique URIs and using the appropriate HTTP actions for interacting with these resources. Additionally, you should ensure that all of the static files in your web app (e.g., HTML, CSS, and client side JS) are served to the client through your Node.JS backend.
+ 
+Step 3: File Upload
+Ashmmita - Programmed an image upload option where the user can upload a profile image when he signs up
+Henry - Integreated this feature with the rest of the code so that when signup button is clicked, all user data get stored in firebase 
+	image is displayed in the homepage (formatting needed)
+ 
+Submission Instructions
 
