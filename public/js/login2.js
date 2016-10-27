@@ -38,7 +38,7 @@ var LoginBox = React.createClass({
         var user = this.state.user;
         var pass = this.state.pass;
         var correct = false;
-        $.get("http://localhost:3000/login", {user: user, pass: pass}).then(function (data) {
+        $.get("/login", {user: user, pass: pass}).then(function (data) {
             console.log("THE URL IS " + data.url);
 
             if (data.url == null || data.url == "") {
@@ -167,7 +167,7 @@ var SignupBox = React.createClass({
                     var formData = new FormData($("#newItemForm")[0]);
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:3000/signup",
+                        url: "/signup",
                         data: formData, processData: false,
                         contentType: false,
                         success: function (output) {

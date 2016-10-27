@@ -30,7 +30,7 @@ var LandingPage = React.createClass({
             loggedin=true;
             console.log("IN SET USER " + user);
             this.setState({theuser: user});
-            $.get("http://localhost:3000/img", {user: user}).then(function (data) {
+            $.get("/img", {user: user}).then(function (data) {
                 createTodo(data.img);
 
             });
@@ -42,7 +42,7 @@ var LandingPage = React.createClass({
     },
     componentDidMount: function (e) {
         console.log("CALLING GET COOKIE from landing");
-        $.get("http://localhost:3000/cookie", {}).then(function (data) {
+        $.get("/cookie", {}).then(function (data) {
             this.setUser(data.user);
         }.bind(this));
     },
@@ -206,7 +206,7 @@ var Result = React.createClass({
     },
     addSub: function () {
         this.setState({donthave: false});
-        $.post("http://localhost:3000/addSub", {
+        $.post("/addSub", {
             user: this.state.theuser,
             sub: this.props.display_name,
             subid: this.props.id
@@ -215,7 +215,7 @@ var Result = React.createClass({
     removeSub: function () {
         this.setState({donthave: true});
         $.ajax({
-            url: "http://localhost:3000/removeSub",
+            url: "/removeSub",
             type: 'DELETE',
             data: {user: this.state.theuser, sub: this.props.display_name, subid: this.props.id},
             success: function (output) {
@@ -224,7 +224,7 @@ var Result = React.createClass({
     },
     render: function () {
         if (this.state.initial == 1) {
-            $.get("http://localhost:3000/cookie", {}).then(function (data) {
+            $.get("/cookie", {}).then(function (data) {
                 this.setUser(data.user);
 
             }.bind(this));
