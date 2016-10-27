@@ -3,21 +3,62 @@ var totalsearchitems = 0;
 var counter = 0;
 var data = [];
 var formdata = [];
-
+var curruser = "";
 var donedata = {"name": "flare", "children": []};
 var circledata = {"name": "flare", "children": []};
+var loggedin=false;
+
+
+function createTodo(img)
+{
+    if(img != "no" || $('#mimg').children.length ==0)
+    {
+        console.log($('#mimg').children.length);
+        $('#musername').append(
+            '<div id="mimg"><img src="'+img+'"</div>'
+        );
+    }
+}
+
 
 var LandingPage = React.createClass({
+    getInitialState: function () {
+        return {theuser: curruser, results: [], text: '', id: ++count, terms: []};
+    },
+    setUser: function (user) {
+        if(!loggedin){
+            loggedin=true;
+            console.log("IN SET USER " + user);
+            this.setState({theuser: user});
+            $.get("/img", {user: user}).then(function (data) {
+                createTodo(data.img);
 
+            });
+
+
+
+        }
+
+    },
+    componentDidMount: function (e) {
+        console.log("CALLING GET COOKIE from landing");
+        $.get("/cookie", {}).then(function (data) {
+            this.setUser(data.user);
+        }.bind(this));
+    },
     render: function () {
-
         return (
             <div key={++count} className="landingpage">
+
                 <div className="alien_img">
                     <img src="img/alien.png"/>
                 </div>
-                <SearchBox />
-
+                <div className="profile">
+                    <div id="musername">
+                        <p>{this.state.theuser}</p>
+                    </div>
+                </div>
+                <SearchBox theuser={this.state.theuser}/>
                 <TopicBox />
             </div>
         );
@@ -30,18 +71,13 @@ var SearchBox = React.createClass({
         return {results: [], text: '', id: ++count, terms: []};
     },
     componentDidMount: function (e) {
-
         ReactDOM.findDOMNode(this.refs.searchInput).focus();
         this.refreshLoadedData(this.state.terms);
-
     },
     onChange: function (e) {
-
         e.preventDefault();
         this.setState({text: e.target.value});
     },
-
-
     deleteTerm: function (term) {
         var items = this.state.terms.filter(function (el) {
             return term.id !== el.id;
@@ -51,13 +87,10 @@ var SearchBox = React.createClass({
             terms: items
         });
     },
-
-
     refreshLoadedData: function (terms) {
         if (terms.length > 0) {
             data = [];
             var num = 50 / totalsearchitems;
-
             counter = 0;
             terms.map(function (term) {
                 counter++;
@@ -106,19 +139,12 @@ var SearchBox = React.createClass({
             var chi = {"name": item.display_name, "url": item.url, "size": item.sub};
             items2.children[0].children.push(chi);
         });
-
-
         circledata.children.push(items2);
-
-        createCirclemap();
-
+        // createCirclemap();
     },
     searchTerms: function () {
         data = [];
-
         this.refreshLoadedData(this.state.terms);
-
-
     },
     handleNewWord: function (e) {
         e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
@@ -126,84 +152,100 @@ var SearchBox = React.createClass({
         var keyCode = e.keyCode || e.which;
         if (keyCode == '13' && this.value != "") {
             totalsearchitems += 1;
-
             var nextTerms = this.state.terms.concat([{text: this.state.text, id: ++count}]);
             var nextText = '';
             this.setState({terms: nextTerms, text: nextText});
-
         }
-
     },
     render: function () {
         return (
-
             <section className="jumbotron text-center button_search center ">
-
-
                 <div className="row">
                     <div className="connecttofacebook">
                         <button className="facebookbutton">
                             Connect with Facebook
                         </button>
                     </div>
-
                     <h3> Or enter a list of your interests to get recommended subreddits!</h3>
-
                     <div key={this.props.id} id="interest_list" className="searchBox interest_list">
                         <label>I like</label>
                         <input type="text" ref="searchInput" onChange={this.onChange}
                                onKeyUp={this.handleNewWord}
                                value={this.state.text} id="searchterms" placeholder=" dogs"/>
                         <p>Press enter to add term</p>
-
                         <SearchList terms={this.state.terms} deleteTerm={this.deleteTerm}/>
-
-
                         <button onClick={this.searchTerms} id="searchnow">Search for Subreddits</button>
-
                         <div id="circle"></div>
                         <ResultList results={this.state.results}/>
-
-
                     </div>
                 </div>
-            </section>
-        )
-            ;
+            </section>);
     }
-
 });
 
 var ResultList = React.createClass({
     render: function () {
-
         return (
             <div key={++count} id="searchresults" className="searchresults">
                 {this.props.results.map(function (result) {
                     return (
-
-                        <Result key={result.id} display_name={result.display_name} url={result.url}/>
-
-
+                        <Result key={result.id} id={result.id} display_name={result.display_name} url={result.url}/>
                     );
                 })}
             </div>
         );
-
-
     }
 });
 var Result = React.createClass({
-
+    getInitialState: function () {
+        return {theuser: "", donthave: true, initial: 1};
+    },
+    setUser: function (user) {
+        console.log("IN SET USER " + user);
+        this.setState({initial: 0, theuser: user});
+    },
+    addSub: function () {
+        this.setState({donthave: false});
+        $.post("/addSub", {
+            user: this.state.theuser,
+            sub: this.props.display_name,
+            subid: this.props.id
+        });
+    },
+    removeSub: function () {
+        this.setState({donthave: true});
+        $.ajax({
+            url: "/removeSub",
+            type: 'DELETE',
+            data: {user: this.state.theuser, sub: this.props.display_name, subid: this.props.id},
+            success: function (output) {
+            }.bind(this)
+        });
+    },
     render: function () {
+        if (this.state.initial == 1) {
+            $.get("/cookie", {}).then(function (data) {
+                this.setUser(data.user);
+
+            }.bind(this));
+        }
+
         return (
 
+            <div key={this.props.id} className="resultnode">
+                <a className="sublink" href={"https://www.reddit.com" + this.props.url}>
 
-            <a key={this.props.id} href={"https://www.reddit.com" + this.props.url}>
-                <div className="suggestedSub">
                     {this.props.display_name}
-                </div>
-            </a>
+
+                </a>
+                { this.state.donthave ? <a className="pluslink" onClick={this.addSub}>
+                    <i className="fa fa-plus" aria-hidden="true"></i>
+                </a> : null }
+                { this.state.donthave == false ? <a className="removelink" onClick={this.removeSub}>
+                    <i className="fa fa-times" aria-hidden="true"></i>
+                </a> : null }
+
+            </div>
 
 
 
@@ -240,9 +282,7 @@ var SearchList = React.createClass({
 
 
 var SearchListItem = React.createClass({
-
     render: function () {
-
         return (
             <div key={this.props.id} className="termitems">
                 <div className="searchterm termitem">{this.props.text}</div>
@@ -318,7 +358,7 @@ var TopicBox = React.createClass({
                 });
 
             }
-            donedata.children.push(items)
+            donedata.children.push(items);
             createTreemap();
 
         });
@@ -484,8 +524,6 @@ function createTreemap() {
         .style("top", margin.top + "px");
 
     var root = donedata;
-
-
     var node = div.datum(root).selectAll(".node")
         .data(treemap.nodes)
         .enter()
@@ -498,7 +536,6 @@ function createTreemap() {
         .text(function (d) {
             return d.children ? null : d.name;
         });
-
 
     d3.selectAll("input").on("change", function change() {
         var value = this.value === "count"
@@ -515,8 +552,6 @@ function createTreemap() {
             .duration(1500)
             .call(position);
     });
-
-
     function position() {
         this.style("left", function (d) {
             return d.x + "px";
@@ -533,11 +568,7 @@ function createTreemap() {
     }
 
 }
-
-
 function createCirclemap() {
-
-
     var diameter = 960,
         format = d3.format(",d"),
         color = d3.scale.category20c();

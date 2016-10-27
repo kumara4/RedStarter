@@ -7,6 +7,10 @@
     background-color: #FF8F86;
 }
 
+#mimg img{
+    width: 15%;
+}
+
 .TopicBox li {
     background-color: inherit;
 }
@@ -125,29 +129,46 @@ Facebook Button and Search section
     display: inline-block;
     background-color: #F48F36;
     text-decoration: none;
+}
+
+.resultnode{
+    display: inline-block;
+}
+.pluslink, .removelink{
+    height: 40px;
     margin: 8px 8px;
-    padding: 0px 5px;
+    margin-left: 0px;
+    padding: 0px 6px;
+}
+.sublink{
+    height: 40px;
+    margin: 8px 8px;
+    margin-right: 0px;
+    padding: 0px 6px;
+
+
+
 }
 
-.suggestedSub{
-    border: 2px dashed transparent;
-
-    color: #FFFFFF;
-
-    resize: none;
-    background: none;
-    outline: none;
-    font-family: "Source Sans Pro",sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    font-size: 15px;
-    line-height: 40px;
+/*.suggestedSub{*/
 
 
-    border-bottom: #a90f03;
-}
+    /*color: #FFFFFF;*/
+
+    /*resize: none;*/
+    /*background: none;*/
+    /*outline: none;*/
+    /*font-family: "Source Sans Pro",sans-serif;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-webkit-box-sizing: border-box;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+    /*font-size: 15px;*/
+    /*line-height: 40px;*/
+
+
+    /*border-bottom: #a90f03;*/
+/*}*/
 .button_search{
     background-color: #FF8F86;
 }

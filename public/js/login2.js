@@ -38,6 +38,7 @@ var LoginBox = React.createClass({
         var user = this.state.user;
         var pass = this.state.pass;
         var correct = false;
+<<<<<<< HEAD
         // this.usersRef = firebase.database().ref("newUsers");
         // this.usersRef.child(user).once('value', function (snapshot) {
         //     console.log("");
@@ -70,6 +71,17 @@ var LoginBox = React.createClass({
         //
         //     }.bind(this)
         // });
+=======
+        $.get("/login", {user: user, pass: pass}).then(function (data) {
+            console.log("THE URL IS " + data.url);
+
+            if (data.url == null || data.url == "") {
+                this.setState({display: "inline", uerror: ["has-error", "inputError1", "Username/Password Incorrect"]});
+            } else {
+                document.location.href = data.url;}
+        }.bind(this));
+
+>>>>>>> gh-pages
 
     },
     handleAdd: function (e) {
@@ -113,6 +125,7 @@ var LoginBox = React.createClass({
 });
 
 
+<<<<<<< HEAD
 var LoginForgot = React.createClass({
 
     render: function () {
@@ -125,6 +138,8 @@ var LoginForgot = React.createClass({
 });
 
 
+=======
+>>>>>>> gh-pages
 var SignupBox = React.createClass({
     mixins: [ReactFireMixin],
 
@@ -144,6 +159,9 @@ var SignupBox = React.createClass({
 
 
     validateSignup: function (e) {
+        e.preventDefault();
+
+        console.log("ENTERED VALIDATESIGNUP");
         var user = this.refs.SignupCredentials.state.user;
         var pass = this.refs.SignupCredentials.state.pass;
         var cpass = this.refs.SignupCredentials.state.passconfirm;
@@ -164,6 +182,10 @@ var SignupBox = React.createClass({
 
         }
         if (user != "") {
+<<<<<<< HEAD
+=======
+            console.log("ENTERED BEFORE USEREF");
+>>>>>>> gh-pages
             this.usersRef.child(user).once('value', function (snapshot) {
                 var exists = (snapshot.val() !== null);
                 if (exists) {
@@ -193,6 +215,7 @@ var SignupBox = React.createClass({
                     alert("You must fill in all fields");
 
                 } else {
+<<<<<<< HEAD
                     var newUser = {
                         'firstname': firstname,
                         'lastname': lastname,
@@ -213,6 +236,24 @@ var SignupBox = React.createClass({
                     //         'password': pass,
                     //     });
                     // document.location.href = "landing.html";
+=======
+
+
+                    var formData = new FormData($("#newItemForm")[0]);
+                    $.ajax({
+                        type: "POST",
+                        url: "/signup",
+                        data: formData, processData: false,
+                        contentType: false,
+                        success: function (output) {
+                            window.location = output.redirectUrl;
+
+                        }.bind(this)
+
+                    });
+
+
+>>>>>>> gh-pages
                 }
 
 
@@ -223,9 +264,9 @@ var SignupBox = React.createClass({
     },
     render: function () {
         ++count;
-
         return (
             <div className="signup-section">
+<<<<<<< HEAD
                 <SignupName ref="SignupName"/>
 
                 <SignupCredentials ref="SignupCredentials" display={this.state.display}
@@ -239,16 +280,23 @@ var SignupBox = React.createClass({
                             id="signupsubmit">Signup
                     </button>
 
+=======
+                <div className="col-lg-12">
+                    <form id="newItemForm" encType="multipart/form-data">
+                        <SignupName ref="SignupName"/>
+                        <SignupCredentials ref="SignupCredentials" display={this.state.display}
+                                           existserror={this.state.existserror}
+                                           confirmpasserror={this.state.confirmpasserror}
+                                           confirmemailerror={this.state.confirmemailerror}/>
+                        <input ref="file" type="file" id="newFile" name="img"/>
+                        <input className="btn btn-primary" onClick={this.validateSignup} id="signupsubmit" type="button"
+                               value="Signup"/>
+                    </form>
+>>>>>>> gh-pages
                 </div>
-
-
             </div>
-
         );
-
     }
-
-
 });
 
 
@@ -269,12 +317,21 @@ var SignupName = React.createClass({
             <div className="fullname-fields">
                 <div className="firstname">
                     <label>First Name:</label>
+<<<<<<< HEAD
                     <input id="name1" type="text" onChange={this.onChangefirst} value={this.state.value}
+=======
+                    <input id="name1" name="firstname" type="text" onChange={this.onChangefirst}
+                           value={this.state.value}
+>>>>>>> gh-pages
                            placeholder="First Name"/>
                 </div>
                 <div className="lastname">
                     <label>Last Name:</label>
+<<<<<<< HEAD
                     <input id="name2" type="text" onChange={this.onChangelast} value={this.state.value}
+=======
+                    <input id="name2" name="lastname" type="text" onChange={this.onChangelast} value={this.state.value}
+>>>>>>> gh-pages
                            placeholder="Last Name"/>
                 </div>
             </div>
@@ -336,14 +393,23 @@ var SignupCredentials = React.createClass({
             <div className="username-pass-fields">
                 <div className={"row " + this.props.existserror[0]}>
                     <label className={this.props.existserror[1]}>Username</label>
+<<<<<<< HEAD
                     <input id="username" className={this.props.existserror[1]} onChange={this.onChangeUser}
+=======
+                    <input name="username" id="username" className={this.props.existserror[1]}
+                           onChange={this.onChangeUser}
+>>>>>>> gh-pages
                            value={this.state.value} placeholder="Username"/>
                     <p className="warning" style={style}>{this.props.existserror[2]}</p>
                 </div>
                 <div className="password-fields">
                     <div className={"row " + this.props.confirmpasserror[0]}>
                         <label className={this.props.confirmpasserror[1]}>Password</label>
+<<<<<<< HEAD
                         <input id="password" className={this.props.confirmpasserror[1]}
+=======
+                        <input name="password" id="password" className={this.props.confirmpasserror[1]}
+>>>>>>> gh-pages
                                onChange={this.onChangePass} value={this.state.value} placeholder="Password"/>
                         <p className="warning" style={style}>{this.props.confirmpasserror[2]}</p>
                     </div>
@@ -357,7 +423,11 @@ var SignupCredentials = React.createClass({
                     </div>
                     <div className={"row " + this.props.confirmemailerror[0]}>
                         <label className={this.props.confirmemailerror[1]}>Email:</label>
+<<<<<<< HEAD
                         <input id="email" type="email" className={this.props.confirmemailerror[1]}
+=======
+                        <input id="email" name="email" type="email" className={this.props.confirmemailerror[1]}
+>>>>>>> gh-pages
                                onChange={this.onChangeEmail} value={this.state.value} placeholder="Email"/>
                         <p className="warning" style={style}>{this.props.confirmemailerror[2]}</p>
                     </div>
@@ -368,9 +438,12 @@ var SignupCredentials = React.createClass({
                                placeholder="Confirm Email"/>
 
                     </div>
+<<<<<<< HEAD
                     <div id="photo"></div>
 
                     <form id="newItemForm" action="/todo" method="post" enctype="multipart/form-data"><input type="text" id="newTodo" name="todoText" /><input type="file" id="newFile" name="img" /><input onClick={this.onSubmit} type="submit" value="Upload Picture" /></form>
+=======
+>>>>>>> gh-pages
 
                 </div>
             </div>
