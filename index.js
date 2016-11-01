@@ -51,38 +51,38 @@ var responce = "";
 
 //UPLOAD IMAGE ON GOOGLEDOC
 //From https://cloud.google.com/nodejs/getting-started/using-cloud-storage
-function sendUploadToGCS (req, res, next) {
-    if (!req.file) {
-        return next();
-    }
-
-    var gcsname = Date.now() + req.file.originalname;
-    var file = bucket.file(gcsname);
-
-
-    var stream = file.createWriteStream({
-        metadata: {
-            contentType: req.file.mimetype
-        }
-    });
-
-    stream.on('error', function (err) {
-        req.file.cloudStorageError = err;
-        next(err);
-    });
-
-    stream.on('finish', function () {
-        req.file.cloudStorageObject = gcsname;
-        req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
-        var options = {
-            entity: 'allUsers',
-            role: gcs.acl.READER_ROLE
-        };
-        file.acl.add(options, function(a,e){next();});//Make file world-readable; this is async so need to wait to return OK until its done
-    });
-
-    stream.end(req.file.buffer);
-}
+// function sendUploadToGCS (req, res, next) {
+//     if (!req.file) {
+//         return next();
+//     }
+//
+//     var gcsname = Date.now() + req.file.originalname;
+//     var file = bucket.file(gcsname);
+//
+//
+//     var stream = file.createWriteStream({
+//         metadata: {
+//             contentType: req.file.mimetype
+//         }
+//     });
+//
+//     stream.on('error', function (err) {
+//         req.file.cloudStorageError = err;
+//         next(err);
+//     });
+//
+//     stream.on('finish', function () {
+//         req.file.cloudStorageObject = gcsname;
+//         req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+//         var options = {
+//             entity: 'allUsers',
+//             role: gcs.acl.READER_ROLE
+//         };
+//         file.acl.add(options, function(a,e){next();});//Make file world-readable; this is async so need to wait to return OK until its done
+//     });
+//
+//     stream.end(req.file.buffer);
+// }
 
 
 //SET COOKIES TO TRACK USER
@@ -125,24 +125,24 @@ app.get('/login',  function (req, res) {
 
 
 //Store new user info in firebase
-app.post('/signup', uploader.single("img"), sendUploadToGCS, function (req, res, next) {
-    var newUser = {
-        'firstname': req.body.firstname,
-        'lastname': req.body.lastname,
-        'email': req.body.email,
-        'username': req.body.username,
-        'password': req.body.password,
-    };
-    console.log("Client wants to signup a newuser with username" + req.body.username);
-    fireRef.child(req.body.username.toString()).set({"info": newUser}, function () {
-        console.log("COOKIE CREATED in signup");
-
-
-    });
-    var subRef = firebase.database().ref('newUsers/'+req.body.username.toString());
-    subRef.child("img").set({"img":getPublicUrl(req.file.cloudStorageObject)});
-    res.cookie("currentuser", req.body.username.toString()).send({redirectUrl: "/landing.html"});
-});
+// app.post('/signup', uploader.single("img"), sendUploadToGCS, function (req, res, next) {
+//     var newUser = {
+//         'firstname': req.body.firstname,
+//         'lastname': req.body.lastname,
+//         'email': req.body.email,
+//         'username': req.body.username,
+//         'password': req.body.password,
+//     };
+//     console.log("Client wants to signup a newuser with username" + req.body.username);
+//     fireRef.child(req.body.username.toString()).set({"info": newUser}, function () {
+//         console.log("COOKIE CREATED in signup");
+//
+//
+//     });
+//     var subRef = firebase.database().ref('newUsers/'+req.body.username.toString());
+//     subRef.child("img").set({"img":getPublicUrl(req.file.cloudStorageObject)});
+//     res.cookie("currentuser", req.body.username.toString()).send({redirectUrl: "/landing.html"});
+// });
 
 
 //Helper to get the a current useer (Not used)
