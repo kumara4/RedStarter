@@ -29,6 +29,9 @@
 
 }
 
+#mainpage{
+    margin-top: 100px;
+}
 .subredditTitle a, .cTitle a, .cComNum a{
     color: #FFFFFF;
 
