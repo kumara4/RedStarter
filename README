@@ -94,3 +94,21 @@ Henry - Integreated this feature with the rest of the code so that when signup b
  
 Submission Instructions
 
+
+
+
+HW8:
+
+Part 2
+ 3 Scenarios that work fully:
+    The user can login through a custom login menu and signup on that page as well
+    The user can search terms that they want subreddit suggestions from
+    The user can follow or unfollow certain subreddits that the search produces, these will be tracekd in their firebase node
+ 
+    The user can view catergories of subreddits by clicking on each section 
+ Part 1
+ +Contributions:
+ +- Ashmita: Connected to Facebook using OAuth
+ +- Henry: Integrated oauth to existing custom signup and login page so the user logs in first through custom and then connect their fb to that account (In the future we will only have fb login)   
+
+
