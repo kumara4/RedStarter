@@ -44,8 +44,12 @@ var FacebookSignin = React.createClass({
     },
     render: function() {
         return(
-            <input class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
+        <div className="col-lg-12">
+            <input class="fb-login-button btn btn-primary"  data-size="xlarge"
                    type="button" value="Log In" onClick={this.fbsignin}/>
+        </div>
+
+
         );
     }
 
