@@ -6,16 +6,82 @@ var formdata = [];
 var curruser = "";
 var donedata = {"name": "flare", "children": []};
 var circledata = {"name": "flare", "children": []};
-var loggedin=false;
+var loggedin = false;
 
 
-function createTodo(img)
-{
-    if(img != "no" || $('#mimg').children.length ==0)
-    {
+//Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
+    authDomain: "redstarter-b0908.firebaseapp.com",
+    databaseURL: "https://redstarter-b0908.firebaseio.com",
+    storageBucket: "redstarter-b0908.appspot.com",
+    messagingSenderId: "122153615057"
+};
+
+firebase.initializeApp(config);
+
+var userName;
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        $("#header").show();
+        $("#firebaseui-auth-container").hide();
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var uid = user.uid;
+        userName = user.uid;
+
+
+        var providerData = user.providerData;
+        user.getToken().then(function (accessToken) {
+            document.getElementById('sign-in-status').textContent = "Welcome, " + displayName;
+            document.getElementById('account-details').textContent = JSON.stringify({
+                displayName: displayName,
+                email: email,
+                emailVerified: emailVerified,
+                photoURL: photoURL,
+                uid: uid,
+                accessToken: accessToken,
+                providerData: providerData
+            }, null, '  ');
+        });
+    } else {
+        console.log("Signed out");
+        // User is signed out.
+        $("#header").hide();
+        // FirebaseUI config.
+        var uiConfig = {
+            'signInSuccessUrl': '/', //URL that we get sent BACK to after logging in
+            'signInOptions': [
+                // Leave the lines as is for the providers you want to offer your users.
+               // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+//            firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+//            firebase.auth.GithubAuthProvider.PROVIDER_ID,
+//                    firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // Terms of service url.
+            'tosUrl': '<your-tos-url>',
+        };
+
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+        $("#container").hide();
+    }
+}, function (error) {
+    console.log(error);
+});
+
+
+function createTodo(img) {
+    if (img != "no" || $('#mimg').children.length == 0) {
         console.log($('#mimg').children.length);
         $('#musername').append(
-            '<div id="mimg"><img src="'+img+'"</div>'
+            '<div id="mimg"><img src="' + img + '"</div>'
         );
     }
 }
@@ -23,18 +89,35 @@ function createTodo(img)
 
 var LandingPage = React.createClass({
     getInitialState: function () {
-        return {theuser: curruser, results: [], text: '', id: ++count, terms: []};
+        return {loggedin: "false", theuser: curruser, results: [], text: '', id: ++count, terms: []};
     },
-    setUser: function (user) {
-        if(!loggedin){
-            loggedin=true;
-            console.log("IN SET USER " + user);
-            this.setState({theuser: user});
-            $.get("/img", {user: user}).then(function (data) {
-                createTodo(data.img);
-
-            });
-
+    setUser: function (data) {
+        if (this.state.loggedin == "false") {
+            loggedin = true;
+            console.log("IN SET USER ");
+            var tcount = 0;
+//             for (var i in localStorage) {
+//                 console.log(localStorage[i]);
+//                 console.log("T COUNT");
+//                 console.log(tcount++);
+//             }
+//
+// //test for firefox 3.6 see if it works
+// //with this way of iterating it
+//             for (var i = 0, len = localStorage.length; i < len; i++) {
+//                 var key = localStorage.key(i);
+//                 var value = localStorage[key];
+//                 console.log(key + " => " + value);
+//             }
+            if (data.user) {
+                this.setState({theuser: data.user, loggedin: "true"});
+                $.get("/img", {user: user}).then(function (data) {
+                    createTodo(data.img);
+                });
+            }
+            if (data.fbuser) {
+                this.setState({photo: data.photo, theuser: data.fbuser, loggedin: "true"});
+            }
 
 
         }
@@ -42,8 +125,24 @@ var LandingPage = React.createClass({
     },
     componentDidMount: function (e) {
         console.log("CALLING GET COOKIE from landing");
+        // var fbdata = localStorage[0];
+        // console.log(fbdata);
+        // console.log(localStorage.length);
+        // for(var i=0, len=localStorage.length; i<len; i++) {
+
+
+        //GOT IT
+        var key = localStorage.key(1);
+        var value = localStorage[key];
+        var myObject = JSON.parse(value);
+        console.log(key + " => " + value);
+
+        console.log("THECOUNT" + myObject.uid);
+
+
         $.get("/cookie", {}).then(function (data) {
-            this.setUser(data.user);
+            this.setUser(data);
+
         }.bind(this));
     },
     render: function () {
@@ -68,11 +167,12 @@ var LandingPage = React.createClass({
 
 var SearchBox = React.createClass({
     getInitialState: function () {
-        return {results: [], text: '', id: ++count, terms: []};
+        return {theuser: "" ,results: [], text: '', id: ++count, terms: []};
     },
     componentDidMount: function (e) {
         ReactDOM.findDOMNode(this.refs.searchInput).focus();
         this.refreshLoadedData(this.state.terms);
+
     },
     onChange: function (e) {
         e.preventDefault();
@@ -147,6 +247,7 @@ var SearchBox = React.createClass({
         this.refreshLoadedData(this.state.terms);
     },
     handleNewWord: function (e) {
+        alert(this.props.theuser);
         e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
@@ -157,12 +258,44 @@ var SearchBox = React.createClass({
             this.setState({terms: nextTerms, text: nextText});
         }
     },
+    handleAdd: function (prov) {
+        prov.addScope('user_likes');
+        firebase.auth().signInWithPopup(prov)
+            .then(this.handleauth)
+            .catch(function(error) {
+
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                console.log(errorCode + ": ERROR WHEN AUTHENTICATING" + errorMessage);
+            });
+
+
+    },
+    handleauth(dat){
+        console.log("LOGGGGGGG");
+        var theuser = this.props.theuser;
+        firebase.auth().currentUser.getToken().then(function(idToken) {
+            $.ajax({
+                url: "/savefbuser",
+                type: 'POST',
+                data: {user: theuser, token: idToken},
+
+            });
+
+        }.bind(this));
+
+    },
     render: function () {
         return (
             <section className="jumbotron text-center button_search center ">
                 <div className="row">
                     <div className="connecttofacebook">
-                        <button className="facebookbutton">
+                        <button onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())} className="facebookbutton">
                             Connect with Facebook
                         </button>
                     </div>
@@ -491,15 +624,10 @@ var Comment = React.createClass({
     }
 });
 
-
 ReactDOM.render(
-    <LandingPage />
-
-    ,
+    <LandingPage />,
     document.getElementById('mainpage')
 );
-
-
 function createTreemap() {
 
 

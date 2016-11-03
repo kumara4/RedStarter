@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <!--
 Authors: Ashmita Kumar and Henry Lopez
@@ -40,63 +42,43 @@ Login: Page that user sees when they need to Log in to use the website.
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <script type="text/javascript"></script>
-    <!--<script type="text/babel" src="js/login2.js"></script>-->
-    <script type="text/babel" src="js/login3.js"></script>
+    <script type="text/babel" src="js/login2.js"></script>
 
-    <!--FACEBOOK AUTH-->
+
+
     <script src="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css"/>
-
-
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css" />
     <!--JASMINE-->
+
+
     <!--<script type="text/javascript" src="jasmine/lib/jasmine-2.5.2/jasmine.js"></script>-->
     <!--<script type="text/javascript" src="jasmine/lib/jasmine-2.5.2/jasmine-html.js"></script>-->
     <!--<script type="text/javascript" src="jasmine/lib/jasmine-2.5.2/boot.js"></script>-->
     <!--<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.5.2/jasmine.css">-->
+
+
     <!--<script src="spec/LoginSpec.js"></script>-->
 
 
 </head>
 <body>
 
-<script>
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '812444982191259',
-            xfbml: true,
-            version: 'v2.6'
-        });
-    };
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-            return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
-
 <div class="alien_img">
     <img src="img/alien.png"/>
 </div>
+<!-- The surrounding HTML is left untouched by FirebaseUI.
+       Your app may use that space for branding, controls and other customizations.-->
+<h1>Welcome to My Awesome App</h1>
+<div id="firebaseui-auth-container"></div>
+<div id="signupbox"></div>
+
+
+<script type="text/javascript">
 
 
 
-<script type="text/babel"></script>
-<div id="signupbox">
 
-</div>
-
-<div id="fblogin" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"
-     onClick="fbSignin()"></div>
-
-
-
+</script>
 
 </body>
 </html>

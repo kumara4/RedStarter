@@ -1,28 +1,36 @@
+
 "use strict";
 var count = 1;
 
 
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
-    authDomain: "redstarter-b0908.firebaseapp.com",
-    databaseURL: "https://redstarter-b0908.firebaseio.com",
-    storageBucket: "redstarter-b0908.appspot.com",
-    messagingSenderId: "122153615057"
-};
-firebase.initializeApp(config);
+
+
+
+
+
+
+
+
 
 
 var LoginBox = React.createClass({
     mixins: [ReactFireMixin],
 
     getInitialState: function () {
-        return {user: "", pass: "", newUsers: [], uerror: ["", "", ""], display: "none"};
+        return {uid:'',user: "", pass: "", newUsers: [], uerror: ["", "", ""], display: "none"};
     },
 
     componentWillMount: function () {
-        this.usersRef = firebase.database().ref("newUsers");
-        //this.bindAsArray(this.userRef, "newUsers");
+      //  this.usersRef = firebase.database().ref("newUsers");
+        // firebase.auth().onAuthStateChanged(function(user) {
+        //     console.log("user login cpmincount " );
+        //     console.log(user);
+        //     if (user) {
+        //         this.handleauth(user);
+        //     } else {
+        //         // No user is signed in.
+        //     }
+        // }.bind(this));
     },
     onChangePass: function (e) {
 
@@ -49,20 +57,41 @@ var LoginBox = React.createClass({
 
 
     },
-    handleAdd: function (e) {
-        e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
-        this.setState({user: this.state.user, pass: this.state.pass});
-        this.accessFirebase(this.state.user, this.state.pass);
 
-
-    },
+    // handleauth(dat){
+    //     var authData = dat.user || dat;
+    //    // IN HERE SET IT UP SO WHEN i RETEIVE FACEBOOK DATA, I AM ABLE TO CHECK DATABSE TO SE IF USER EXISTS, IF NOT SAVE HIM TO DB AND PROCEED TO LANDING
+    //     var userRef = firebase.database().ref('newUsers/' + authData.uid);
+    //     userRef.on('value',(snapshot) => {
+    //         var data = snapshot.val() || {};
+    //         if(!data.uid){
+    //             userRef.set({
+    //                 uid: authData.uid,
+    //                 email: authData.email,
+    //                 photo: authData.photoURL,
+    //                 name: authData.displayName
+    //             });
+    //         }
+    //         this.setState({
+    //             uid: authData.uid,
+    //
+    //         });
+    //         window.location = "landing.html";
+    //     });
+    //     console.log("GOT DATA");
+    //     console.log(authData);
+    // },
 
     render: function () {
         ++count;
         var style = {display: this.props.display};
+
         return (
 
             <div key={this.props.id} className="row text-center LoginBox">
+                {/*<div className="col-lg-12">*/}
+                    {/*<button className="btn btn-primary auth" onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())} id="login">Signin with Facebook</button>*/}
+                {/*</div>*/}
                 <div className={"col-lg-12 " + this.state.uerror[0]}>
                     <label className={this.state.uerror[1]}>Username: </label>
                     <input id="loginUN" className={this.state.uerror[1]} onChange={this.onChangeUser}
@@ -103,7 +132,7 @@ var SignupBox = React.createClass({
     },
 
     componentWillMount: function () {
-        this.usersRef = firebase.database().ref("newUsers");
+        //this.usersRef = firebase.database().ref("newUsers");
         //this.bindAsArray(this.usersRef, "newUsers");
     },
 
@@ -121,8 +150,8 @@ var SignupBox = React.createClass({
         var lastname = this.refs.SignupName.state.lastname;
 
 
-        var userexists = false;
-        this.usersRef = firebase.database().ref("newUsers");
+       // var userexists = false;
+      //  this.usersRef = firebase.database().ref("newUsers");
 
         if (user == "" || pass == "" || cpass == "" || email == "" || cemail == "" || firstname == "" || lastname == "") {
             this.setState({
@@ -133,56 +162,54 @@ var SignupBox = React.createClass({
         }
         if (user != "") {
             console.log("ENTERED BEFORE USEREF");
-            this.usersRef.child(user).once('value', function (snapshot) {
-                var exists = (snapshot.val() !== null);
-                if (exists) {
-                    userexists = true;
-                }
-                if (userexists) {
-                    console.log("user exists");
-                    this.setState({
-                        display: "inline",
-                        existserror: ["has-error", "inputError1", "Username already exists"]
-                    })
-                }
-                else if (email != cemail) {
-                    console.log("email not same");
-                    this.setState({
-                        display: "inline",
-                        confirmemailserror: ["has-error", "inputError1", "Emails do not match"]
-                    })
-                }
-                else if (pass != cpass) {
-                    console.log("pass not same");
-                    this.setState({
-                        display: "inline",
-                        confirmpasserror: ["has-error", "inputError1", "Passwords do not match"]
-                    })
-                } else if (user == "" || pass == "" || cpass == "" || email == "" || cemail == "" || firstname == "" || lastname == "") {
-                    alert("You must fill in all fields");
-
-                } else {
 
 
-                    var formData = new FormData($("#newItemForm")[0]);
-                    $.ajax({
-                        type: "POST",
-                        url: "/signup",
-                        data: formData, processData: false,
-                        contentType: false,
-                        success: function (output) {
+
+                var formData = new FormData($("#newItemForm")[0]);
+                $.ajax({
+                    type: "POST",
+                    url: "/signup",
+                    data: formData, processData: false,
+                    contentType: false,
+                    success: function (output) {
+                        if (output.error == "exists") {
+                            console.log("user exists");
+                            this.setState({
+                                display: "inline",
+                                existserror: ["has-error", "inputError1", "Username already exists"]
+                            })
+                        }
+                        else if (output.error == "confirmemail") {
+                            console.log("email not same");
+                            this.setState({
+                                display: "inline",
+                                confirmemailserror: ["has-error", "inputError1", "Emails do not match"]
+                            })
+                        }
+                        else if (output.error == "confirmpass") {
+                            console.log("pass not same");
+                            this.setState({
+                                display: "inline",
+                                confirmpasserror: ["has-error", "inputError1", "Passwords do not match"]
+                            })
+                        } else if (output.error == "blank") {
+                            alert("You must fill in all fields");
+
+                        } else {
                             window.location = output.redirectUrl;
+                        }
 
-                        }.bind(this)
+                    }.bind(this)
 
-                    });
-
-
-                }
+                });
 
 
-            }, this);
         }
+
+
+
+
+
 
 
     },
@@ -284,7 +311,7 @@ var SignupCredentials = React.createClass({
                     </div>
                     <div className={"row " + this.props.confirmpasserror[0]}>
                         <label className={this.props.confirmpasserror[1]}>Confirm Password</label>
-                        <input id="cpassword" className={this.props.confirmpasserror[1]}
+                        <input id="cpassword" name="cpassword" className={this.props.confirmpasserror[1]}
                                onChange={this.onChangePassCon} value={this.state.value}
                                placeholder="Confirm Password"/>
 
@@ -298,7 +325,7 @@ var SignupCredentials = React.createClass({
                     </div>
                     <div className="row">
                         <label className={this.props.confirmemailerror[1]}>Confirm Email:</label>
-                        <input id="cemail" type="email" className={this.props.confirmemailerror[1]}
+                        <input id="cemail" name="cemail" type="email" className={this.props.confirmemailerror[1]}
                                onChange={this.onChangeConEmail} value={this.state.value}
                                placeholder="Confirm Email"/>
 
@@ -317,3 +344,4 @@ var SignupCredentials = React.createClass({
 ReactDOM.render(
     < LoginBox />, document.getElementById('signupbox')
 );
+
