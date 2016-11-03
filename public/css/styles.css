@@ -233,7 +233,10 @@ ul li a {
 }
 .bigtitle {
     font-family: Arial, Times;
-    color: mediumaquamarine;
+    color: dodgerblue;
+    font-size: 30px;
+    display: inline-block;
+    margin: 10px;
 }
 .email:invalid {
     border: red;

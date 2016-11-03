@@ -51,6 +51,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log("Signed out");
         // User is signed out.
         $("#header").hide();
+        window.location = 'index.html';
         // FirebaseUI config.
         var uiConfig = {
             'signInSuccessUrl': '/', //URL that we get sent BACK to after logging in

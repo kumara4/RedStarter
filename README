@@ -92,5 +92,12 @@ Ashmmita - Programmed an image upload option where the user can upload a profile
 Henry - Integreated this feature with the rest of the code so that when signup button is clicked, all user data get stored in firebase 
 	image is displayed in the homepage (formatting needed)
  
-Submission Instructions
+HW8:
+3 Scenarios to test:
+- Click on the "Log In" button, this should open a pop up window. Enter your Facebook information. This should log the user in and take you to landing.html
+- On the landing page, type one term in the input box: "I like..." and hit enter. This should update the "My list of terms:" right under the input box. Type a second term and hit enter. Now click "Search for Subreddits" button. This should generate 50 sub-reddits (if you entered two terms then you should see 25 sub-reddits for each term). 
+- On the top left of the page you see a message "Welcome, Your Name". When you click on the "Sign Out" button next to that, you should be signed out of the website and taken back to the login page.
 
+Contributions:
+- Ashmita: Connected to Facebook using OAuth
+- Henry: Made sure once on Landing page you see the correct user name of signed in user, and once user clicks "Sign Out" the user is signed out and taken back to index.html.    

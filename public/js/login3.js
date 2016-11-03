@@ -12,42 +12,49 @@ var config = {
 };
 firebase.initializeApp(config);
 
+var FacebookSignin = React.createClass({
+    fbsignin: function (e){
+        console.log('inside fbsignin: function(e)');
+        var provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('user_likes');
+        e.preventDefault();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            if(user){
+                var userName = user.uid;
+                var displayName = user.displayName;
+                var email = user.email;
+                console.log(displayName + ' Signed in via Facebook. Email: ' + email);
+                console.log(userName);
+                window.location = 'landing.html';
+            }
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+        });
+
+    },
+    render: function() {
+        return(
+        <div className="col-lg-12">
+            <input class="fb-login-button btn btn-primary"  data-size="xlarge"
+                   type="button" value="Log In" onClick={this.fbsignin}/>
+        </div>
 
 
-var provider = new firebase.auth.FacebookAuthProvider();
-//  get user's likes: https://developers.facebook.com/docs/facebook-login/permissions
-provider.addScope('user_likes');
-// Initialize the FirebaseUI Widget using Firebase.
-firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    if(user){
-        var userName = user.uid;
-        var displayName = user.displayName;
-        var email = user.email;
-        console.log(displayName + ' Signed in via Facebook. Email: ' + email);
-        console.log(userName);
-        window.location = 'landing.html';
+        );
     }
-}).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
+
 });
 
-
-function facebookSignout() {
-    firebase.auth().signOut()
-
-        .then(function () {
-            console.log('Signout successful!')
-        }, function (error) {
-            console.log('Signout failed')
-        });
-}
+ReactDOM.render(
+    < FacebookSignin />, document.getElementById('signupbox')
+);
