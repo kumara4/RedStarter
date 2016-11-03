@@ -132,12 +132,12 @@ var LandingPage = React.createClass({
 
 
         //GOT IT
-        var key = localStorage.key(1);
-        var value = localStorage[key];
-        var myObject = JSON.parse(value);
-        console.log(key + " => " + value);
-
-        console.log("THECOUNT" + myObject.uid);
+        // var key = localStorage.key(1);
+        // var value = localStorage[key];
+        // var myObject = JSON.parse(value);
+        // console.log(key + " => " + value);
+        //
+        // console.log("THECOUNT" + myObject.uid);
 
 
         $.get("/cookie", {}).then(function (data) {
