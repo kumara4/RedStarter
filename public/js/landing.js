@@ -1,14 +1,14 @@
 $(document).ready(function () {
     "use strict";
     // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
-        authDomain: "redstarter-b0908.firebaseapp.com",
-        databaseURL: "https://redstarter-b0908.firebaseio.com",
-        storageBucket: "redstarter-b0908.appspot.com",
-        messagingSenderId: "122153615057"
-    };
-    firebase.initializeApp(config);
+    // var config = {
+    //     apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",
+    //     authDomain: "redstarter-b0908.firebaseapp.com",
+    //     databaseURL: "https://redstarter-b0908.firebaseio.com",
+    //     storageBucket: "redstarter-b0908.appspot.com",
+    //     messagingSenderId: "122153615057"
+    // };
+    // firebase.initializeApp(config);
 
     //GLOBAL VARIABLES
     var sections = ['top', 'rising', 'new', 'controversial', 'hot'];
