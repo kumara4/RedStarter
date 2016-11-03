@@ -51,7 +51,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log("Signed out");
         // User is signed out.
         $("#header").hide();
-        window.location = 'index.html';
         // FirebaseUI config.
         var uiConfig = {
             'signInSuccessUrl': '/', //URL that we get sent BACK to after logging in
@@ -133,12 +132,12 @@ var LandingPage = React.createClass({
 
 
         //GOT IT
-        // var key = localStorage.key(1);
-        // var value = localStorage[key];
-        // var myObject = JSON.parse(value);
-        // console.log(key + " => " + value);
-        //
-        // console.log("THECOUNT" + myObject.uid);
+        var key = localStorage.key(1);
+        var value = localStorage[key];
+        var myObject = JSON.parse(value);
+        console.log(key + " => " + value);
+
+        console.log("THECOUNT" + myObject.uid);
 
 
         $.get("/cookie", {}).then(function (data) {
