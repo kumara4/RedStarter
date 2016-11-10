@@ -52,8 +52,9 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
-    <script type="text" src="js/landing.js"></script>
+    <!--<script type="text" src="js/landing.js"></script>-->
     <script type="text/babel" src="js/landing2.js"></script>
+    <script src="//connect.facebook.net/en_US/sdk.js"></script>
 
 
     <title>RedStarter</title>
@@ -81,7 +82,22 @@ User can begin getting subreddit recommendations, by connecting to Facebook or s
 
 
 <script type="text/babel">
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '812444982191259',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+        FB.AppEvents.logPageView();
+    };
 
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
 </script>
 <style>

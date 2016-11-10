@@ -40,7 +40,13 @@ Login: Page that user sees when they need to Log in to use the website.
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <script type="text/javascript"></script>
+
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css" />
+
   <script type="text/babel" src="js/login2.js"></script>
+  <script src="//connect.facebook.net/en_US/sdk.js"></script>
 
   <!--JASMINE-->
 
@@ -60,9 +66,27 @@ Login: Page that user sees when they need to Log in to use the website.
 <div class="alien_img">
   <img src="img/alien.png"/>
 </div>
-<div id="signupbox"></div>
+
+
+
+<div id="header">
+  <span id="sign-in-status"></span> | <a href="javascript:firebase.auth().signOut()">Sign Out</a>
+</div>
+<div id="firebaseui-auth-container"></div>
+
+<div id="container">
+
+  <div id="signupbox"></div>
+</div>
+<div id="footer">
+  Debug: <span id="account-details"></span>
+</div>
+
+
 
 <script type="text/babel">
+
+
 
 
 
