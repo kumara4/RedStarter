@@ -95,6 +95,28 @@ app.get('/cookie', function (req, res) {
     res.send(data);
 });
 
+app.post('/fbcookie', function (req, res) {
+   // console.log(req);
+
+    if(req.cookies.terms == undefined){
+        console.log("First cookie ");
+        console.log(req.body.addtermtocookie);
+        var ar =[];
+        ar.push(req.body.addtermtocookie);
+        res.cookie("terms", JSON.stringify(ar)).send('Added term!');
+
+    }else{
+        var cookie = [];
+        cookie.push(req.body.addtermtocookie);
+        console.log("the current cookie is");
+        console.log(JSON.parse(req.cookies.terms));
+        var finalcookie = cookie.concat(JSON.parse(req.cookies.terms));
+        console.log("THE TERMS COOKIE about to be pushed is  ");
+        console.log(finalcookie);
+        res.cookie("terms", JSON.stringify(finalcookie)).send('Added term!');
+    }
+});
+
 
 //SET COOKIES TO TRACK USER
 app.post('/savefbuser', function (req, res) {

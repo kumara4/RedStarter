@@ -1,12 +1,16 @@
 var count = 1;
 var totalsearchitems = 0;
 var counter = 0;
+//Search term result data
 var data = [];
 var formdata = [];
 var curruser = "";
 var donedata = {"name": "flare", "children": []};
 var circledata = {"name": "flare", "children": []};
 var loggedin = false;
+
+//Facebook terms
+var fbterms = [];
 
 
 //Initialize Firebase
@@ -22,6 +26,7 @@ firebase.initializeApp(config);
 
 var userName;
 firebase.auth().onAuthStateChanged(function (user) {
+    console.log(user);
     if (user) {
         $("#header").show();
         $("#firebaseui-auth-container").hide();
@@ -36,6 +41,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         var providerData = user.providerData;
         user.getToken().then(function (accessToken) {
+            console.log();
             document.getElementById('sign-in-status').textContent = "Welcome, " + displayName;
             document.getElementById('account-details').textContent = JSON.stringify({
                 displayName: displayName,
@@ -47,36 +53,65 @@ firebase.auth().onAuthStateChanged(function (user) {
                 providerData: providerData
             }, null, '  ');
         });
+
+
+        //MAKE AJAX CALLS TO GET REDDIT SUBREDDITS OF THE LIKES OF YOUR FAEBOOK ACCOUNT
+        var fbtermscookie = $.parseJSON(document.cookie);
+        console.log("Got cookie " + document.cookie);
+        var length = fbtermscookie.length;
+        console.log("fbternscookie length is " + length);
+        fbtermscookie.map(function (term) {
+            console.log("iterating through cookie object ");
+            $.ajax({
+                url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
+                dataType: 'json',
+                cache: false,
+                success: function (output) {
+                    var parent={};
+                    var termchildren=[];
+                    $.each(output.data.children, function (ii, item) {
+                        var sub = {
+                            sub: item.data.subscribers,
+                            url: item.data.url,
+                            display_name: item.data.display_name,
+                            id: item.data.id
+                        };
+                        termchildren.push(sub);
+                    });
+                    parent[term.name] = termchildren;
+                    length--;
+                    if (length == 0) {
+                        fbterms.push(parent);
+                        console.log("Got terms!");
+                        console.log(fbterms);
+                    }
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }, this);
     } else {
         console.log("Signed out");
-        // User is signed out.
-        $("#header").hide();
-        // FirebaseUI config.
-        var uiConfig = {
-            'signInSuccessUrl': '/', //URL that we get sent BACK to after logging in
-            'signInOptions': [
-                // Leave the lines as is for the providers you want to offer your users.
-               // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-//            firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-//            firebase.auth.GithubAuthProvider.PROVIDER_ID,
-//                    firebase.auth.EmailAuthProvider.PROVIDER_ID
-            ],
-            // Terms of service url.
-            'tosUrl': '<your-tos-url>',
-        };
-
-        // Initialize the FirebaseUI Widget using Firebase.
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        // The start method will wait until the DOM is loaded.
-        ui.start('#firebaseui-auth-container', uiConfig);
-        $("#container").hide();
+        facebookSignout();
+        window.location = "index.html";
     }
 }, function (error) {
     console.log(error);
 });
 
 
+
+
+function facebookSignout() {
+    firebase.auth().signOut()
+
+        .then(function () {
+            console.log('Signout successful!')
+        }, function (error) {
+            console.log('Signout failed')
+        });
+}
 function createTodo(img) {
     if (img != "no" || $('#mimg').children.length == 0) {
         console.log($('#mimg').children.length);
@@ -134,7 +169,6 @@ var LandingPage = React.createClass({
         //GOT IT
 
 
-
         $.get("/cookie", {}).then(function (data) {
             this.setUser(data);
 
@@ -162,7 +196,7 @@ var LandingPage = React.createClass({
 
 var SearchBox = React.createClass({
     getInitialState: function () {
-        return {theuser: "" ,results: [], text: '', id: ++count, terms: []};
+        return {theuser: "", results: [], text: '', id: ++count, terms: []};
     },
     componentDidMount: function (e) {
         ReactDOM.findDOMNode(this.refs.searchInput).focus();
@@ -257,7 +291,7 @@ var SearchBox = React.createClass({
         prov.addScope('user_likes');
         firebase.auth().signInWithPopup(prov)
             .then(this.handleauth)
-            .catch(function(error) {
+            .catch(function (error) {
 
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -274,7 +308,7 @@ var SearchBox = React.createClass({
     handleauth(dat){
         console.log("LOGGGGGGG");
         var theuser = this.props.theuser;
-        firebase.auth().currentUser.getToken().then(function(idToken) {
+        firebase.auth().currentUser.getToken().then(function (idToken) {
             $.ajax({
                 url: "/savefbuser",
                 type: 'POST',
@@ -290,11 +324,12 @@ var SearchBox = React.createClass({
             <section className="jumbotron text-center button_search center ">
                 <div className="row">
                     <div className="connecttofacebook">
-                        <button onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())} className="facebookbutton">
+                        <button onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())}
+                                className="facebookbutton">
                             Connect with Facebook
                         </button>
                     </div>
-                    <h3> Or enter a list of your interests to get recommended subreddits!</h3>
+                    <h3> Enter things you find interesting! Press enter to add each term to your list then click the Search</h3>
                     <div key={this.props.id} id="interest_list" className="searchBox interest_list">
                         <label>I like</label>
                         <input type="text" ref="searchInput" onChange={this.onChange}
