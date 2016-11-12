@@ -122,13 +122,13 @@ Facebook Button and Search section
     margin-top: 0px;
 }
 
-#searchresults{
+#searchresults, #sugresults {
     margin-bottom: 30px;
     background-color: #3D9CA5;
     padding: 30px 15px;
     margin-top: 30px;
 }
-#searchresults a{
+#searchresults a, #sugresults a{
     display: inline-block;
     background-color: #F48F36;
     text-decoration: none;

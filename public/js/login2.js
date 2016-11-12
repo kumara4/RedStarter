@@ -25,6 +25,46 @@ var check = 0;
 console.log("CURRENT USER");
 console.log(currentuser);
 var node = [];
+
+var help = [];
+var finaltermcount;
+
+
+function storenames(term, i) {
+    help.push(term);
+    if(finaltermcount-1 == i){
+        gotolanding();
+    }
+}
+function getpages(term, token){
+    finaltermcount = term.length;
+    console.log("finalterm count is " + finaltermcount);
+    $.each(term, function (i, value) {
+        FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
+            storenames(response2, i);
+        });
+
+    });
+
+
+}
+
+function gotolanding(){
+    console.log("see help" + help.length + " " );
+    console.log(help);
+    $.ajax({
+        type: "GET",
+        url: "/fbcookie",
+        data: {hi: help},
+        success: function (output) {
+            window.location = 'landing.html';
+        }
+    });
+
+
+
+}
+
 firebase.auth().onAuthStateChanged(function (user) {
 
     if (currentuser) {
@@ -48,38 +88,32 @@ firebase.auth().onAuthStateChanged(function (user) {
 
                 //GRAB THE USER'S LIKED AGES AND STORE THEM AS A COOKIE
 
-                FB.api(result.user.providerData[0].uid + '/likes', {
+                var fb = FB.api(result.user.providerData[0].uid + '/likes', {
                     fields: 'user_likes',
                     access_token: token
                 }, function (response) {
+                    getpages(response.data, token);
+                    var names=[];
+                    function storenames(name){
+                        names.push(name);
+
+                    }
 
 
                     console.log(response.data);
 
-                    $.each(response.data, function (i, value) {
-                        FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
-                            storefbterm(response2);
 
-                            $.ajax({
-                                url: "/fbcookie",
-                                type: 'POST',
-                                data: {addtermtocookie: response2},
 
-                            });
-
-                        });
-
-                    });
 
                 });
 
-                var help = [];
+                console.log("fb is");
+                console.log(fb);
 
-                function storefbterm(term) {
-                    help.push(term);
-                    console.log(help);
-                    node.push(term);
-                }
+
+
+
+
 
                 // FB.api(result.user.providerData[0].uid+'/music', {fields: 'user_likes', access_token: token}, function (response) {
                 //     var customtermsMusic=[];
@@ -113,19 +147,8 @@ firebase.auth().onAuthStateChanged(function (user) {
                 //     console.log(customtermsTele);
                 //
                 // });
-                console.log("GOT ACCESSTOKEN");
-                console.log(token);
-                // The signed-in user info.
-                var user = result.user;
-                if (user) {
-                    var userName = user.uid;
-                    var displayName = user.displayName;
-                    var email = user.email;
-                    console.log(displayName + ' Signed in via Facebook. Email: ' + email);
-                    console.log(userName);
-                    console.log(document.cookie);
-                    window.location = 'landing.html';
-                }
+
+
             }).catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;

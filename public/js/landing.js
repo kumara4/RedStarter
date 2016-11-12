@@ -1,5 +1,10 @@
 $(document).ready(function () {
     "use strict";
+
+    $('.pluslink').click(function(){
+        alert("hello world");
+    });
+
     // Initialize Firebase
     // var config = {
     //     apiKey: "AIzaSyCr2qQE1PIXTNcRMk5pAecHiiGKYqPp53U",

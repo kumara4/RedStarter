@@ -26,7 +26,7 @@ firebase.initializeApp(config);
 
 var userName;
 firebase.auth().onAuthStateChanged(function (user) {
-    console.log(user);
+    console.log("Hey state changed");
     if (user) {
         $("#header").show();
         $("#firebaseui-auth-container").hide();
@@ -52,45 +52,21 @@ firebase.auth().onAuthStateChanged(function (user) {
                 accessToken: accessToken,
                 providerData: providerData
             }, null, '  ');
+
+
         });
 
 
         //MAKE AJAX CALLS TO GET REDDIT SUBREDDITS OF THE LIKES OF YOUR FAEBOOK ACCOUNT
-        var fbtermscookie = $.parseJSON(document.cookie);
-        console.log("Got cookie " + document.cookie);
-        var length = fbtermscookie.length;
-        console.log("fbternscookie length is " + length);
-        fbtermscookie.map(function (term) {
-            console.log("iterating through cookie object ");
-            $.ajax({
-                url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
-                dataType: 'json',
-                cache: false,
-                success: function (output) {
-                    var parent={};
-                    var termchildren=[];
-                    $.each(output.data.children, function (ii, item) {
-                        var sub = {
-                            sub: item.data.subscribers,
-                            url: item.data.url,
-                            display_name: item.data.display_name,
-                            id: item.data.id
-                        };
-                        termchildren.push(sub);
-                    });
-                    parent[term.name] = termchildren;
-                    length--;
-                    if (length == 0) {
-                        fbterms.push(parent);
-                        console.log("Got terms!");
-                        console.log(fbterms);
-                    }
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
-        }, this);
+        console.log("Make cookie calls ");
+
+       // var length = fbtermscookie.length;
+        $.get("/getfbcookie", {}).then(function (data) {
+            console.log("Got cookie");
+            getFBSubreddits(data);
+        });
+
+
     } else {
         console.log("Signed out");
         facebookSignout();
@@ -101,13 +77,59 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
+function getFBSubreddits(data){
+    data = $.parseJSON(data);
+    var length = data.length;
+    console.log("fbternscookie length is " + length);
+    $.each(data, function (index, term) {
+        console.log("iterating through cookie object ");
+        $.ajax({
+            url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
+            dataType: 'json',
+            cache: false,
+            success: function (output) {
+                var parent={};
+                var termchildren=[];
+                $.each(output.data.children, function (ii, item) {
+                    if(item.data.id != null) {
+                        var sub = {
+                            sub: item.data.subscribers,
+                            url: item.data.url,
+                            display_name: item.data.display_name,
+                            id: item.data.id
+                        };
+                        termchildren.push(sub);
+                    }
+                });
+                if(termchildren.length >0) {
+                    parent['data'] = termchildren;
+                    parent['name'] = term.name;
+                    fbterms.push(parent);
+                    console.log("parent is");
+                    console.log(parent);
+                    displayFBterms(parent);
+                }
+                length--;
+                if (length == 0) {
+                    console.log("Got terms!");
+                    console.log(fbterms);
 
+
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    });
+}
 
 function facebookSignout() {
     firebase.auth().signOut()
 
         .then(function () {
             console.log('Signout successful!')
+
         }, function (error) {
             console.log('Signout failed')
         });
@@ -121,6 +143,24 @@ function createTodo(img) {
     }
 }
 
+function displayFBterms(cat){
+    console.log("setting view for " + cat.name);
+
+    $.each(cat.data, function(index, result){
+        console.log("RESULT IS");
+        console.log(result);
+        $('#sugresults').append(
+            '<div class="resultnode">' +
+            '<a class="sublink" href="https://www.reddit.com' + result.url.toString() + '">'+
+            result.display_name + '</a>   </div>');
+    });
+
+}
+
+
+
+
+
 
 var LandingPage = React.createClass({
     getInitialState: function () {
@@ -131,19 +171,7 @@ var LandingPage = React.createClass({
             loggedin = true;
             console.log("IN SET USER ");
             var tcount = 0;
-//             for (var i in localStorage) {
-//                 console.log(localStorage[i]);
-//                 console.log("T COUNT");
-//                 console.log(tcount++);
-//             }
-//
-// //test for firefox 3.6 see if it works
-// //with this way of iterating it
-//             for (var i = 0, len = localStorage.length; i < len; i++) {
-//                 var key = localStorage.key(i);
-//                 var value = localStorage[key];
-//                 console.log(key + " => " + value);
-//             }
+
             if (data.user) {
                 this.setState({theuser: data.user, loggedin: "true"});
                 $.get("/img", {user: user}).then(function (data) {
@@ -160,15 +188,10 @@ var LandingPage = React.createClass({
     },
     componentDidMount: function (e) {
         console.log("CALLING GET COOKIE from landing");
-        // var fbdata = localStorage[0];
-        // console.log(fbdata);
-        // console.log(localStorage.length);
-        // for(var i=0, len=localStorage.length; i<len; i++) {
 
-
-        //GOT IT
-
-
+        $('.pluslink').click(function(){
+            alert("hello world");
+        });
         $.get("/cookie", {}).then(function (data) {
             this.setUser(data);
 
@@ -185,6 +208,9 @@ var LandingPage = React.createClass({
                     <div id="musername">
                         <p>{this.state.theuser}</p>
                     </div>
+                </div>
+                <div id="sugresults" className="searchresults">
+
                 </div>
                 <SearchBox theuser={this.state.theuser}/>
                 <TopicBox />
@@ -276,7 +302,7 @@ var SearchBox = React.createClass({
         this.refreshLoadedData(this.state.terms);
     },
     handleNewWord: function (e) {
-        alert(this.props.theuser);
+
         e.preventDefault(); // This is, by default, submit button by form. Make sure it isn't submitted.
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
@@ -320,14 +346,16 @@ var SearchBox = React.createClass({
 
     },
     render: function () {
+
         return (
             <section className="jumbotron text-center button_search center ">
                 <div className="row">
                     <div className="connecttofacebook">
-                        <button onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())}
-                                className="facebookbutton">
-                            Connect with Facebook
-                        </button>
+
+                        {/*<button onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())}*/}
+                                {/*className="facebookbutton">*/}
+                            {/*Connect with Facebook*/}
+                        {/*</button>*/}
                     </div>
                     <h3> Enter things you find interesting! Press enter to add each term to your list then click the Search</h3>
                     <div key={this.props.id} id="interest_list" className="searchBox interest_list">
@@ -658,6 +686,11 @@ ReactDOM.render(
     <LandingPage />,
     document.getElementById('mainpage')
 );
+console.log("VIEW SUGGESTIONS");
+console.log(fbterms.length);
+
+
+
 function createTreemap() {
 
 
