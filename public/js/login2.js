@@ -25,6 +25,46 @@ var check = 0;
 console.log("CURRENT USER");
 console.log(currentuser);
 var node = [];
+
+var help = [];
+var finaltermcount;
+
+
+function storenames(term, i) {
+    help.push(term);
+    if(finaltermcount-1 == i){
+        gotolanding();
+    }
+}
+function getpages(term, token){
+    finaltermcount = term.length;
+    console.log("finalterm count is " + finaltermcount);
+    $.each(term, function (i, value) {
+        FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
+            storenames(response2, i);
+        });
+
+    });
+
+
+}
+
+function gotolanding(){
+    console.log("see help" + help.length + " " );
+    console.log(help);
+    $.ajax({
+        type: "GET",
+        url: "/fbcookie",
+        data: {hi: help},
+        success: function (output) {
+            window.location = 'landing.html';
+        }
+    });
+
+
+
+}
+
 firebase.auth().onAuthStateChanged(function (user) {
 
     if (currentuser) {
@@ -46,86 +86,37 @@ firebase.auth().onAuthStateChanged(function (user) {
                 console.log("UID IS IN LOGIN");
                 console.log(result.user.providerData[0].uid);
 
+                //Save the uid in the provder data which is needed to access the FB API in the backend
+                $.get("/fbuidcookie", {fbuid: result.user.providerData[0].uid }).then(function (data) {
+                    console.log("SAVED FBUID");
+                    //Call function to get fb like subreddit data
+                });
                 //GRAB THE USER'S LIKED AGES AND STORE THEM AS A COOKIE
 
-                FB.api(result.user.providerData[0].uid + '/likes', {
+                var fb = FB.api(result.user.providerData[0].uid + '/likes', {
                     fields: 'user_likes',
                     access_token: token
                 }, function (response) {
+                    getpages(response.data, token);
+                    var names=[];
+                    function storenames(name){
+                        names.push(name);
+
+                    }
 
 
                     console.log(response.data);
 
-                    $.each(response.data, function (i, value) {
-                        FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
-                            storefbterm(response2);
 
-                            $.ajax({
-                                url: "/fbcookie",
-                                type: 'POST',
-                                data: {addtermtocookie: response2},
 
-                            });
-
-                        });
-
-                    });
 
                 });
 
-                var help = [];
 
-                function storefbterm(term) {
-                    help.push(term);
-                    console.log(help);
-                    node.push(term);
-                }
 
-                // FB.api(result.user.providerData[0].uid+'/music', {fields: 'user_likes', access_token: token}, function (response) {
-                //     var customtermsMusic=[];
-                //     console.log("MUSIC");
-                //     console.log(response.data);
-                //     $.each(response.data, function(i, value){
-                //         FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
-                //             console.log(response2);
-                //             customtermsMusic.push(response2);
-                //
-                //         });
-                //     });
-                //     document.cookie = "{music:" +customtermsMusic+'}';
-                //     console.log("music");
-                //     console.log(customtermsMusic);
-                // });
-                //
-                // FB.api(result.user.providerData[0].uid+'/television', {fields: 'user_likes', access_token: token}, function (response) {
-                //     var customtermsTele=[];
-                //     console.log("TELE");
-                //     console.log(response.data);
-                //     $.each(response.data, function(i, value){
-                //         FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
-                //             console.log(response2);
-                //             customtermsTele.push(response2);
-                //
-                //         });
-                //     });
-                //     document.cookie = "{tele:" +customtermsTele+'}';
-                //     console.log("tele");
-                //     console.log(customtermsTele);
-                //
-                // });
-                console.log("GOT ACCESSTOKEN");
-                console.log(token);
-                // The signed-in user info.
-                var user = result.user;
-                if (user) {
-                    var userName = user.uid;
-                    var displayName = user.displayName;
-                    var email = user.email;
-                    console.log(displayName + ' Signed in via Facebook. Email: ' + email);
-                    console.log(userName);
-                    console.log(document.cookie);
-                    window.location = 'landing.html';
-                }
+
+
+
             }).catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -225,29 +216,7 @@ var LoginBox = React.createClass({
 
     },
 
-    // handleauth(dat){
-    //     var authData = dat.user || dat;
-    //    // IN HERE SET IT UP SO WHEN i RETEIVE FACEBOOK DATA, I AM ABLE TO CHECK DATABSE TO SE IF USER EXISTS, IF NOT SAVE HIM TO DB AND PROCEED TO LANDING
-    //     var userRef = firebase.database().ref('newUsers/' + authData.uid);
-    //     userRef.on('value',(snapshot) => {
-    //         var data = snapshot.val() || {};
-    //         if(!data.uid){
-    //             userRef.set({
-    //                 uid: authData.uid,
-    //                 email: authData.email,
-    //                 photo: authData.photoURL,
-    //                 name: authData.displayName
-    //             });
-    //         }
-    //         this.setState({
-    //             uid: authData.uid,
-    //
-    //         });
-    //         window.location = "landing.html";
-    //     });
-    //     console.log("GOT DATA");
-    //     console.log(authData);
-    // },
+
 
     render: function () {
         ++count;

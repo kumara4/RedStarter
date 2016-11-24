@@ -1,16 +1,20 @@
 .jumbotron{
     background-color: transparent;
     margin-bottom: 0px;
+    font-size: 15px;
 }
 
 .alien_img, .TopicBox, .container{
-    background-color: #FF8F86;
+    background-color: #BB8BD3;
 }
 
 #mimg img{
     width: 15%;
 }
 
+.TopicBox{
+    padding-top: 20px;
+}
 .TopicBox li {
     background-color: inherit;
 }
@@ -29,9 +33,7 @@
 
 }
 
-#mainpage{
-    margin-top: 100px;
-}
+
 .subredditTitle a, .cTitle a, .cComNum a{
     color: #FFFFFF;
 
@@ -58,7 +60,7 @@
 }
 
 button {
-    background-color: #A90F03; /* Green */
+    background-color: black; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -122,21 +124,14 @@ Facebook Button and Search section
     margin-top: 0px;
 }
 
-#searchresults{
+#searchresults, #sugresults {
     margin-bottom: 30px;
-    background-color: #3D9CA5;
     padding: 30px 15px;
     margin-top: 30px;
 }
-#searchresults a{
-    display: inline-block;
-    background-color: #F48F36;
-    text-decoration: none;
-}
 
-.resultnode{
-    display: inline-block;
-}
+
+
 .pluslink, .removelink{
     height: 40px;
     margin: 8px 8px;
@@ -173,7 +168,7 @@ Facebook Button and Search section
     /*border-bottom: #a90f03;*/
 /*}*/
 .button_search{
-    background-color: #FF8F86;
+    background-color: #bb8bd3;
 }
 
 .usersignup{
@@ -183,4 +178,67 @@ Facebook Button and Search section
 
 text {
     font: 10px sans-serif;
+}
+
+
+/*Header*/
+#header{
+    background-color: black;
+
+
+
+}
+
+#header span, #header h3, #header a{
+    color: white;
+}
+
+.header-content{
+    width:inherit;
+    padding: 25px;
+    background-color: #B82701;
+    width: 300px;
+    display: inline-block;
+
+}
+.description {
+
+    text-align: center;
+    color: white;
+    font-size: 25px;
+}
+.description p{
+    text-align: center;
+}
+
+
+/*Facebook subreddits*/
+.custom{
+    width: 1300px;
+    margin:auto;
+    background-color: white;
+}
+.alike{
+    display: inline-block;
+    width: 50%;
+}
+.alike-header p{
+    color: #B82701;
+}
+
+.resultnode{
+    background-color: #062F4F;
+    margin: 5px 5px;
+    display: inline-block;
+    padding: 8px;
+}
+
+.haveitresultnode{
+    display: inline-block;
+    background-color: #B82701;
+    margin: 5px 5px;
+    padding: 8px;
+}
+.sublink{
+    color: white;
 }
