@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 /**
  * Google cloud storage part
  */
+
+
 var CLOUD_BUCKET = "redstarter-b0908.appspot.com"; //From storage console, list of buckets
 var gcs = gcloud.storage({
     projectId: 'redstarter-b0908', //from storage console, then click settings, then "x-goog-project-id"
