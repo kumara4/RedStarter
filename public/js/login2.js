@@ -86,6 +86,11 @@ firebase.auth().onAuthStateChanged(function (user) {
                 console.log("UID IS IN LOGIN");
                 console.log(result.user.providerData[0].uid);
 
+                //Save the uid in the provder data which is needed to access the FB API in the backend
+                $.get("/fbuidcookie", {fbuid: result.user.providerData[0].uid }).then(function (data) {
+                    console.log("SAVED FBUID");
+                    //Call function to get fb like subreddit data
+                });
                 //GRAB THE USER'S LIKED AGES AND STORE THEM AS A COOKIE
 
                 var fb = FB.api(result.user.providerData[0].uid + '/likes', {
@@ -107,46 +112,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 
                 });
 
-                console.log("fb is");
-                console.log(fb);
 
 
 
-
-
-
-                // FB.api(result.user.providerData[0].uid+'/music', {fields: 'user_likes', access_token: token}, function (response) {
-                //     var customtermsMusic=[];
-                //     console.log("MUSIC");
-                //     console.log(response.data);
-                //     $.each(response.data, function(i, value){
-                //         FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
-                //             console.log(response2);
-                //             customtermsMusic.push(response2);
-                //
-                //         });
-                //     });
-                //     document.cookie = "{music:" +customtermsMusic+'}';
-                //     console.log("music");
-                //     console.log(customtermsMusic);
-                // });
-                //
-                // FB.api(result.user.providerData[0].uid+'/television', {fields: 'user_likes', access_token: token}, function (response) {
-                //     var customtermsTele=[];
-                //     console.log("TELE");
-                //     console.log(response.data);
-                //     $.each(response.data, function(i, value){
-                //         FB.api('/' + value.id, {fields: 'name', access_token: token}, function (response2) {
-                //             console.log(response2);
-                //             customtermsTele.push(response2);
-                //
-                //         });
-                //     });
-                //     document.cookie = "{tele:" +customtermsTele+'}';
-                //     console.log("tele");
-                //     console.log(customtermsTele);
-                //
-                // });
 
 
             }).catch(function (error) {
@@ -248,29 +216,7 @@ var LoginBox = React.createClass({
 
     },
 
-    // handleauth(dat){
-    //     var authData = dat.user || dat;
-    //    // IN HERE SET IT UP SO WHEN i RETEIVE FACEBOOK DATA, I AM ABLE TO CHECK DATABSE TO SE IF USER EXISTS, IF NOT SAVE HIM TO DB AND PROCEED TO LANDING
-    //     var userRef = firebase.database().ref('newUsers/' + authData.uid);
-    //     userRef.on('value',(snapshot) => {
-    //         var data = snapshot.val() || {};
-    //         if(!data.uid){
-    //             userRef.set({
-    //                 uid: authData.uid,
-    //                 email: authData.email,
-    //                 photo: authData.photoURL,
-    //                 name: authData.displayName
-    //             });
-    //         }
-    //         this.setState({
-    //             uid: authData.uid,
-    //
-    //         });
-    //         window.location = "landing.html";
-    //     });
-    //     console.log("GOT DATA");
-    //     console.log(authData);
-    // },
+
 
     render: function () {
         ++count;

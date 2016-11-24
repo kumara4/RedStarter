@@ -25,48 +25,59 @@ var config = {
 firebase.initializeApp(config);
 
 var userName;
+
+function setusernam(email){
+    userName = email;
+}
+function getUser(){
+    return userName;
+}
+//Authenticate whether a fb has authenticated
 firebase.auth().onAuthStateChanged(function (user) {
     console.log("Hey state changed");
+    //If there is a user in the state, state his credentials in the page
     if (user) {
         $("#header").show();
         $("#firebaseui-auth-container").hide();
-        // User is signed in.
+        // User is signed in. Grab user information to user throughout the page
         var displayName = user.displayName;
         var email = user.email;
         var emailVerified = user.emailVerified;
         var photoURL = user.photoURL;
         var uid = user.uid;
         userName = user.uid;
-
-
         var providerData = user.providerData;
+        var name = firebase.auth().currentUser;
+        //Get user accessToken
         user.getToken().then(function (accessToken) {
-            console.log();
+            //Display user credentials on page
             document.getElementById('sign-in-status').textContent = "Welcome, " + displayName;
-            document.getElementById('account-details').textContent = JSON.stringify({
-                displayName: displayName,
-                email: email,
-                emailVerified: emailVerified,
-                photoURL: photoURL,
-                uid: uid,
-                accessToken: accessToken,
-                providerData: providerData
-            }, null, '  ');
+            // document.getElementById('account-details').textContent = JSON.stringify({
+            //     displayName: displayName,
+            //     email: email,
+            //     emailVerified: emailVerified,
+            //     photoURL: photoURL,
+            //     uid: uid,
+            //     accessToken: accessToken,
+            //     providerData: providerData
+            // }, null, '  ');
+            setusernam(email);
+            $.ajax({
+                            url: "/savefbuser",
+                            type: 'POST',
+                            data: {token: accessToken},
 
-
+                        });
         });
 
-
-        //MAKE AJAX CALLS TO GET REDDIT SUBREDDITS OF THE LIKES OF YOUR FAEBOOK ACCOUNT
-        console.log("Make cookie calls ");
-
-       // var length = fbtermscookie.length;
-        $.get("/getfbcookie", {}).then(function (data) {
-            console.log("Got cookie");
-            getFBSubreddits(data);
-        });
-
-
+       //  console.log("Make cookie calls ");
+       //  //Get User cookie which has User Likes
+       // // var length = fbtermscookie.length;
+       //  $.get("/getfbcookie", {token:"false", likes:'false'}).then(function (data) {
+       //      console.log("Got cookie");
+       //      //Call function to get fb like subreddit data
+       //     // getFBSubreddits(data);
+       //  });
     } else {
         console.log("Signed out");
         facebookSignout();
@@ -77,56 +88,56 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
-function getFBSubreddits(data){
-    data = $.parseJSON(data);
-    var length = data.length;
-    console.log("fbternscookie length is " + length);
-    $.each(data, function (index, term) {
-        console.log("iterating through cookie object ");
-        $.ajax({
-            url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
-            dataType: 'json',
-            cache: false,
-            success: function (output) {
-                var parent={};
-                var termchildren=[];
-                $.each(output.data.children, function (ii, item) {
-                    if(item.data.id != null) {
-                        var sub = {
-                            sub: item.data.subscribers,
-                            url: item.data.url,
-                            display_name: item.data.display_name,
-                            id: item.data.id
-                        };
-                        termchildren.push(sub);
-                    }
-                });
-                if(termchildren.length >0) {
-                    parent['data'] = termchildren;
-                    parent['name'] = term.name;
-                    fbterms.push(parent);
-                    console.log("parent is");
-                    console.log(parent);
-                    displayFBterms(parent);
-                }
-                length--;
-                if (length == 0) {
-                    console.log("Got terms!");
-                    console.log(fbterms);
-
-
-                }
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-    });
-}
+//Given user likes, call reddit API to get subreddits related to those likes
+// function getFBSubreddits(data){
+//     data = $.parseJSON(data);
+//     var length = data.length;
+//     console.log("fbternscookie length is " + length);
+//     $.each(data, function (index, term) {
+//         console.log("iterating through cookie object ");
+//         $.ajax({
+//             url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
+//             dataType: 'json',
+//             cache: false,
+//             success: function (output) {
+//                 var parent={};
+//                 var termchildren=[];
+//                 $.each(output.data.children, function (ii, item) {
+//                     if(item.data.id != null) {
+//                         var sub = {
+//                             sub: item.data.subscribers,
+//                             url: item.data.url,
+//                             display_name: item.data.display_name,
+//                             id: item.data.id
+//                         };
+//                         termchildren.push(sub);
+//                     }
+//                 });
+//                 if(termchildren.length >0) {
+//                     parent['data'] = termchildren;
+//                     parent['name'] = term.name;
+//                     fbterms.push(parent);
+//                     // console.log("parent is");
+//                     // console.log(parent);
+//                     displayFBterms(parent);
+//                 }
+//                 length--;
+//                 if (length == 0) {
+//                     console.log("Got terms!");
+//                     console.log(fbterms);
+//
+//
+//                 }
+//             }.bind(this),
+//             error: function (xhr, status, err) {
+//                 console.error(this.props.url, status, err.toString());
+//             }.bind(this)
+//         });
+//     });
+//}
 
 function facebookSignout() {
     firebase.auth().signOut()
-
         .then(function () {
             console.log('Signout successful!')
 
@@ -143,19 +154,18 @@ function createTodo(img) {
     }
 }
 
-function displayFBterms(cat){
-    console.log("setting view for " + cat.name);
-
-    $.each(cat.data, function(index, result){
-        console.log("RESULT IS");
-        console.log(result);
-        $('#sugresults').append(
-            '<div class="resultnode">' +
-            '<a class="sublink" href="https://www.reddit.com' + result.url.toString() + '">'+
-            result.display_name + '</a>   </div>');
-    });
-
-}
+// function displayFBterms(cat){
+//     console.log("setting view for " + cat.name);
+//     $.each(cat.data, function(index, result){
+//         // console.log("RESULT IS");
+//         // console.log(result);
+//         $('#sugresults').append(
+//             '<div class="resultnode">' +
+//             '<a class="sublink" href="https://www.reddit.com' + result.url.toString() + '">'+
+//             result.display_name + '</a>   </div>');
+//     });
+//
+// }
 
 
 
@@ -166,63 +176,234 @@ var LandingPage = React.createClass({
     getInitialState: function () {
         return {loggedin: "false", theuser: curruser, results: [], text: '', id: ++count, terms: []};
     },
-    setUser: function (data) {
-        if (this.state.loggedin == "false") {
-            loggedin = true;
-            console.log("IN SET USER ");
-            var tcount = 0;
 
-            if (data.user) {
-                this.setState({theuser: data.user, loggedin: "true"});
-                $.get("/img", {user: user}).then(function (data) {
-                    createTodo(data.img);
-                });
-            }
-            if (data.fbuser) {
-                this.setState({photo: data.photo, theuser: data.fbuser, loggedin: "true"});
-            }
-
-
-        }
-
-    },
     componentDidMount: function (e) {
         console.log("CALLING GET COOKIE from landing");
-
-        $('.pluslink').click(function(){
-            alert("hello world");
+        firebase.auth().onAuthStateChanged(function (user) {
+            console.log("Hey state changed in landing");
+            //If there is a user in the state, state his credentials in the page
+            if (user) {
+                //Get user accessToken
+                user.getToken().then(function (accessToken) {
+                    $.get("/getfbcookie", {token:accessToken, likes:'true'}).then(function (data) {
+                        console.log("Got cookie in landpage cmd");
+                        //Call function to get fb like subreddit data
+                        console.log(data);
+                    });
+                });
+            }
         });
-        $.get("/cookie", {}).then(function (data) {
-            this.setUser(data);
+        // $.get("/getfbcookie", {likes:"true"}).then(function (data) {
+        //     console.log("Got cookie");
+        //     //Call function to get fb like subreddit data
+        //     getFBSubreddits(data);
+        // });
 
-        }.bind(this));
     },
+
     render: function () {
         return (
             <div key={++count} className="landingpage">
 
-                <div className="alien_img">
-                    <img src="img/alien.png"/>
-                </div>
-                <div className="profile">
-                    <div id="musername">
-                        <p>{this.state.theuser}</p>
-                    </div>
-                </div>
-                <div id="sugresults" className="searchresults">
 
+
+                <SearchBox/>
+                <div id="customcontainer" className="jumbotron">
+                    <CustomBox/>
                 </div>
-                <SearchBox theuser={this.state.theuser}/>
                 <TopicBox />
             </div>
         );
     }
 });
 
+var CustomBox = React.createClass({
+    getInitialState: function () {
+        return {results: [], text: '', id: ++count, terms: []};
+    },
+    // displayFBterms: function (cat){
+    //     console.log("setting view for " + cat.name);
+    //     $.each(cat.data, function(index, result){
+    //         // console.log("RESULT IS");
+    //         // console.log(result);
+    //         $('#sugresults').append(
+    //             '<div class="resultnode">' +
+    //             '<a class="sublink" href="https://www.reddit.com' + result.url.toString() + '">'+
+    //             result.display_name + '</a>   </div>');
+    //     });
+    //
+    // },
+    printTerms: function(){
+        this.state.terms.map(function(term){
+
+        });
+
+    },
+    getFBSubreddits: function (data){
+        data = $.parseJSON(data);
+        var length = data.length;
+
+        data.map(function (term) {
+            console.log("fbternscookie length is  IN CUSTOM BOX" + length);
+                $.ajax({
+                    url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
+                    dataType: 'json',
+                    cache: false,
+                    success: function (output) {
+                        var parent = {};
+                        var termchildren = [];
+                        $.each(output.data.children, function (ii, item) {
+
+                            if (item.data.id != null) {
+                                var sub = {
+                                    sub: item.data.subscribers,
+                                    url: item.data.url,
+                                    display_name: item.data.display_name,
+                                    id: item.data.id
+                                };
+                                termchildren.push(sub);
+                            }
+                        });
+                        if (termchildren.length > 0) {
+                            parent['data'] = termchildren;
+                            parent['name'] = term.name;
+                            fbterms.push(parent);
+                            var terms = this.state.terms;
+                            terms.push(parent);
+                            terms.sort(function(a, b) {
+                                return parseFloat(a.data.length) - parseFloat(b.data.length);
+                            });
+                            this.setState({terms: terms});
+                            // console.log("parent is");
+                            // console.log(parent);
+                           // this.displayFBterms(parent);
+                        }
+                        length--;
+                        if (length == 0) {
+                            console.log("Got terms IN CUSTOM BOX!");
+                            //this.setState({terms: fbterms});
+                            this.printTerms();
+                            console.log(fbterms);
+
+
+                        }
+                    }.bind(this),
+                    error: function (xhr, status, err) {
+                        console.error(this.props.url, status, err.toString());
+                    }.bind(this)
+                });
+        }, this);
+        // $.each(data, function (index, term) {
+        //     console.log("iterating through cookie object ");
+        //     $.ajax({
+        //         url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
+        //         dataType: 'json',
+        //         cache: false,
+        //         success: function (output) {
+        //             var parent = {};
+        //             var termchildren = [];
+        //             $.each(output.data.children, function (ii, item) {
+        //                 if (item.data.id != null) {
+        //                     var sub = {
+        //                         sub: item.data.subscribers,
+        //                         url: item.data.url,
+        //                         display_name: item.data.display_name,
+        //                         id: item.data.id
+        //                     };
+        //                     termchildren.push(sub);
+        //                 }
+        //             });
+        //             if (termchildren.length > 0) {
+        //                 parent['data'] = termchildren;
+        //                 parent['name'] = term.name;
+        //                 fbterms.push(parent);
+        //                 // console.log("parent is");
+        //                 // console.log(parent);
+        //                 this.displayFBterms(parent);
+        //             }
+        //             length--;
+        //             if (length == 0) {
+        //                 console.log("Got terms!");
+        //                 console.log(fbterms);
+        //
+        //
+        //             }
+        //         },
+        //         error: function (xhr, status, err) {
+        //             console.error(this.props.url, status, err.toString());
+        //         }.bind(this)
+        //     }.bind(this));
+        // });
+    },
+    refreshLoadedData: function () {
+        var user;
+
+            $.get("/getfbcookie", {token:"false", likes:'false'}).then(function (data) {
+                console.log("DATA GOTTEN FROM CUSTOMBOX GET REQUEST");
+                //Call function to get fb like subreddit data
+                this.getFBSubreddits(data);
+
+
+
+            }.bind(this));
+
+
+
+
+
+    },
+    componentDidMount: function (e) {
+
+        this.refreshLoadedData();
+
+    },
+    render: function () {
+        console.log(this.state.terms[0]);
+        return (
+                <div key={++count} data-id= {this.state.terms.length} className="custom">
+                    {this.state.terms.map(function (result) {
+                        return(<CustomList name={result.name} data={result.data}/>)
+                    })}
+
+
+                </div>
+        )
+
+    }
+
+});
+
+var CustomList = React.createClass({
+
+    render: function () {
+        return (
+            <div key={++count}  className="alike">
+                <div className="alike-header">
+                    <p>Because you like {this.props.name}</p>
+                    </div>
+                {
+                    this.props.data.map(function (sub) {
+                    return (
+
+
+                    <Result key={++count} id={sub.id} display_name={sub.display_name}
+                    url={sub.url}/>
+
+                    );
+                }
+                    )
+                }
+
+
+
+            </div>
+        );
+    }
+});
 
 var SearchBox = React.createClass({
     getInitialState: function () {
-        return {theuser: "", results: [], text: '', id: ++count, terms: []};
+        return {results: [], text: '', id: ++count, terms: []};
     },
     componentDidMount: function (e) {
         ReactDOM.findDOMNode(this.refs.searchInput).focus();
@@ -266,10 +447,10 @@ var SearchBox = React.createClass({
                             data.push(sub);
 
                         });
-                        if (counter == terms.length) {
-                            var temp = data;
-                            this.work(temp);
-                        }
+                        // if (counter == terms.length) {
+                        //     var temp = data;
+                        //     this.work(temp);
+                        // }
 
                         this.setState({results: data});
 
@@ -285,18 +466,18 @@ var SearchBox = React.createClass({
             document.getElementById("circle").innerHTML = "";
         }
     },
-    work: function (data) {
-        var items = {};
-        circledata = {"name": "flare", "children": []};
-        var items2 = {"name": "nametemp", "children": [{"name2": "nametemp2", "children": []}]};
-
-        data.forEach(function (item) {
-            var chi = {"name": item.display_name, "url": item.url, "size": item.sub};
-            items2.children[0].children.push(chi);
-        });
-        circledata.children.push(items2);
-        // createCirclemap();
-    },
+    // work: function (data) {
+    //     var items = {};
+    //     circledata = {"name": "flare", "children": []};
+    //     var items2 = {"name": "nametemp", "children": [{"name2": "nametemp2", "children": []}]};
+    //
+    //     data.forEach(function (item) {
+    //         var chi = {"name": item.display_name, "url": item.url, "size": item.sub};
+    //         items2.children[0].children.push(chi);
+    //     });
+    //     circledata.children.push(items2);
+    //     // createCirclemap();
+    // },
     searchTerms: function () {
         data = [];
         this.refreshLoadedData(this.state.terms);
@@ -331,20 +512,20 @@ var SearchBox = React.createClass({
 
 
     },
-    handleauth(dat){
-        console.log("LOGGGGGGG");
-        var theuser = this.props.theuser;
-        firebase.auth().currentUser.getToken().then(function (idToken) {
-            $.ajax({
-                url: "/savefbuser",
-                type: 'POST',
-                data: {user: theuser, token: idToken},
-
-            });
-
-        }.bind(this));
-
-    },
+    // handleauth(dat){
+    //     console.log("LOGGGGGGG");
+    //     var theuser = this.props.theuser;
+    //     firebase.auth().currentUser.getToken().then(function (idToken) {
+    //         $.ajax({
+    //             url: "/savefbuser",
+    //             type: 'POST',
+    //             data: {user: theuser, token: idToken},
+    //
+    //         });
+    //
+    //     }.bind(this));
+    //
+    // },
     render: function () {
 
         return (
@@ -352,10 +533,6 @@ var SearchBox = React.createClass({
                 <div className="row">
                     <div className="connecttofacebook">
 
-                        {/*<button onClick={this.handleAdd.bind(this, new firebase.auth.FacebookAuthProvider())}*/}
-                                {/*className="facebookbutton">*/}
-                            {/*Connect with Facebook*/}
-                        {/*</button>*/}
                     </div>
                     <h3> Enter things you find interesting! Press enter to add each term to your list then click the Search</h3>
                     <div key={this.props.id} id="interest_list" className="searchBox interest_list">
@@ -389,50 +566,78 @@ var ResultList = React.createClass({
 });
 var Result = React.createClass({
     getInitialState: function () {
-        return {theuser: "", donthave: true, initial: 1};
+        return {haveit:false, theuser: "tempuser", initial: 1};
     },
-    setUser: function (user) {
-        console.log("IN SET USER " + user);
-        this.setState({initial: 0, theuser: user});
+    setHaveit: function(){
+        firebase.auth().onAuthStateChanged(function (user) {
+
+            //If there is a user in the state, state his credentials in the page
+            if (user) {
+
+                var email = user.email.split("@")[0];
+                console.log("email is set to " + email);
+                var userRef = firebase.database().ref('newUsers/' + email+"/subreddits");
+                userRef.child(this.props.id).once('value', function(snapshot) {
+                    var exists = (snapshot.val() !== null);
+                    if(exists){
+
+                        this.setState({haveit: true});
+
+
+                    }
+
+                }.bind(this));
+            }
+        }.bind(this));
+    },
+    componentWillMount: function (e) {
+        this.setHaveit();
+
+
+
     },
     addSub: function () {
-        this.setState({donthave: false});
-        $.post("/addSub", {
-            user: this.state.theuser,
-            sub: this.props.display_name,
-            subid: this.props.id
-        });
+        var usernam = getUser();
+        this.setState({haveit:true});
+        firebase.auth().currentUser.getToken().then(function(idToken) {
+            $.post("/addSub", {
+                token: idToken,
+                sub: this.props.display_name,
+                subid: this.props.id
+            });
+        }.bind(this));
+
     },
     removeSub: function () {
-        this.setState({donthave: true});
-        $.ajax({
-            url: "/removeSub",
-            type: 'DELETE',
-            data: {user: this.state.theuser, sub: this.props.display_name, subid: this.props.id},
-            success: function (output) {
-            }.bind(this)
+        this.setState({haveit:false});
+        firebase.auth().currentUser.getToken().then(function(idToken) {
+            $.ajax({
+                url: "/removeSub",
+                type: 'DELETE',
+                data: {token: idToken, sub: this.props.display_name, subid: this.props.id},
+                success: function (output) {
+                }.bind(this)
+            });
         });
+
     },
     render: function () {
-        if (this.state.initial == 1) {
-            $.get("/cookie", {}).then(function (data) {
-                this.setUser(data.user);
 
-            }.bind(this));
-        }
+
 
         return (
 
-            <div key={this.props.id} className="resultnode">
+            <div key={this.props.id} data-id={this.state.haveit} className={!this.state.haveit ? 'resultnode': 'haveitresultnode'}>
                 <a className="sublink" href={"https://www.reddit.com" + this.props.url}>
 
                     {this.props.display_name}
 
+
                 </a>
-                { this.state.donthave ? <a className="pluslink" onClick={this.addSub}>
+                { this.state.haveit == false ? <a className="pluslink" onClick={this.addSub}>
                     <i className="fa fa-plus" aria-hidden="true"></i>
                 </a> : null }
-                { this.state.donthave == false ? <a className="removelink" onClick={this.removeSub}>
+                { this.state.haveit == true ? <a className="removelink" onClick={this.removeSub}>
                     <i className="fa fa-times" aria-hidden="true"></i>
                 </a> : null }
 
