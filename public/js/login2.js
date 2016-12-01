@@ -85,8 +85,8 @@ firebase.auth().onAuthStateChanged(function (user) {
                 var token = result.credential.accessToken;
                 console.log(result);
                 console.log("UID IS IN LOGIN");
-                console.log(result.user.providerData[0].uid);
-
+                //console.log(result.user.providerData[0].uid);
+                console.log(result.user);
                 //Save the uid in the provder data which is needed to access the FB API in the backend
                 $.get("/fbuidcookie", {fbuid: result.user.providerData[0].uid }).then(function (data) {
                     console.log("SAVED FBUID");
@@ -107,7 +107,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
                     }
 
-                    
+                  //  window.location = "landing.html";
                     console.log(response.data);
 
 
