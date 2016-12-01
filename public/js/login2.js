@@ -74,7 +74,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
         if (user) {
-             window.location = "landing.html";
+             
             check++;
             var provider = new firebase.auth.FacebookAuthProvider();
             //  get user's likes: https://developers.facebook.com/docs/facebook-login/permissions
@@ -105,7 +105,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
                     }
 
-
+                    window.location = "landing.html";
                     console.log(response.data);
 
 
