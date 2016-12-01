@@ -99,7 +99,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                     fields: 'user_likes',
                     access_token: token
                 }, function (response) {
-                    window.location = "landing.html";
+                   // window.location = "landing.html";
                     getpages(response.data, token);
                     var names=[];
                     function storenames(name){
