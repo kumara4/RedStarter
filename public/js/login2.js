@@ -135,7 +135,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             $("#header").hide();
             console.log("FirebaseUI config.");
             var uiConfig = {
-                'signInSuccessUrl': '/', //URL that we get sent BACK to after logging in
+               // 'signInSuccessUrl': '/', //URL that we get sent BACK to after logging in
                 'signInOptions': [
                     // Leave the lines as is for the providers you want to offer your users.
                     //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
