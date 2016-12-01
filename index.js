@@ -6,7 +6,7 @@ var uploader = multer({storage: multer.memoryStorage({})});
 var cookieParser = require('cookie-parser');
 var app = express();
 var bodyParser = require('body-parser');
-var graph = require('fbgraph');
+
 
 //RESOURCES
 app.use(cookieParser());

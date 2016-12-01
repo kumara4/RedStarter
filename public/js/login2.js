@@ -74,6 +74,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
         if (user) {
+             
             check++;
             var provider = new firebase.auth.FacebookAuthProvider();
             //  get user's likes: https://developers.facebook.com/docs/facebook-login/permissions
@@ -89,6 +90,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                 //Save the uid in the provder data which is needed to access the FB API in the backend
                 $.get("/fbuidcookie", {fbuid: result.user.providerData[0].uid }).then(function (data) {
                     console.log("SAVED FBUID");
+                    
                     //Call function to get fb like subreddit data
                 });
                 //GRAB THE USER'S LIKED AGES AND STORE THEM AS A COOKIE
@@ -97,6 +99,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                     fields: 'user_likes',
                     access_token: token
                 }, function (response) {
+                    window.location = "landing.html";
                     getpages(response.data, token);
                     var names=[];
                     function storenames(name){
@@ -104,7 +107,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
                     }
 
-
+                    
                     console.log(response.data);
 
 

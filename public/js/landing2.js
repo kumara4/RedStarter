@@ -88,53 +88,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
-//Given user likes, call reddit API to get subreddits related to those likes
-// function getFBSubreddits(data){
-//     data = $.parseJSON(data);
-//     var length = data.length;
-//     console.log("fbternscookie length is " + length);
-//     $.each(data, function (index, term) {
-//         console.log("iterating through cookie object ");
-//         $.ajax({
-//             url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
-//             dataType: 'json',
-//             cache: false,
-//             success: function (output) {
-//                 var parent={};
-//                 var termchildren=[];
-//                 $.each(output.data.children, function (ii, item) {
-//                     if(item.data.id != null) {
-//                         var sub = {
-//                             sub: item.data.subscribers,
-//                             url: item.data.url,
-//                             display_name: item.data.display_name,
-//                             id: item.data.id
-//                         };
-//                         termchildren.push(sub);
-//                     }
-//                 });
-//                 if(termchildren.length >0) {
-//                     parent['data'] = termchildren;
-//                     parent['name'] = term.name;
-//                     fbterms.push(parent);
-//                     // console.log("parent is");
-//                     // console.log(parent);
-//                     displayFBterms(parent);
-//                 }
-//                 length--;
-//                 if (length == 0) {
-//                     console.log("Got terms!");
-//                     console.log(fbterms);
-//
-//
-//                 }
-//             }.bind(this),
-//             error: function (xhr, status, err) {
-//                 console.error(this.props.url, status, err.toString());
-//             }.bind(this)
-//         });
-//     });
-//}
+
 
 function facebookSignout() {
     firebase.auth().signOut()
@@ -154,18 +108,6 @@ function createTodo(img) {
     }
 }
 
-// function displayFBterms(cat){
-//     console.log("setting view for " + cat.name);
-//     $.each(cat.data, function(index, result){
-//         // console.log("RESULT IS");
-//         // console.log(result);
-//         $('#sugresults').append(
-//             '<div class="resultnode">' +
-//             '<a class="sublink" href="https://www.reddit.com' + result.url.toString() + '">'+
-//             result.display_name + '</a>   </div>');
-//     });
-//
-// }
 
 
 
@@ -221,18 +163,7 @@ var CustomBox = React.createClass({
     getInitialState: function () {
         return {results: [], text: '', id: ++count, terms: []};
     },
-    // displayFBterms: function (cat){
-    //     console.log("setting view for " + cat.name);
-    //     $.each(cat.data, function(index, result){
-    //         // console.log("RESULT IS");
-    //         // console.log(result);
-    //         $('#sugresults').append(
-    //             '<div class="resultnode">' +
-    //             '<a class="sublink" href="https://www.reddit.com' + result.url.toString() + '">'+
-    //             result.display_name + '</a>   </div>');
-    //     });
-    //
-    // },
+
     printTerms: function(){
         this.state.terms.map(function(term){
 
@@ -274,9 +205,7 @@ var CustomBox = React.createClass({
                                 return parseFloat(a.data.length) - parseFloat(b.data.length);
                             });
                             this.setState({terms: terms});
-                            // console.log("parent is");
-                            // console.log(parent);
-                           // this.displayFBterms(parent);
+
                         }
                         length--;
                         if (length == 0) {
@@ -293,47 +222,7 @@ var CustomBox = React.createClass({
                     }.bind(this)
                 });
         }, this);
-        // $.each(data, function (index, term) {
-        //     console.log("iterating through cookie object ");
-        //     $.ajax({
-        //         url: "https://www.reddit.com/subreddits/search/.json?q=" + term.name + "&sort=relevance&limit=8",
-        //         dataType: 'json',
-        //         cache: false,
-        //         success: function (output) {
-        //             var parent = {};
-        //             var termchildren = [];
-        //             $.each(output.data.children, function (ii, item) {
-        //                 if (item.data.id != null) {
-        //                     var sub = {
-        //                         sub: item.data.subscribers,
-        //                         url: item.data.url,
-        //                         display_name: item.data.display_name,
-        //                         id: item.data.id
-        //                     };
-        //                     termchildren.push(sub);
-        //                 }
-        //             });
-        //             if (termchildren.length > 0) {
-        //                 parent['data'] = termchildren;
-        //                 parent['name'] = term.name;
-        //                 fbterms.push(parent);
-        //                 // console.log("parent is");
-        //                 // console.log(parent);
-        //                 this.displayFBterms(parent);
-        //             }
-        //             length--;
-        //             if (length == 0) {
-        //                 console.log("Got terms!");
-        //                 console.log(fbterms);
-        //
-        //
-        //             }
-        //         },
-        //         error: function (xhr, status, err) {
-        //             console.error(this.props.url, status, err.toString());
-        //         }.bind(this)
-        //     }.bind(this));
-        // });
+
     },
     refreshLoadedData: function () {
         var user;
@@ -362,7 +251,7 @@ var CustomBox = React.createClass({
         return (
                 <div key={++count} data-id= {this.state.terms.length} className="custom">
                     {this.state.terms.map(function (result) {
-                        return(<CustomList name={result.name} data={result.data}/>)
+                        return(<CustomList key={++count} name={result.name} data={result.data}/>)
                     })}
 
 
@@ -466,18 +355,7 @@ var SearchBox = React.createClass({
             document.getElementById("circle").innerHTML = "";
         }
     },
-    // work: function (data) {
-    //     var items = {};
-    //     circledata = {"name": "flare", "children": []};
-    //     var items2 = {"name": "nametemp", "children": [{"name2": "nametemp2", "children": []}]};
-    //
-    //     data.forEach(function (item) {
-    //         var chi = {"name": item.display_name, "url": item.url, "size": item.sub};
-    //         items2.children[0].children.push(chi);
-    //     });
-    //     circledata.children.push(items2);
-    //     // createCirclemap();
-    // },
+
     searchTerms: function () {
         data = [];
         this.refreshLoadedData(this.state.terms);
@@ -512,20 +390,7 @@ var SearchBox = React.createClass({
 
 
     },
-    // handleauth(dat){
-    //     console.log("LOGGGGGGG");
-    //     var theuser = this.props.theuser;
-    //     firebase.auth().currentUser.getToken().then(function (idToken) {
-    //         $.ajax({
-    //             url: "/savefbuser",
-    //             type: 'POST',
-    //             data: {user: theuser, token: idToken},
-    //
-    //         });
-    //
-    //     }.bind(this));
-    //
-    // },
+
     render: function () {
 
         return (
